@@ -1,4 +1,4 @@
-<!DOCTYPE HTML!>
+<!-- <!DOCTYPE HTML!>
 <html>
   <head>
     <title>Assignment 1 - Hello World: GitHub and d3</title>
@@ -139,3 +139,49 @@
     </script>
   </body>
 </html>
+ -->
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<div id="value"> </div>
+<svg id="vis"> </svg>
+
+<script>
+  console.log(d3);
+
+  var data = [10, 78, 15, 67, 100];
+
+
+  var svg = d3.select('#vis')
+    .attr('width', 400)
+    .attr('height', 400);
+
+  var xscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, 400]);
+
+  var yscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, 400]);
+
+  svg.selectAll('circle')
+   .data(data)
+   .enter().append('circle')
+   .attr('cy', 100)
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+  .attr('r', 10)
+  .attr('fill', 'steelblue')
+  .on('mouseover', function(e, d) {
+    d3.select(this).attr('fill', 'brown');
+
+    d3.select('#value').text(d);
+  }).on('mouseout', function() {
+    d3.select(this)
+      .attr('fill', 'steelblue');
+  })
+
+
+  var svg = d3.select('#vis')
+    .attr('width', 1000)
+    .attr('height', 800);
+
+</script>
