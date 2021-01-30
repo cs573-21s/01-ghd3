@@ -7,6 +7,14 @@ https://rmlamarche.github.io/01-ghd3/
 
 ## Notes
 
+Randomized data is used to draw all of the shapes, and the svg scales based on the window size. Everything is configurable via controls on the right side of the page (colors, # data points, etc.).
+
+Clicking on a node will reveal a window that shows the relevant data for that element.
+
+I made heavy use of the MDN docs to reference attributes for the svg elements because I can never remember them off the top of my head:
+
+https://developer.mozilla.org/en-US/docs/Web/SVG/Element
+
 I used Node.js to setup a test server for running locally, but all of the work for Assignment 1 is done in index.html. The rest of the files in this repo can be ignored.
 
 ***
