@@ -26,6 +26,18 @@
 		label {
 			font-weight: 700;
 		}
+		.info {
+			position: fixed;
+			display: flex;
+			flex-flow: column nowrap;
+			top: 1em;
+			left: 50%;
+			transform: translateX(-50%);
+			padding: 1em;
+			background: #d5d5d5;
+			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+			border-radius: 0.25em;
+		}
 		.controls {
 			position: fixed;
 			display: flex;
@@ -37,7 +49,7 @@
 			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
 			border-radius: 0.25em;
 		}
-		.controls button {
+		button {
 			cursor: pointer;
 			background: green;
 			margin-top: 0.5em;
@@ -114,11 +126,21 @@
 					.attr('y', (d) => scale.y(d.y))
 					.attr('fill', config.rect.fill)
 					.attr('stroke', config.rect.stroke)
-					.attr('opacity', (d) => `${d.x * 100}%`)
+					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
 						d3.select(this).attr('opacity', '100%');
 					}).on('mouseout', function(e, d) {
-						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Rectangle';
+						const rectData = {
+							x: d.x,
+							y: d.y,
+							sx: scale.x(d.x),
+							sy: scale.y(d.y),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(rectData, null, 2);
 					});
 				// Add Circles
 				svg.selectAll('circle')
@@ -130,11 +152,22 @@
 					.attr('cy', (d) => scale.y(d.y))
 					.attr('fill', config.circle.fill)
 					.attr('stroke', config.circle.stroke)
-					.attr('opacity', (d) => `${d.x * 100}%`)
+					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
 						d3.select(this).attr('opacity', '100%');
 					}).on('mouseout', function(e, d) {
-						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Circle';
+						const circleData = {
+							x: d.x,
+							y: d.y,
+							r: scale.y(d.y) / 2,
+							cx: scale.x(d.x),
+							cy: scale.y(d.y),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(circleData, null, 2);
 					});
 				// Add Lines
 				svg.selectAll('line')
@@ -152,11 +185,17 @@
 						return scale.y(d._y2);
 					})
 					.attr('stroke', config.line.stroke)
-					.attr('opacity', (d) => `${d.x * 100}%`)
-					.on('mouseover', function(e, d) {
-						d3.select(this).attr('opacity', '100%');
-					}).on('mouseout', function(e, d) {
-						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+					.attr('stroke-width', '5px')
+					.attr('stroke-linecap', 'round').on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Line';
+						const lineData = {
+							x1: scale.x(d.x),
+							y1: scale.y(d.y),
+							x2: scale.x(d._x2),
+							y2: scale.y(d._y2),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(lineData, null, 2);
 					});
 				// Add Polygons
 				svg.selectAll('polygon')
@@ -177,11 +216,19 @@
 					})
 					.attr('stroke', config.polygon.stroke)
 					.attr('fill', config.polygon.fill)
-					.attr('opacity', (d) => `${d.x * 100}%`)
+					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
 						d3.select(this).attr('opacity', '100%');
 					}).on('mouseout', function(e, d) {
-						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Polygon';
+						const polygonData = {
+							numPoints: Math.ceil(scale.polyPoints(d.x)),
+							pointPairs: d._pointPairs,
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(polygonData, null, 2);
 					});
 
 				console.table(randomizedData, ['x', 'y', '_x2', '_y2']);
@@ -240,27 +287,22 @@
 				}));
 				draw();
 			});
+
+			// info
+			document.getElementById('button-close-info').addEventListener('click', function() {
+				document.getElementsByClassName('info')[0].style.display = 'none';
+			});
 		});
 	</script>
 </head>
 <body>
 	<svg id="container"></svg>
-	<!-- 				rect: {
-					fill: 'steelblue',
-					stroke: '#333',
-				},
-				circle: {
-					fill: 'pink',
-					stroke: '#333',
-				},
-				line: {
-					stroke: '#333',
-				},
-				polygon: {
-					fill: 'lightgray',
-					stroke: '#333',
-					maxPoints: 5,
-				}, -->
+	<div class="info" style="display: none;">
+		<h2>Selected Node</h2>
+		<p id="selected"></p>
+		<pre id="data"></pre>
+		<button id="button-close-info">Close</button>
+	</div>
 	<div class="controls">
 		<h2>Controls</h2>
 		<h3>Data Points</h3>
