@@ -1,28 +1,24 @@
-<!-- Assignment 1 Requirements
-1. Your project should contain at least four kinds of graphics primitives (circles, rectangles, lines, polygons) in different colors.
-2. Your document should identify the source of the code if you start with code that you found.
-3. Your code should be forked from the GitHub repo and linked using GitHub pages. See the "GitHub Details" section below for detailed instructions on how to do this. -->
-
 <!DOCTYPE HTML!>
 <html>
   <head>
     <title>Assignment 1 - Hello World: GitHub and d3</title>
     <script src="http://d3js.org/d3.v5.min.js"></script>
-    <div id = "svgcontainer"></div>
+    <div id = "value"></div>
+    <svg id = "vis"></svg>
   </head>
   <body>
     <script>
       console.log(d3); // test if d3 is loaded
       
-      //Add an SVG
+      // Add an SVG
       var width = 900;
       var height = 900;
-      var svg = d3.select("#svgcontainer")
-      .append("svg")
+      var svg = d3.select("#vis")
       .attr("width", width)
       .attr("height", height);
       
-      //Add Rectangles
+      // Get started with examples in [tutorialspoint: D3.js - Introduction to SVG](https://www.tutorialspoint.com/d3js/d3js_introduction_to_svg.htm)
+      // Add Rectangles
       svg.append("rect")
       .attr("x", 0)
       .attr("y", 60)
@@ -30,7 +26,7 @@
       .attr('height', 50)
       .style("fill", "yellow");
       
-      //add Circles
+      // Add Circles
       svg.append("circle")
       .attr("cx", 25)
       .attr("cy", 25)
@@ -64,7 +60,7 @@
       .attr("points", "70, 0 80, 0 80, 100 90, 100 90, 200 100, 200 100, 245")
       .attr("style", "fill: none; stroke: black; stroke-width: 2");
 
-      // Draw a Christmas tree
+      // Draw a Christmas tree using graphics above
       // 1. Draw leaves
       var leafStyle = "fill: rgb(35, 144, 35); stroke: rgb(20, 82, 20); stroke-width: 1";
       svg.append("polygon")
@@ -76,6 +72,7 @@
       svg.append("polygon")
       .attr("points", "330, 450 210, 570 690, 570 570, 450")
       .attr("style", leafStyle);
+
       // 2. Draw a set
       svg.append("ellipse")
       .attr("cx", 450)
@@ -83,6 +80,7 @@
       .attr("rx", 100)
       .attr("ry", 30)
       .attr("style", "fill: rgb(204, 102, 0); stroke: black; stroke-width: 2");
+
       // 3. Draw the root
       svg.append("rect")
       .attr("x", 420)
@@ -90,10 +88,12 @@
       .attr("width", 60)
       .attr("height", 100)
       .attr("fill", "brown");
+
       // 4. Draw a star
       svg.append("polygon")
       .attr("points", "450, 120 415, 210 500, 150 400, 150  485, 210")
       .attr("style", "fill: gold");
+
       // 5. Draw a stick to hold the star
       svg.append("line")
       .attr("x1", 450)
@@ -102,8 +102,9 @@
       .attr("y2", 210)
       .attr("stroke", "yellow")
       .attr("stroke-width", 2);
+      
       // 5. Draw some bulbs
-      // Define a blur filter
+      // Define a blur filter. Started from an example in [stackoverflow: how to blur an image on mouseover using d3](https://stackoverflow.com/questions/35745042/how-to-blur-an-image-on-mouseover-using-d3)
       var filter = svg.append("defs")
       .append("filter")
       .attr("id", "blur")
