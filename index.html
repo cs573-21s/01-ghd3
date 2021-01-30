@@ -1,10 +1,140 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!-- Assignment 1 Requirements
+1. Your project should contain at least four kinds of graphics primitives (circles, rectangles, lines, polygons) in different colors.
+2. Your document should identify the source of the code if you start with code that you found.
+3. Your code should be forked from the GitHub repo and linked using GitHub pages. See the "GitHub Details" section below for detailed instructions on how to do this. -->
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<!DOCTYPE HTML!>
+<html>
+  <head>
+    <title>Assignment 1 - Hello World: GitHub and d3</title>
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <div id = "svgcontainer"></div>
+  </head>
+  <body>
+    <script>
+      console.log(d3); // test if d3 is loaded
+      
+      //Add an SVG
+      var width = 900;
+      var height = 900;
+      var svg = d3.select("#svgcontainer")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+      
+      //Add Rectangles
+      svg.append("rect")
+      .attr("x", 0)
+      .attr("y", 60)
+      .attr('width', 50)
+      .attr('height', 50)
+      .style("fill", "yellow");
+      
+      //add Circles
+      svg.append("circle")
+      .attr("cx", 25)
+      .attr("cy", 25)
+      .attr("r", 25)
+      .style("fill", "purple");
+      
+      // Add Lines
+      svg.append("line")
+      .attr("x1", 60)
+      .attr("y1", 0)
+      .attr("x2", 60)
+      .attr("y2", 245)
+      .attr("stroke", "rgb(255, 0, 0)")
+      .attr("stroke-width", 2);
+      
+      // Add Polygons
+      svg.append("polygon")
+      .attr("points", "25, 120 0, 165 50, 165")
+      .attr("style", "fill: blue");
+
+      // Add Ellipses
+      svg.append("ellipse")
+      .attr("cx", 25)
+      .attr("cy", 210)
+      .attr("rx", 20)
+      .attr("ry", 35)
+      .attr("style", "fill: steelblue");
+
+      // Add Polylines
+      svg.append("polyline")
+      .attr("points", "70, 0 80, 0 80, 100 90, 100 90, 200 100, 200 100, 245")
+      .attr("style", "fill: none; stroke: black; stroke-width: 2");
+
+      // Draw a Christmas tree
+      // 1. Draw leaves
+      var leafStyle = "fill: rgb(35, 144, 35); stroke: rgb(20, 82, 20); stroke-width: 1";
+      svg.append("polygon")
+      .attr("points", "450, 210 330, 330 570, 330")
+      .attr("style", leafStyle);
+      svg.append("polygon")
+      .attr("points", "390, 330 270, 450 630, 450 510, 330")
+      .attr("style", leafStyle);
+      svg.append("polygon")
+      .attr("points", "330, 450 210, 570 690, 570 570, 450")
+      .attr("style", leafStyle);
+      // 2. Draw a set
+      svg.append("ellipse")
+      .attr("cx", 450)
+      .attr("cy", 670)
+      .attr("rx", 100)
+      .attr("ry", 30)
+      .attr("style", "fill: rgb(204, 102, 0); stroke: black; stroke-width: 2");
+      // 3. Draw the root
+      svg.append("rect")
+      .attr("x", 420)
+      .attr("y", 570)
+      .attr("width", 60)
+      .attr("height", 100)
+      .attr("fill", "brown");
+      // 4. Draw a star
+      svg.append("polygon")
+      .attr("points", "450, 120 415, 210 500, 150 400, 150  485, 210")
+      .attr("style", "fill: gold");
+      // 5. Draw a stick to hold the star
+      svg.append("line")
+      .attr("x1", 450)
+      .attr("y1", 185)
+      .attr("x2", 450)
+      .attr("y2", 210)
+      .attr("stroke", "yellow")
+      .attr("stroke-width", 2);
+      // 5. Draw some bulbs
+      // Define a blur filter
+      var filter = svg.append("defs")
+      .append("filter")
+      .attr("id", "blur")
+      .append("feGaussianBlur")
+      .attr("stdDeviation", 3); 
+      // Define drawBulb function, which can draw an bulb and stimulate light up effect when mouseover it
+      function blurFilter() {
+        d3.select(this).attr("filter", "url(#blur)").attr("style", "fill: yellow");
+      }
+      function noFilter() {
+        d3.select(this).attr("filter", null).attr("style", "fill: gold");
+      }
+      function drawBulb(cx, cy, r) {
+        svg.append("circle")
+        .attr("cx", cx)
+        .attr("cy", cy)
+        .attr("r", r)
+        .style("fill", "orange")
+        .on("mouseover", blurFilter)
+        .on("mouseout", noFilter);  
+      }
+      // Draw bulbs
+      drawBulb(410, 290, 15);
+      drawBulb(490, 310, 15);
+      drawBulb(360, 410, 15);
+      drawBulb(455, 429, 15);
+      drawBulb(530, 380, 15);
+      drawBulb(386, 500, 15);
+      drawBulb(301, 530, 15);
+      drawBulb(480, 545, 15);
+      drawBulb(570, 510, 15);
+    </script>
+  </body>
+</html>
