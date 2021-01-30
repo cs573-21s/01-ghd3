@@ -6,6 +6,7 @@
 	<title>Assignment 1 | Ryan LaMarche</title>
 	<style>
 		html, body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 			margin: 0;
 		}
 		body {
@@ -14,6 +15,35 @@
 		}
 		svg rect, svg circle, svg polygon {
 			transition: opacity 300ms ease-out;
+		}
+
+		h2, h3 {
+			margin: 0.25em 0;
+		}
+		label {
+			font-weight: 700;
+		}
+		.controls {
+			position: fixed;
+			display: flex;
+			flex-flow: column nowrap;
+			top: 1em;
+			right: 1em;
+			padding: 1em;
+			background: #d5d5d5;
+			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+			border-radius: 0.25em;
+		}
+		.controls button {
+			cursor: pointer;
+			background: green;
+			margin-top: 0.5em;
+			padding: 0.5em 0.25em;
+			outline: none;
+			border: none;
+			border-radius: 3px;
+			color: white;
+			font-size: 1.25em;
 		}
 	</style>
 	<script src="https://d3js.org/d3.v6.min.js" async></script>
@@ -30,18 +60,18 @@
 				},
 				dataLength: 3,
 				rect: {
-					fill: 'steelblue',
+					fill: '#8EC641',
 					stroke: '#333',
 				},
 				circle: {
-					fill: 'pink',
+					fill: '#1F76BB',
 					stroke: '#333',
 				},
 				line: {
 					stroke: '#333',
 				},
 				polygon: {
-					fill: 'lightgray',
+					fill: '#7B33FF',
 					stroke: '#333',
 					maxPoints: 5,
 				},
@@ -162,10 +192,99 @@
 				config.svg.height = document.body.clientHeight;
 				draw();
 			});
+
+			// Controls
+			document.getElementById('data-length').addEventListener('change', function() {
+				config.dataLength = parseInt(this.value);
+			});
+
+			document.getElementById('rect-fill').addEventListener('change', function() {
+				config.rect.fill = this.value;
+			});
+			document.getElementById('rect-stroke').addEventListener('change', function() {
+				config.rect.stroke = this.value;
+			});
+
+			document.getElementById('circle-fill').addEventListener('change', function() {
+				config.circle.fill = this.value;
+			});
+			document.getElementById('circle-stroke').addEventListener('change', function() {
+				config.circle.stroke = this.value;
+			});
+
+			document.getElementById('line-stroke').addEventListener('change', function() {
+				config.line.stroke = this.value;
+			});
+
+			document.getElementById('polygon-fill').addEventListener('change', function() {
+				config.polygon.fill = this.value;
+			});
+			document.getElementById('polygon-stroke').addEventListener('change', function() {
+				config.polygon.stroke = this.value;
+			});
+			document.getElementById('polygon-complexity').addEventListener('change', function() {
+				config.polygon.maxPoints = parseInt(this.value);
+			});
+
+			document.getElementById('button-redraw').addEventListener('click', function() {
+				draw();
+			});
+
+			document.getElementById('button-regenerate').addEventListener('click', function() {
+				randomizedData = [...Array(config.dataLength)].map(() => ({
+					x: randomIshValue(0.1, 0.9),
+					y: randomIshValue(0.1, 0.9),
+				}));
+				draw();
+			});
 		});
 	</script>
 </head>
 <body>
 	<svg id="container"></svg>
+	<!-- 				rect: {
+					fill: 'steelblue',
+					stroke: '#333',
+				},
+				circle: {
+					fill: 'pink',
+					stroke: '#333',
+				},
+				line: {
+					stroke: '#333',
+				},
+				polygon: {
+					fill: 'lightgray',
+					stroke: '#333',
+					maxPoints: 5,
+				}, -->
+	<div class="controls">
+		<h2>Controls</h2>
+		<h3>Data Points</h3>
+		<label for="data-length"># Data Points</label>
+		<input name="data-length" id="data-length" type="range" min="1" max="10" step="1" value="3">
+		<h3>Rectangles</h3>
+		<label for="rect-fill">Fill</label>
+		<input name="rect-fill" id="rect-fill" type="color" value="#8EC641">
+		<label for="rect-stroke">Stroke</label>
+		<input name="rect-stroke" id="rect-stroke" type="color" value="#333333">
+		<h3>Circles</h3>
+		<label for="circle-fill">Fill</label>
+		<input name="circle-fill" id="circle-fill" type="color" value="#1F76BB">
+		<label for="circle-stroke">Stroke</label>
+		<input name="circle-stroke" id="circle-stroke" type="color" value="#333333">
+		<h3>Lines</h3>
+		<label for="line-stroke">Stroke</label>
+		<input name="line-stroke" id="line-stroke" type="color" value="#333333">
+		<h3>Polygons</h3>
+		<label for="polygon-fill">Fill</label>
+		<input name="polygon-fill" id="polygon-fill" type="color" value="#7B33FF">
+		<label for="polygon-stroke">Stroke</label>
+		<input name="polygon-stroke" id="polygon-stroke" type="color" value="#333333">
+		<label for="polygon-complexity">Max Complexity</label>
+		<input name="polygon-complexity" id="polygon-complexity" type="range" min="3" max="10" step="1" value="5">
+		<button id="button-redraw">Redraw</button>
+		<button id="button-regenerate">Regenerate Data</button>
+	</div>
 </body>
 </html>
