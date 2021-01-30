@@ -4,7 +4,7 @@
 [My gh-page](http://Junying-Li.github.io/01-ghd3/index.html)
 
 ## Description
-This is Junying Li's solution for assignment 1. It contains 6 kinds of graphics primitives (circles, rectangles, lines, polygons, ellipses, polylines) in different colors and some of them are stroking. Each of these primitives is drawn on the left top. By using these graphics primitives, I designed a Christmas tree. Users can light up the bulbs on this tree by mouseover them. 
+This is Junying Li's solution for assignment 1. It contains 6 kinds of graphics primitives (circles, rectangles, lines, polygons, ellipses, polylines) in different colors and some of them are stroking. By using these graphics primitives, I designed a Christmas tree. Users can light up the bulbs on this tree by mouseover them. 
 
 ## Section for Technical and Design Achievements
 ### Technical achievements
