@@ -1,10 +1,171 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Assignment 1 | Ryan LaMarche</title>
+	<style>
+		html, body {
+			margin: 0;
+		}
+		body {
+			height: 100vh;
+			width: 100vw;
+		}
+		svg rect, svg circle, svg polygon {
+			transition: opacity 300ms ease-out;
+		}
+	</style>
+	<script src="https://d3js.org/d3.v6.min.js" async></script>
+	<script>
+		// returns a random value from 0..1 clamped between [min, max]
+		const randomIshValue = (min, max) => Math.max(min, Math.min(max, Math.random()));
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+		window.addEventListener('load', function() {
+			// config options for the d3 sketch
+			const config = {
+				svg: {
+					width: document.body.clientWidth,
+					height: document.body.clientHeight,
+				},
+				dataLength: 3,
+				rect: {
+					fill: 'steelblue',
+					stroke: '#333',
+				},
+				circle: {
+					fill: 'pink',
+					stroke: '#333',
+				},
+				line: {
+					stroke: '#333',
+				},
+				polygon: {
+					fill: 'lightgray',
+					stroke: '#333',
+					maxPoints: 5,
+				},
+			};
+			// random values from [0.1, 0.9] to use as data
+			let randomizedData = [...Array(config.dataLength)].map(() => ({
+				x: randomIshValue(0.1, 0.9),
+				y: randomIshValue(0.1, 0.9),
+			}));
+			
+			// Select svg from DOM
+			const svg = d3.select('#container');
+			
+			let drawCount = 0;
+			function draw() {
+				svg.selectAll('*').remove();
+				console.group(`draw #${++drawCount}`);
+				console.log({ config });
+
+				svg.attr('width', config.svg.width).attr('height', config.svg.height);
+
+				// data scale functions
+				const scale = {
+					x: d3.scaleLinear().domain([0, 1]).range([0, config.svg.width / 2]),
+					y: d3.scaleLinear().domain([0, 1]).range([0, config.svg.height / 2]),
+					polyPoints: d3.scaleLinear().domain([0, 1]).range([3, config.polygon.maxPoints]),
+				};
+
+				// Add Rectangles
+				svg.selectAll('rect')
+					.data(randomizedData)
+					.enter()
+					.append('rect')
+					.attr('width', (d) => scale.x(d.x))
+					.attr('height', (d) => scale.y(d.y))
+					.attr('x', (d) => scale.x(d.x))
+					.attr('y', (d) => scale.y(d.y))
+					.attr('fill', config.rect.fill)
+					.attr('stroke', config.rect.stroke)
+					.attr('opacity', (d) => `${d.x * 100}%`)
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+					});
+				// Add Circles
+				svg.selectAll('circle')
+					.data(randomizedData)
+					.enter()
+					.append('circle')
+					.attr('r', (d) => scale.y(d.y) / 2)
+					.attr('cx', (d) => scale.x(d.x))
+					.attr('cy', (d) => scale.y(d.y))
+					.attr('fill', config.circle.fill)
+					.attr('stroke', config.circle.stroke)
+					.attr('opacity', (d) => `${d.x * 100}%`)
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+					});
+				// Add Lines
+				svg.selectAll('line')
+					.data(randomizedData)
+					.enter()
+					.append('line')
+					.attr('x1', (d) => scale.x(d.x))
+					.attr('y1', (d) => scale.y(d.y))
+					.attr('x2', function(d) {
+						d._x2 = d._x2 || randomIshValue(0.1, 0.9);
+						return scale.x(d._x2);
+					})
+					.attr('y2', function(d) {
+						d._y2 = d._y2 || randomIshValue(0.1, 0.9);
+						return scale.y(d._y2);
+					})
+					.attr('stroke', config.line.stroke)
+					.attr('opacity', (d) => `${d.x * 100}%`)
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+					});
+				// Add Polygons
+				svg.selectAll('polygon')
+					.data(randomizedData)
+					.enter()
+					.append('polygon')
+					.attr('points', function(d) {
+						// number of points in poly scales based on data
+						const numPoints = Math.ceil(scale.polyPoints(d.x));
+						// create random-ish [x,y] pairs for points (or use cached values for window resize)
+						const pointPairs = d._pointPairs || [...Array(numPoints)].map(() => [
+							randomIshValue(0.1, 0.9),
+							randomIshValue(0.1, 0.9),
+						]);
+						d._pointPairs = pointPairs;
+						const points = pointPairs.map(p => `${scale.x(p[0])}, ${scale.y(p[1])}`).join(' ');
+						return points;
+					})
+					.attr('stroke', config.polygon.stroke)
+					.attr('fill', config.polygon.fill)
+					.attr('opacity', (d) => `${d.x * 100}%`)
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', (d) => `${d.x * 100}%`);
+					});
+
+				console.table(randomizedData, ['x', 'y', '_x2', '_y2']);
+				console.groupEnd();
+			}
+			
+			draw();
+
+			window.addEventListener('resize', () => {
+				config.svg.width = document.body.clientWidth;
+				config.svg.height = document.body.clientHeight;
+				draw();
+			});
+		});
+	</script>
+</head>
+<body>
+	<svg id="container"></svg>
+</body>
+</html>

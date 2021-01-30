@@ -1,6 +1,16 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
+## Link to GitHub Pages
+
+https://rmlamarche.github.io/01-ghd3/
+
+## Notes
+
+I used Node.js to setup a test server for running locally, but all of the work for Assignment 1 is done in index.html. The rest of the files in this repo can be ignored.
+
+***
+
 This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
 
 The primary goal is to be able to generate graphics primitives (circles, rectangles, lines, polygons) at different locations on the screen with different colors. 
