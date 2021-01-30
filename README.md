@@ -9,9 +9,7 @@ This is Junying Li's solution for assignment 1. It contains 6 kinds of graphics 
 ## Section for Technical and Design Achievements
 ### Technical achievements
 1. It contains 6 kinds of graphics primitives in defferent colors.
-2. By using a blur filter and mouse event, users can stimulate lighting up the bulbs on the Christmas tree.
+2. By using a blur filter and mouse event, users can light up the bulbs on the Christmas tree.
 ### Design achievements
 1. Draw a Christmas tree by using basic graphics primitives.
-2. The bulbs on the tree can be light up when mouseover them.
-
-
+2. The bulbs on the tree can be lit up when mouseover them.
