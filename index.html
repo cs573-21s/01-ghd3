@@ -65,7 +65,7 @@
 	<script>
 		// returns a random value from 0..1 clamped between [min, max]
 		const randomIshValue = (min, max) => Math.max(min, Math.min(max, Math.random()));
-
+		
 		window.addEventListener('load', function() {
 			// config options for the d3 sketch
 			const config = {
@@ -91,11 +91,25 @@
 					maxPoints: 5,
 				},
 			};
-			// random values from [0.1, 0.9] to use as data
-			let randomizedData = [...Array(config.dataLength)].map(() => ({
+
+			// random x,y values from [0.1, 0.9] to use as data
+			let randomizedRectData, randomizedCircleData, randomizedLineData, randomizedPolygonData;
+
+			// helper function to create arrays of x,y pairs in obj
+			const randomXY = length => [...Array(length)].map(() => ({
 				x: randomIshValue(0.1, 0.9),
 				y: randomIshValue(0.1, 0.9),
 			}));
+
+			// regenerate random data
+			const regenerateRandomValues = () => {
+				randomizedRectData = randomXY(config.dataLength);
+				randomizedCircleData = randomXY(config.dataLength);
+				randomizedLineData = randomXY(config.dataLength);
+				randomizedPolygonData = randomXY(config.dataLength);
+			};
+			// initialize
+			regenerateRandomValues();
 			
 			// Select svg from DOM
 			const svg = d3.select('#container');
@@ -109,15 +123,16 @@
 				svg.attr('width', config.svg.width).attr('height', config.svg.height);
 
 				// data scale functions
+				const rangeScaleFactor = 0.65;
 				const scale = {
-					x: d3.scaleLinear().domain([0, 1]).range([0, config.svg.width / 2]),
-					y: d3.scaleLinear().domain([0, 1]).range([0, config.svg.height / 2]),
+					x: d3.scaleLinear().domain([0, 1]).range([0, rangeScaleFactor * config.svg.width]),
+					y: d3.scaleLinear().domain([0, 1]).range([0, rangeScaleFactor * config.svg.height]),
 					polyPoints: d3.scaleLinear().domain([0, 1]).range([3, config.polygon.maxPoints]),
 				};
 
 				// Add Rectangles
 				svg.selectAll('rect')
-					.data(randomizedData)
+					.data(randomizedRectData)
 					.enter()
 					.append('rect')
 					.attr('width', (d) => scale.x(d.x))
@@ -126,6 +141,7 @@
 					.attr('y', (d) => scale.y(d.y))
 					.attr('fill', config.rect.fill)
 					.attr('stroke', config.rect.stroke)
+					.attr('stroke-width', '3px')
 					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
 						d3.select(this).attr('opacity', '100%');
@@ -144,7 +160,7 @@
 					});
 				// Add Circles
 				svg.selectAll('circle')
-					.data(randomizedData)
+					.data(randomizedCircleData)
 					.enter()
 					.append('circle')
 					.attr('r', (d) => scale.y(d.y) / 2)
@@ -152,6 +168,7 @@
 					.attr('cy', (d) => scale.y(d.y))
 					.attr('fill', config.circle.fill)
 					.attr('stroke', config.circle.stroke)
+					.attr('stroke-width', '3px')
 					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
 						d3.select(this).attr('opacity', '100%');
@@ -171,7 +188,7 @@
 					});
 				// Add Lines
 				svg.selectAll('line')
-					.data(randomizedData)
+					.data(randomizedLineData)
 					.enter()
 					.append('line')
 					.attr('x1', (d) => scale.x(d.x))
@@ -199,7 +216,7 @@
 					});
 				// Add Polygons
 				svg.selectAll('polygon')
-					.data(randomizedData)
+					.data(randomizedPolygonData)
 					.enter()
 					.append('polygon')
 					.attr('points', function(d) {
@@ -215,6 +232,7 @@
 						return points;
 					})
 					.attr('stroke', config.polygon.stroke)
+					.attr('stroke-width', '3px')
 					.attr('fill', config.polygon.fill)
 					.attr('opacity', '50%')
 					.on('mouseover', function(e, d) {
@@ -231,7 +249,15 @@
 						document.getElementById('data').innerHTML = JSON.stringify(polygonData, null, 2);
 					});
 
-				console.table(randomizedData, ['x', 'y', '_x2', '_y2']);
+				const titleStyle = 'font-size: 1.25rem; color: navy;'
+				console.log('\n%crandomizedRectData:', titleStyle);
+				console.table(randomizedRectData, ['x', 'y']);
+				console.log('\n%crandomizedCircleData:', titleStyle);
+				console.table(randomizedCircleData, ['x', 'y']);
+				console.log('\n%crandomizedLineData:', titleStyle);
+				console.table(randomizedLineData, ['x', 'y', '_x2', '_y2']);
+				console.log('\n%crandomizedPolygonData:', titleStyle);
+				console.table(randomizedPolygonData, ['x', 'y']);
 				console.groupEnd();
 			}
 			
@@ -281,10 +307,7 @@
 			});
 
 			document.getElementById('button-regenerate').addEventListener('click', function() {
-				randomizedData = [...Array(config.dataLength)].map(() => ({
-					x: randomIshValue(0.1, 0.9),
-					y: randomIshValue(0.1, 0.9),
-				}));
+				regenerateRandomValues();
 				draw();
 			});
 
