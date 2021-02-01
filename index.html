@@ -1,9 +1,21 @@
 <!-- A1 - Andrew Nolan-->
 
+<!--Sources:-->
+<!-- https://www.youtube.com/watch?v=-RQWC4I2I1s&list=WL&index=1 -->
+<!-- https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute -->
+
+<!--Atleast 4 primitives-->
+<!--Circles - eyes-->
+<!--Rectanges - eyebrows-->
+<!--Polygon - nose-->
+<!--Line - sliders-->
+<!--Ellipses - head-->
+
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
 <head>
   <title>CS 573 - A1</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -106,8 +118,62 @@
     .attr("fill", noseFillColor)
     .attr("stroke-width",noseStrokeWidth);
 
-  
+  // Face shape slider
+  let faceWidthScale = d3.scaleLinear()
+    .domain([50,150]) // The range of head widths
+    .range([0,100]) // slider range is 200 pixels
+    .clamp(true); //not sure what this does yet
 
+  let faceWidthSlider = svgContainer.append("g")
+    .attr("class","slider") // css thing I think
+    .attr("transform","translate(13,50)");
+
+  faceWidthSlider.append("line")
+    .attr("class","track")
+    .attr("x1",faceWidthScale.range()[0])
+    .attr("x2",faceWidthScale.range()[1])
+    .select(function(){
+      return this.parentNode;
+    });
+
+  faceWidthSlider.append("line")
+  .attr("x1", faceWidthScale.range()[0])
+  .attr("x2", faceWidthScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  });
+
+  faceWidthSlider.append("line")
+  .attr("x1", faceWidthScale.range()[0])
+  .attr("x2", faceWidthScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      faceWidthSlider.interrupt();
+    })
+    .on("start drag", function() {
+      changeHeadWidth(faceWidthScale.invert(event.x));
+  }));
+
+  let faceWidthHandle = faceWidthSlider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 10)
+    .attr("cx",50);
+  
+  function changeHeadWidth(h) {
+    faceWidthHandle.attr("cx", faceWidthScale(h));
+    headRadiusX = h;
+    head.attr("rx",headRadiusX);
+  }
+
+  // Smile shape slider
+
+  // Nose height slider
+
+  // Brow Angle
+
+  // After making the adjustable one make a iris species dataset example
 
   /** console.log(d3); // test if d3 is loaded **/
 
