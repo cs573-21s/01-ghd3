@@ -1,10 +1,73 @@
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
+<div id="value"> </div>
+<svg id="vis"></svg>
+
 <script>
   console.log(d3); // test if d3 is loaded
   // Add an SVG
   // Add Rectangles
   // Add Circles
   // Add Lines
-  // Add Polygons
-</script>
+  // Add Polygons  var 
+  data1 = [1, 1, 2, 5, 8, 13];
+  data2 = [21, 31, 42, 45, 58, 63];
+
+
+
+  var svg = d3.select('#vis')
+    .attr('width', 1000)
+    .attr('height', 1000);
+
+  var svg2 = d3.select('#vis')
+    .attr('width', 1000)
+    .attr('height', 1000);
+
+  var xscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, 1000]);
+
+  var yscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, 1000]);
+
+  svg.selectAll('circle')
+   .data(data1)
+   .enter().append('circle')
+   .attr('cy', 100)
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 20)
+   .attr('fill', 'steelblue')
+   .on('mouseover', function(e, d) {
+    d3.select(this).attr('fill', 'brown');
+    d3.select('#value').text(d); })
+    
+    .on('mouseout', function() {
+    d3.select(this).attr('fill', 'steelblue'); })
+
+
+  var svg = d3.select('#vis')
+    .attr('width', 1000)
+    .attr('height', 800);
+
+
+    svg2.selectAll('rectangle')
+   .data(data2)
+   .enter().append('rectangle')
+   .attr('cy', 100)
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 20)
+   .attr('fill', 'pink')
+   .on('mouseover', function(e, d) {
+    d3.select(this).attr('fill', 'green');
+    d3.select('#value').text(d); })
+    
+    .on('mouseout', function() {
+    d3.select(this).attr('fill', 'pink'); })
+
+
+  var svg2 = d3.select('#vis')
+    .attr('width', 1000)
+    .attr('height', 800);
+  
+</script> 
