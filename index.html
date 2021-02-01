@@ -17,62 +17,94 @@
     .append("svg")
     .attr("width", 640)
     .attr("height", 480)
-    .style("background-color", "blue");
+    .style("background-color", "lightblue");
 
-  /* Notes about ellipse:
-   * cx and cy are center x and y
-   * rx and ry are radius width and height
-   */
+  // The head, an ellipse
+  let headRadiusX = 100;
+  let headRadiusY = 100;
+  let headCenterX = 250;
+  let headCenterY = 250;
+  let headColor = "yellow";
+  let headStrokeColor = "black";
+
   const head = svgContainer.append("ellipse")
-    .attr("cx",250)
-    .attr("cy",250)
-    .attr("rx",100)
-    .attr("ry",100)
-    .attr("fill","yellow")
-    .attr("stroke","black");
+    .attr("cx",headCenterX)
+    .attr("cy",headCenterY)
+    .attr("rx",headRadiusX)
+    .attr("ry",headRadiusY)
+    .attr("fill",headColor)
+    .attr("stroke",headStrokeColor);
+
+  // The eyes, circles
+  let eyeGroupTranslationX = 250;
+  let eyeGroupTranslationY = 200;
+  let eyeRadius = 10;
+  let eyeSeparation = 50;
+  let eyeFillColor = "black";
 
   const eyeGroup = svgContainer.append('g')
-    .attr('transform', 'translate(250,200)');
+    .attr('transform', 'translate('+eyeGroupTranslationX+','+eyeGroupTranslationY+')');
 
   const leftEye = eyeGroup.append('circle')
-    .attr("r", 10)
-    .attr("cx", -50)
-    .attr("fill","black");
+    .attr("r", eyeRadius)
+    .attr("cx", -eyeSeparation)
+    .attr("fill",eyeFillColor);
 
   const rightEye = eyeGroup.append('circle')
-    .attr("r", 10)
-    .attr("cx", 50)
-    .attr("fill","black");
+    .attr("r", eyeRadius)
+    .attr("cx", eyeSeparation)
+    .attr("fill",eyeFillColor);
+
+  // The eyebrows, rectangles
+  let browWidth = 30;
+  let browHeight= 10;
+  let browX = 30;
+  let browY = -25;
 
   const leftEyebrow = eyeGroup.append('rect')
-    .attr('width',30)
-    .attr('height',10)
-    .attr('x',-60)
-    .attr('y', -25);
+    .attr('width',browWidth)
+    .attr('height',browHeight)
+    .attr('x',-browX-browWidth)
+    .attr('y', browY);
 
   const rightEyebrow = eyeGroup.append('rect')
-    .attr('width',30)
-    .attr('height',10)
-    .attr('x', 30)
-    .attr('y', -25);
+    .attr('width',browWidth)
+    .attr('height',browHeight)
+    .attr('x', browX)
+    .attr('y', browY);
 
-  // The smile
-  // SVG Group Component to Translate the Path component
+  // The smile, a path
+  let smileTranslateX = 250;
+  let smileTranslateY = 250;
+  let smileInnerRadius = 0;
+  let smileOuterRadius = 60;
+  let smileStartAngle = Math.PI/2;
+  let smileEndAngle = Math.PI * 3 / 2;
+
   const smileGroup = svgContainer.append('g')
-    .attr('transform', 'translate(250, 250)');
+    .attr('transform', 'translate('+smileTranslateX+', '+smileTranslateY+')');
 
   const mouth = smileGroup.append("path")
     .attr("d", d3.arc()({
-      innerRadius: 0,
-      outerRadius: 60,
-      startAngle: Math.PI/2,
-      endAngle: Math.PI * 3 / 2
+      innerRadius: smileInnerRadius,
+      outerRadius: smileOuterRadius,
+      startAngle: smileStartAngle,
+      endAngle: smileEndAngle
     }));
 
-  // The nose
+  // The nose, a polygon
+  let nosePoint1 = "250,200";
+  let nosePoint2 = "225,225";
+  let nosePoint3 = "275,225";
+  let noseStrokeColor = "black";
+  let noseFillColor = "none";
+  let noseStrokeWidth = 10;
+
   const nose = svgContainer.append("polygon")
-    .attr("points", "250,200 225,225 275,225")
-    .attr("stroke", "black");
+    .attr("points", nosePoint1+" "+nosePoint2+" "+nosePoint3)
+    .attr("stroke", noseStrokeColor)
+    .attr("fill", noseFillColor)
+    .attr("stroke-width",noseStrokeWidth);
 
   
 
