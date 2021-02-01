@@ -1,6 +1,12 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
+Github Pages Link
+---
+https://acnolan.tech/01-ghd3/
+
+Assignment Description
+---
 This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
 
 The primary goal is to be able to generate graphics primitives (circles, rectangles, lines, polygons) at different locations on the screen with different colors. 
@@ -32,7 +38,7 @@ GitHub Details
 - Fork the GitHub Repository for Assignment 1. You now have a copy associated with your username.
 - Make changes to index.html to fulfill the project requirements. 
 - Make sure your "main" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit the README.md with a link to your gh-pages site "http://YourUsernameGoesHere.github.io/01-ghd3/index.html".
+- Edit the README.md with a link to your gh-pages site "https://acnolan.tech/01-ghd3/".
 
 Submission Details
 ---

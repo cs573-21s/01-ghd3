@@ -1,7 +1,85 @@
+<!-- A1 - Andrew Nolan-->
+
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
+<head>
+  <title>CS 573 - A1</title>
+</head>
+
+<body>
+  <h1>Chernoff Faces</h1>
+  <div id="svgZone"></div>
+</body>
+
 <script>
-  console.log(d3); // test if d3 is loaded
+  // Try to make chernoff faces
+  const svgContainer = d3.select("#svgZone")
+    .append("svg")
+    .attr("width", 640)
+    .attr("height", 480)
+    .style("background-color", "blue");
+
+  /* Notes about ellipse:
+   * cx and cy are center x and y
+   * rx and ry are radius width and height
+   */
+  const head = svgContainer.append("ellipse")
+    .attr("cx",250)
+    .attr("cy",250)
+    .attr("rx",100)
+    .attr("ry",100)
+    .attr("fill","yellow")
+    .attr("stroke","black");
+
+  const eyeGroup = svgContainer.append('g')
+    .attr('transform', 'translate(250,200)');
+
+  const leftEye = eyeGroup.append('circle')
+    .attr("r", 10)
+    .attr("cx", -50)
+    .attr("fill","black");
+
+  const rightEye = eyeGroup.append('circle')
+    .attr("r", 10)
+    .attr("cx", 50)
+    .attr("fill","black");
+
+  const leftEyebrow = eyeGroup.append('rect')
+    .attr('width',30)
+    .attr('height',10)
+    .attr('x',-60)
+    .attr('y', -25);
+
+  const rightEyebrow = eyeGroup.append('rect')
+    .attr('width',30)
+    .attr('height',10)
+    .attr('x', 30)
+    .attr('y', -25);
+
+  // The smile
+  // SVG Group Component to Translate the Path component
+  const smileGroup = svgContainer.append('g')
+    .attr('transform', 'translate(250, 250)');
+
+  const mouth = smileGroup.append("path")
+    .attr("d", d3.arc()({
+      innerRadius: 0,
+      outerRadius: 60,
+      startAngle: Math.PI/2,
+      endAngle: Math.PI * 3 / 2
+    }));
+
+  // The nose
+  const nose = svgContainer.append("polygon")
+    .attr("points", "250,200 225,225 275,225")
+    .attr("stroke", "black");
+
+  
+
+
+  /** console.log(d3); // test if d3 is loaded **/
+
+
   // Add an SVG
   // Add Rectangles
   // Add Circles
