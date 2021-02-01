@@ -3,6 +3,7 @@
 <!--Sources:-->
 <!-- https://www.youtube.com/watch?v=-RQWC4I2I1s&list=WL&index=1 -->
 <!-- https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute -->
+<!-- https://en.wikipedia.org/wiki/Chernoff_face -->
 
 <!--Atleast 4 primitives-->
 <!--Circles - eyes-->
@@ -88,7 +89,7 @@
   // The smile, a path
   let smileTranslateX = 250;
   let smileTranslateY = 250;
-  let smileInnerRadius = 0;
+  let smileInnerRadius = 35;
   let smileOuterRadius = 60;
   let smileStartAngle = Math.PI/2;
   let smileEndAngle = Math.PI * 3 / 2;
@@ -105,12 +106,12 @@
     }));
 
   // The nose, a polygon
-  let nosePoint1 = "250,200";
+  let nosePoint1 = "250,205";
   let nosePoint2 = "225,225";
   let nosePoint3 = "275,225";
   let noseStrokeColor = "black";
   let noseFillColor = "none";
-  let noseStrokeWidth = 10;
+  let noseStrokeWidth = 5;
 
   const nose = svgContainer.append("polygon")
     .attr("points", nosePoint1+" "+nosePoint2+" "+nosePoint3)
@@ -168,10 +169,159 @@
   }
 
   // Smile shape slider
+  let smileShapeScale = d3.scaleLinear()
+    .domain([0,50]) // The range of smile inner radii
+    .range([0,100]) // slider range is 200 pixels
+    .clamp(true); //not sure what this does yet
+
+  let smileShapeSlider = svgContainer.append("g")
+    .attr("class","slider") // css thing I think
+    .attr("transform","translate(13,100)");
+
+  smileShapeSlider.append("line")
+    .attr("class","track")
+    .attr("x1",smileShapeScale.range()[0])
+    .attr("x2",smileShapeScale.range()[1])
+    .select(function(){
+      return this.parentNode;
+    });
+
+  smileShapeSlider.append("line")
+  .attr("x1", smileShapeScale.range()[0])
+  .attr("x2", smileShapeScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  });
+
+  smileShapeSlider.append("line")
+  .attr("x1", smileShapeScale.range()[0])
+  .attr("x2", smileShapeScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      smileShapeSlider.interrupt();
+    })
+    .on("start drag", function() {
+      changeSmileShape(smileShapeScale.invert(event.x));
+  }));
+
+    let smileShapeHandle = smileShapeSlider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 10)
+    .attr("cx",70);
+  
+  function changeSmileShape(h) {
+    smileShapeHandle.attr("cx", smileShapeScale(h));
+    //smileStartAngle = h;
+    //smileEndAngle = h+Math.PI*3/2;
+    smileInnerRadius = h;
+    mouth.attr("d", d3.arc()({
+      innerRadius: smileInnerRadius,
+      outerRadius: smileOuterRadius,
+      startAngle: smileStartAngle,
+      endAngle: smileEndAngle
+    }));
+  }
 
   // Nose height slider
+  let noseHeightScale = d3.scaleLinear()
+    .domain([175,275]) // The range of nose heights
+    .range([0,100]) // slider range is 200 pixels
+    .clamp(true); //not sure what this does yet
+
+  let noseHeightSlider = svgContainer.append("g")
+    .attr("class","slider") // css thing I think
+    .attr("transform","translate(13,150)");
+
+  noseHeightSlider.append("line")
+    .attr("class","track")
+    .attr("x1",noseHeightScale.range()[0])
+    .attr("x2",noseHeightScale.range()[1])
+    .select(function(){
+      return this.parentNode;
+    });
+
+  noseHeightSlider.append("line")
+  .attr("x1", noseHeightScale.range()[0])
+  .attr("x2", noseHeightScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  });
+
+  noseHeightSlider.append("line")
+  .attr("x1", noseHeightScale.range()[0])
+  .attr("x2", noseHeightScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      noseHeightSlider.interrupt();
+    })
+    .on("start drag", function() {
+      changeNoseHeight(noseHeightScale.invert(event.x));
+  }));
+
+    let noseHeightHandle = noseHeightSlider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 10)
+    .attr("cx",30);
+  
+  function changeNoseHeight(h) {
+    noseHeightHandle.attr("cx", noseHeightScale(h));
+    nosePoint1 = "250,"+h;
+    nose.attr("points", nosePoint1+" "+nosePoint2+" "+nosePoint3);
+  }
 
   // Brow Angle
+  let browAngleScale = d3.scaleLinear()
+    .domain([-38.1,38.1]) // The range of brow angles
+    .range([0,100]) // slider range is 100 pixels
+    .clamp(true); //not sure what this does yet
+
+  let browAngleSlider = svgContainer.append("g")
+    .attr("class","slider") // css thing I think
+    .attr("transform","translate(13,200)");
+
+  browAngleSlider.append("line")
+    .attr("class","track")
+    .attr("x1",browAngleScale.range()[0])
+    .attr("x2",browAngleScale.range()[1])
+    .select(function(){
+      return this.parentNode;
+    });
+
+  browAngleSlider.append("line")
+  .attr("x1", browAngleScale.range()[0])
+  .attr("x2", browAngleScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  });
+
+  browAngleSlider.append("line")
+  .attr("x1", browAngleScale.range()[0])
+  .attr("x2", browAngleScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      browAngleSlider.interrupt();
+    })
+    .on("start drag", function() {
+      changeBrowAngle(browAngleScale.invert(event.x));
+  }));
+
+  let browAngleHandle = browAngleSlider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 10)
+    .attr("cx",50);
+  
+  function changeBrowAngle(h) {
+    browAngleHandle.attr("cx", browAngleScale(h));
+    leftEyebrow.attr("transform","rotate(" + h +","+(-browX-browWidth)+","+browY+")");
+    console.log(h);
+    rightEyebrow.attr("transform","rotate(" + -h +","+ (browX+browWidth) +","+browY+")");
+  }
 
   // After making the adjustable one make a iris species dataset example
 
