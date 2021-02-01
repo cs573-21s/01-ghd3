@@ -1,10 +1,358 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Assignment 1 | Ryan LaMarche</title>
+	<style>
+		html, body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			margin: 0;
+		}
+		body {
+			height: 100vh;
+			width: 100vw;
+		}
+		svg rect, svg circle, svg polygon {
+			transition: opacity 300ms ease-out;
+		}
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+		h2, h3 {
+			margin: 0.25em 0;
+		}
+		h3 {
+			text-decoration: underline;
+		}
+		label {
+			font-weight: 700;
+		}
+		.info {
+			position: fixed;
+			display: flex;
+			flex-flow: column nowrap;
+			top: 1em;
+			left: 50%;
+			transform: translateX(-50%);
+			padding: 1em;
+			background: #d5d5d5;
+			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+			border-radius: 0.25em;
+		}
+		.controls {
+			position: fixed;
+			display: flex;
+			flex-flow: column nowrap;
+			top: 1em;
+			right: 1em;
+			padding: 1em;
+			background: #d5d5d5;
+			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+			border-radius: 0.25em;
+		}
+		button {
+			cursor: pointer;
+			background: green;
+			margin-top: 0.5em;
+			padding: 0.5em 0.25em;
+			outline: none;
+			border: none;
+			border-radius: 3px;
+			color: white;
+			font-size: 1.25em;
+		}
+	</style>
+	<script src="https://d3js.org/d3.v6.min.js" async></script>
+	<script>
+		// returns a random value from 0..1 clamped between [min, max]
+		const randomIshValue = (min, max) => Math.max(min, Math.min(max, Math.random()));
+		
+		window.addEventListener('load', function() {
+			// config options for the d3 sketch
+			const config = {
+				svg: {
+					width: document.body.clientWidth,
+					height: document.body.clientHeight,
+				},
+				dataLength: 3,
+				rect: {
+					fill: '#8EC641',
+					stroke: '#333',
+				},
+				circle: {
+					fill: '#1F76BB',
+					stroke: '#333',
+				},
+				line: {
+					stroke: '#333',
+				},
+				polygon: {
+					fill: '#7B33FF',
+					stroke: '#333',
+					maxPoints: 5,
+				},
+			};
+
+			// random x,y values from [0.1, 0.9] to use as data
+			let randomizedRectData, randomizedCircleData, randomizedLineData, randomizedPolygonData;
+
+			// helper function to create arrays of x,y pairs in obj
+			const randomXY = length => [...Array(length)].map(() => ({
+				x: randomIshValue(0.1, 0.9),
+				y: randomIshValue(0.1, 0.9),
+			}));
+
+			// regenerate random data
+			const regenerateRandomValues = () => {
+				randomizedRectData = randomXY(config.dataLength);
+				randomizedCircleData = randomXY(config.dataLength);
+				randomizedLineData = randomXY(config.dataLength);
+				randomizedPolygonData = randomXY(config.dataLength);
+			};
+			// initialize
+			regenerateRandomValues();
+			
+			// Select svg from DOM
+			const svg = d3.select('#container');
+			
+			let drawCount = 0;
+			function draw() {
+				svg.selectAll('*').remove();
+				console.group(`draw #${++drawCount}`);
+				console.log({ config });
+
+				svg.attr('width', config.svg.width).attr('height', config.svg.height);
+
+				// data scale functions
+				const rangeScaleFactor = 0.65;
+				const scale = {
+					x: d3.scaleLinear().domain([0, 1]).range([0, rangeScaleFactor * config.svg.width]),
+					y: d3.scaleLinear().domain([0, 1]).range([0, rangeScaleFactor * config.svg.height]),
+					polyPoints: d3.scaleLinear().domain([0, 1]).range([3, config.polygon.maxPoints]),
+				};
+
+				// Add Rectangles
+				svg.selectAll('rect')
+					.data(randomizedRectData)
+					.enter()
+					.append('rect')
+					.attr('width', (d) => scale.x(d.x))
+					.attr('height', (d) => scale.y(d.y))
+					.attr('x', (d) => scale.x(d.x))
+					.attr('y', (d) => scale.y(d.y))
+					.attr('fill', config.rect.fill)
+					.attr('stroke', config.rect.stroke)
+					.attr('stroke-width', '3px')
+					.attr('opacity', '50%')
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Rectangle';
+						const rectData = {
+							x: d.x,
+							y: d.y,
+							sx: scale.x(d.x),
+							sy: scale.y(d.y),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(rectData, null, 2);
+					});
+				// Add Circles
+				svg.selectAll('circle')
+					.data(randomizedCircleData)
+					.enter()
+					.append('circle')
+					.attr('r', (d) => scale.y(d.y) / 2)
+					.attr('cx', (d) => scale.x(d.x))
+					.attr('cy', (d) => scale.y(d.y))
+					.attr('fill', config.circle.fill)
+					.attr('stroke', config.circle.stroke)
+					.attr('stroke-width', '3px')
+					.attr('opacity', '50%')
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Circle';
+						const circleData = {
+							x: d.x,
+							y: d.y,
+							r: scale.y(d.y) / 2,
+							cx: scale.x(d.x),
+							cy: scale.y(d.y),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(circleData, null, 2);
+					});
+				// Add Lines
+				svg.selectAll('line')
+					.data(randomizedLineData)
+					.enter()
+					.append('line')
+					.attr('x1', (d) => scale.x(d.x))
+					.attr('y1', (d) => scale.y(d.y))
+					.attr('x2', function(d) {
+						d._x2 = d._x2 || randomIshValue(0.1, 0.9);
+						return scale.x(d._x2);
+					})
+					.attr('y2', function(d) {
+						d._y2 = d._y2 || randomIshValue(0.1, 0.9);
+						return scale.y(d._y2);
+					})
+					.attr('stroke', config.line.stroke)
+					.attr('stroke-width', '5px')
+					.attr('stroke-linecap', 'round').on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Line';
+						const lineData = {
+							x1: scale.x(d.x),
+							y1: scale.y(d.y),
+							x2: scale.x(d._x2),
+							y2: scale.y(d._y2),
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(lineData, null, 2);
+					});
+				// Add Polygons
+				svg.selectAll('polygon')
+					.data(randomizedPolygonData)
+					.enter()
+					.append('polygon')
+					.attr('points', function(d) {
+						// number of points in poly scales based on data
+						const numPoints = Math.ceil(scale.polyPoints(d.x));
+						// create random-ish [x,y] pairs for points (or use cached values for window resize)
+						const pointPairs = d._pointPairs || [...Array(numPoints)].map(() => [
+							randomIshValue(0.1, 0.9),
+							randomIshValue(0.1, 0.9),
+						]);
+						d._pointPairs = pointPairs;
+						const points = pointPairs.map(p => `${scale.x(p[0])}, ${scale.y(p[1])}`).join(' ');
+						return points;
+					})
+					.attr('stroke', config.polygon.stroke)
+					.attr('stroke-width', '3px')
+					.attr('fill', config.polygon.fill)
+					.attr('opacity', '50%')
+					.on('mouseover', function(e, d) {
+						d3.select(this).attr('opacity', '100%');
+					}).on('mouseout', function(e, d) {
+						d3.select(this).attr('opacity', '50%');
+					}).on('click', function(e, d) {
+						document.getElementsByClassName('info')[0].style.display = 'flex';
+						document.getElementById('selected').innerText = 'Polygon';
+						const polygonData = {
+							numPoints: Math.ceil(scale.polyPoints(d.x)),
+							pointPairs: d._pointPairs,
+						};
+						document.getElementById('data').innerHTML = JSON.stringify(polygonData, null, 2);
+					});
+
+				const titleStyle = 'font-size: 1.25rem; color: navy;'
+				console.log('\n%crandomizedRectData:', titleStyle);
+				console.table(randomizedRectData, ['x', 'y']);
+				console.log('\n%crandomizedCircleData:', titleStyle);
+				console.table(randomizedCircleData, ['x', 'y']);
+				console.log('\n%crandomizedLineData:', titleStyle);
+				console.table(randomizedLineData, ['x', 'y', '_x2', '_y2']);
+				console.log('\n%crandomizedPolygonData:', titleStyle);
+				console.table(randomizedPolygonData, ['x', 'y']);
+				console.groupEnd();
+			}
+			
+			draw();
+
+			window.addEventListener('resize', () => {
+				config.svg.width = document.body.clientWidth;
+				config.svg.height = document.body.clientHeight;
+				draw();
+			});
+
+			// Controls
+			document.getElementById('data-length').addEventListener('change', function() {
+				config.dataLength = parseInt(this.value);
+			});
+
+			document.getElementById('rect-fill').addEventListener('change', function() {
+				config.rect.fill = this.value;
+			});
+			document.getElementById('rect-stroke').addEventListener('change', function() {
+				config.rect.stroke = this.value;
+			});
+
+			document.getElementById('circle-fill').addEventListener('change', function() {
+				config.circle.fill = this.value;
+			});
+			document.getElementById('circle-stroke').addEventListener('change', function() {
+				config.circle.stroke = this.value;
+			});
+
+			document.getElementById('line-stroke').addEventListener('change', function() {
+				config.line.stroke = this.value;
+			});
+
+			document.getElementById('polygon-fill').addEventListener('change', function() {
+				config.polygon.fill = this.value;
+			});
+			document.getElementById('polygon-stroke').addEventListener('change', function() {
+				config.polygon.stroke = this.value;
+			});
+			document.getElementById('polygon-complexity').addEventListener('change', function() {
+				config.polygon.maxPoints = parseInt(this.value);
+			});
+
+			document.getElementById('button-redraw').addEventListener('click', function() {
+				draw();
+			});
+
+			document.getElementById('button-regenerate').addEventListener('click', function() {
+				regenerateRandomValues();
+				draw();
+			});
+
+			// info
+			document.getElementById('button-close-info').addEventListener('click', function() {
+				document.getElementsByClassName('info')[0].style.display = 'none';
+			});
+		});
+	</script>
+</head>
+<body>
+	<svg id="container"></svg>
+	<div class="info" style="display: none;">
+		<h2>Selected Node</h2>
+		<p id="selected"></p>
+		<pre id="data"></pre>
+		<button id="button-close-info">Close</button>
+	</div>
+	<div class="controls">
+		<h2>Controls</h2>
+		<h3>Data Points</h3>
+		<label for="data-length"># Data Points</label>
+		<input name="data-length" id="data-length" type="range" min="1" max="10" step="1" value="3">
+		<h3>Rectangles</h3>
+		<label for="rect-fill">Fill</label>
+		<input name="rect-fill" id="rect-fill" type="color" value="#8EC641">
+		<label for="rect-stroke">Stroke</label>
+		<input name="rect-stroke" id="rect-stroke" type="color" value="#333333">
+		<h3>Circles</h3>
+		<label for="circle-fill">Fill</label>
+		<input name="circle-fill" id="circle-fill" type="color" value="#1F76BB">
+		<label for="circle-stroke">Stroke</label>
+		<input name="circle-stroke" id="circle-stroke" type="color" value="#333333">
+		<h3>Lines</h3>
+		<label for="line-stroke">Stroke</label>
+		<input name="line-stroke" id="line-stroke" type="color" value="#333333">
+		<h3>Polygons</h3>
+		<label for="polygon-fill">Fill</label>
+		<input name="polygon-fill" id="polygon-fill" type="color" value="#7B33FF">
+		<label for="polygon-stroke">Stroke</label>
+		<input name="polygon-stroke" id="polygon-stroke" type="color" value="#333333">
+		<label for="polygon-complexity">Max Complexity</label>
+		<input name="polygon-complexity" id="polygon-complexity" type="range" min="3" max="10" step="1" value="5">
+		<button id="button-redraw">Redraw</button>
+		<button id="button-regenerate">Regenerate Data</button>
+	</div>
+</body>
+</html>
