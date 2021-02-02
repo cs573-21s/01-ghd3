@@ -33,3 +33,5 @@ Whether we wanted to do more creative challenges with the data or we wanted to e
 ## Design • Achievements  
 
 All the shapes are randomly generated at a scale in which makes the collective of shapes visually appealing and an art form. For those who are actual lovers of abstract art, you all may be actually shocked at the kinds of results I've gotten here, given the small amounts of code. Virtual instruments are challenging on the internet across the board. The use of randomly generated colors for fills in the paintings is pretty neat in creating different experiences for different tones.
+
+A great thing to also note is that the paintings generated are temporary reflective real world experiences. Feelings only last so long, so make it count! :D
