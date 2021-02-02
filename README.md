@@ -1,6 +1,6 @@
 Assignment 1 • The D3 Melodic Experience  
 ===
-![alt text](https://github.com/mike3osei/01-ghd3/blob/main/Screen_Shot_2021-02-01_at_10.03.25_PM.png)
+![alt text](https://github.com/mike3osei/01-ghd3/blob/main/map.png)
 
 
 ## Link
