@@ -12,7 +12,7 @@ This is Junying Li's solution for assignment 1. It contains 6 kinds of graphics 
 
 <img src="https://i.ibb.co/wrjYzgC/scrshot3.png" width="700">
 
-  *Screenshot 2 - Show effect*
+  *Screenshot 2 - Effects and some explanation*
 
 ## Section for Technical and Design Achievements
 ### Technical achievements
