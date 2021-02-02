@@ -23,7 +23,7 @@ https://mike3osei.github.io/01-ghd3/index.html
 
 ## Technical • Achievements  
 
-In the D3 Melodic Experience you'll see that there is a virtual instrument, a piano. This virtual instrument is created entirely with D3 objects. It is also functional on-click and produces the correct melodic frequency given a specific note selection. The virtual piano is entirely responsive which can be a problem for virtual pianos on the web in general. There are a couple libraries out there that have produced responsive virtual instruments and we have implemented our own version using the power of D3, flexbox, SVGs, and ToneJS.
+In the D3 Melodic Experience you'll immediately see that there is a virtual instrument, a piano. This virtual instrument is created entirely with D3 objects. It is also functional on-click and produces the correct melodic frequency given a specific note selection. The virtual piano is entirely responsive which can be a problem for virtual pianos on the web in general. There are a couple libraries out there that have produced responsive virtual instruments and we have implemented our own version using the power of D3, flexbox, SVGs, and ToneJS.
 
 When analyzing the application, you'll notice that The D3 Melodic Experience utilizes the recommended primitive objects. These are all randomly generated as well. Both the paintings that are generated and the virtual instrument are all data driven.
 
