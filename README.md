@@ -1,3 +1,16 @@
+Description - The Melodic Experience  
+===
+A description of what you have created. 1-2 screenshots are recommended for the README.
+A working link to the hosted files (usually the gh-pages 'live' url)
+
+Technical - Achievements  
+===
+Section for Technical and Design Achievements
+
+Design - Achievements  
+===
+Section for Technical and Design Achievements
+
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
