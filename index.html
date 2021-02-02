@@ -1,10 +1,200 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+    </head>
+    <body>
+        <p>
+            Jasmine Duerk Assignment 1
+        </p>
+    </body>
+</html>
+
 
 <script>
   console.log(d3); // test if d3 is loaded
   // Add an SVG
+  var svg = d3.select("body")
+  .append("svg")
+  .attr("width", 800)
+  .attr("height", 800)
   // Add Rectangles
+  svg.append("rect")
+  .attr('x', 0)
+  .attr('y', 0)
+  .attr('width', 600)
+  .attr('height', 600)
+  //.attr('stroke', 'black')
+  .attr('fill', '#69a3b2');
+
   // Add Circles
+  //shadow
+  svg.append("ellipse")
+  .attr("cx", 300)
+  .attr("cy", 435)
+  .attr("rx", 110)
+  .attr("ry", 30)
+  .style("fill", "#53828f");
+
+  // main body
+  svg.append("circle")
+  .attr("cx", 300)
+  .attr("cy", 300)
+  .attr("r", 110)
+  .style("fill", "green");
+
+  //eyes
+  svg.append("circle")
+  .attr("cx", 230)
+  .attr("cy", 220)
+  .attr("r", 42)
+  .style("fill", "green");
+
+  svg.append("circle")
+  .attr("cx", 370)
+  .attr("cy", 220)
+  .attr("r", 42)
+  .style("fill", "green");
+
+  svg.append("circle")
+  .attr("cx", 230)
+  .attr("cy", 210)
+  .attr("r", 18)
+  .style("fill", "black");
+
+  svg.append("circle")
+  .attr("cx", 370)
+  .attr("cy", 210)
+  .attr("r", 18)
+  .style("fill", "black");
+
+  // blush
+  svg.append("circle")
+  .attr("cx", 225)
+  .attr("cy", 250)
+  .attr("r", 18)
+  .style("fill", "#f76f6a");
+
+  svg.append("circle")
+  .attr("cx", 375)
+  .attr("cy", 250)
+  .attr("r", 18)
+  .style("fill", "#f76f6a");
+
+  // stomach
+  svg.append("circle")
+  .attr("cx", 300)
+  .attr("cy", 320)
+  .attr("r", 80)
+  .style("fill", "#99db81");
+
+  // Arms
+  svg.append("rect")
+  .attr('id', "leftarm")
+  .attr('x', 140)
+  .attr('y', 290)
+  .attr('width', 70)
+  .attr('height', 30)
+  .attr('fill', 'green')
+  .attr("transform", " rotate(0)");
+
+  svg.append("rect")
+  .attr('id', "rightarm")
+  .attr('x', 400)
+  .attr('y', 290)
+  .attr('width', 70)
+  .attr('height', 30)
+  .attr('fill', 'green')
+  .attr("transform", " rotate(50, 400, 300)");
+
+  // Legs
+  var xval = 220;
+  svg.append("rect")
+  .attr('x', xval)
+  .attr('y', 380)
+  .attr('width', 30)
+  .attr('height', 40)
+  .attr('fill', 'green')
+  .attr("transform", "rotate(30, "+xval+", 400)");
+
+  var xval2 = 350;
+  svg.append("rect")
+  .attr('x', xval2)
+  .attr('y', 395)
+  .attr('width', 30)
+  .attr('height', 40)
+  .attr('fill', 'green')
+  .attr("transform", "rotate(-30, "+xval2+", 400)");
+
+
   // Add Lines
+  svg.append('line')
+  .attr('x1', 290)
+  .attr('y1', 215)
+  .attr('x2', 300)
+  .attr('y2', 225)
+  .attr('stroke', 'black')
+
+    svg.append('line')
+  .attr('x1', 310)
+  .attr('y1', 215)
+  .attr('x2', 300)
+  .attr('y2', 225)
+  .attr('stroke', 'black')
+
   // Add Polygons
+  svg.append("polygon")
+  .attr('id', "heart")
+  .attr("points", "418,150 450,180 482,150 495,120 480,100 460,105 450,120 440,105 420,100 405,120")
+  .style("fill", "#f76f6a")
+  .attr("transform", " rotate(0)");
+
+  // Animate heart
+  var i = 0;
+  var timeInterval = 20;
+  var rotateForward = true;
+
+  setInterval(function(){
+          if (rotateForward) i += 1;
+          else i -= 1;
+
+          if (i > 20) rotateForward = false;
+          if (i < -20) rotateForward = true;
+          
+          update(i % 360) 
+    }, timeInterval);
+
+
+  var n;
+  // update the element
+  function update(n) {
+  // rotate
+  svg.select("#heart")
+  .attr("transform", "rotate("+n+", 450, 150)");
+  }
+
+  // Animate arm
+  var i2 = 0;
+  var timeInterval2 = 15;
+  var rotateForward2 = true;
+
+  setInterval(function(){
+          if (rotateForward2) i2 += 1;
+          else i2 -= 1;
+
+          if (i2 > 30) rotateForward2 = false;
+          if (i2 < -00) rotateForward2 = true;
+          
+          update2(i2 % 360) 
+    }, timeInterval);
+
+
+  var n2;
+  // update the element
+  function update2(n2) {
+  // rotate
+  svg.select("#leftarm")
+  .attr("transform", "rotate("+n2+", 200, 300)");
+  }
+
 </script>
