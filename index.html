@@ -1,10 +1,169 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!doctype html>
+<html lang="en">
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+
+<head>
+  <meta charset="UTF-8">
+	<meta name="author" content="Jyalu Wu">
+  <title>01-ghd3</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+	<div>
+		clover will you marry me  i love u !!
+	</div>
+	<br>
+
+
+	<script>
+	  console.log(d3); // test if d3 is loaded
+
+	  // Add an SVG
+	  var svg = d3.select('body').append('svg')
+	  	.attr('width', 700)
+	  	.attr('height', 700);
+
+	  var colors = ['#caff70', '#bcee68', '#a2cd5a', '#6e8b3d']
+
+	  // background
+	  // svg.append('rect')
+	  // 	.attr('width', '100%')
+	  // 	.attr('height', '100%')
+	  // 	.attr('fill', 'gray')
+
+	  // Add Rectangles
+	  svg.append("rect")
+	    .attr("width", 100)
+	    .attr("height", 100)
+	    .attr("fill", "#caff70");
+
+	  svg.append("rect")
+	  	.attr('x', 150)
+	    .attr("width", 100)
+	    .attr("height", 100)
+	    .attr("fill", "#bcee68");
+
+	  svg.append("rect")
+	  	.attr('x', 300)
+	    .attr("width", 100)
+	    .attr("height", 100)
+	    .attr("fill", "#a2cd5a");
+
+	  svg.append("rect")
+	  	.attr('x', 450)
+	    .attr("width", 100)
+	    .attr("height", 100)
+	    .attr("fill", "#6e8b3d");
+
+
+	  // Add Circles
+	  svg.append('circle')
+	  	.attr('cx', 50)
+	  	.attr('cy', 200)
+	  	.attr('r', 50)
+	  	.attr('fill', '#caff70')
+
+	  svg.append('circle')
+	  	.attr('cx', 200)
+	  	.attr('cy', 200)
+	  	.attr('r', 50)
+	  	.attr('fill', '#bcee68')
+
+	  svg.append('circle')
+	  	.attr('cx', 350)
+	  	.attr('cy', 200)
+	  	.attr('r', 50)
+	  	.attr('fill', '#a2cd5a')
+
+	  svg.append('circle')
+	  	.attr('cx', 500)
+	  	.attr('cy', 200)
+	  	.attr('r', 50)
+	  	.attr('fill', '#6e8b3d')
+
+
+	  // Add Lines
+	  svg.append('line')
+	  	.attr('x1', 0)
+	  	.attr('y1', 300)
+	  	.attr('x2', 100)
+	  	.attr('y2', 300)
+	  	.style('stroke', colors[0])
+	  	.style('stroke-width', 10)
+
+	  svg.append('line')
+	  	.attr('x1', 150)
+	  	.attr('y1', 300)
+	  	.attr('x2', 250)
+	  	.attr('y2', 300)
+	  	.style('stroke', colors[1])
+	  	.style('stroke-width', 10)
+
+	  svg.append('line')
+	  	.attr('x1', 300)
+	  	.attr('y1', 300)
+	  	.attr('x2', 400)
+	  	.attr('y2', 300)
+	  	.style('stroke', colors[2])
+	  	.style('stroke-width', 10)
+
+	  svg.append('line')
+	  	.attr('x1', 450)
+	  	.attr('y1', 300)
+	  	.attr('x2', 550)
+	  	.attr('y2', 300)
+	  	.style('stroke', colors[3])
+	  	.style('stroke-width', 10)
+
+	  // Add Polygons
+ var w = 800;
+var h = 800;
+		var xScale = d3.scaleLinear()
+		             //accepts
+		             .domain([0, 100])
+		             //outputs
+		             .range([0, w]);
+
+		var yScale = d3.scaleLinear()
+		             //accepts
+		             .domain([0, 100])
+		             //outputs
+		             .range([0, h]);
+
+
+	  var radialLineGenerator = d3.radialArea()
+                         .innerRadius(function(d) {
+                          return xScale(d[1])})
+                         .outerRadius(function(d) {
+                          return xScale(d[2])});   
+		var radialpoints = [
+		    [0, 0, 15],
+		    [Math.PI * 0.2, 0, 6],
+		    [Math.PI * 0.4, 0, 15],
+		    [Math.PI * 0.6, 0, 6],
+		    [Math.PI * 0.8, 0, 15],
+		    [Math.PI * 1, 0, 6],       
+		    [Math.PI * 1.2, 0, 15],
+		    [Math.PI * 1.4, 0, 6],
+		    [Math.PI * 1.6, 0, 15],
+		    [Math.PI * 1.8, 0, 6],
+		    [Math.PI * 2, 0, 15]
+		];
+
+		var radialData = radialLineGenerator(radialpoints);
+		var radial = svg.append("path")
+		             .attr("class", "freeradial")
+		             .attr("d", radialData)
+		             .attr("class", "radial")
+		             .attr("transform", function(d) {
+		              return "translate("+xScale(60)+","+yScale(60)+")"
+		              });
+
+
+    // Add Hearts
+	</script>
+</body>
+
+
+</html>
