@@ -21,22 +21,34 @@
 
 <body>
   <h1>Chernoff Faces</h1>
-  <div id="svgZone"></div>
+  <div class="content">
+    <div id="svgZone"></div>
+  </div>
 </body>
 
 <script>
-  // Try to make chernoff faces
+  // The svg and it's border
   const svgContainer = d3.select("#svgZone")
     .append("svg")
     .attr("width", 640)
-    .attr("height", 480)
+    .attr("height", 300)
     .style("background-color", "lightblue");
+  
+  const svgContainerBorder = svgContainer.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("height", 300)
+    .attr("width", 640)
+    .attr("stroke","black")
+    .style("fill","none")
+    .style("stroke-width",2);
 
+  // Try to make chernoff faces
   // The head, an ellipse
   let headRadiusX = 100;
   let headRadiusY = 100;
-  let headCenterX = 250;
-  let headCenterY = 250;
+  let headCenterX = 475;
+  let headCenterY = 150;
   let headColor = "yellow";
   let headStrokeColor = "black";
 
@@ -49,8 +61,8 @@
     .attr("stroke",headStrokeColor);
 
   // The eyes, circles
-  let eyeGroupTranslationX = 250;
-  let eyeGroupTranslationY = 200;
+  let eyeGroupTranslationX = 475;
+  let eyeGroupTranslationY = 100;
   let eyeRadius = 10;
   let eyeSeparation = 50;
   let eyeFillColor = "black";
@@ -87,8 +99,8 @@
     .attr('y', browY);
 
   // The smile, a path
-  let smileTranslateX = 250;
-  let smileTranslateY = 250;
+  let smileTranslateX = 475;
+  let smileTranslateY = 150;
   let smileInnerRadius = 35;
   let smileOuterRadius = 60;
   let smileStartAngle = Math.PI/2;
@@ -106,9 +118,9 @@
     }));
 
   // The nose, a polygon
-  let nosePoint1 = "250,205";
-  let nosePoint2 = "225,225";
-  let nosePoint3 = "275,225";
+  let nosePoint1 = "475,105";
+  let nosePoint2 = "450,125";
+  let nosePoint3 = "500,125";
   let noseStrokeColor = "black";
   let noseFillColor = "none";
   let noseStrokeWidth = 5;
@@ -119,15 +131,18 @@
     .attr("fill", noseFillColor)
     .attr("stroke-width",noseStrokeWidth);
 
+  // Global slider variable
+  let offset = document.getElementById('svgZone').offsetLeft;
+
   // Face shape slider
   let faceWidthScale = d3.scaleLinear()
     .domain([50,150]) // The range of head widths
-    .range([0,100]) // slider range is 200 pixels
-    .clamp(true); //not sure what this does yet
+    .range([0,100]) // slider range is 100 pixels
+    .clamp(true); // prevents the slider from sliding too far
 
   let faceWidthSlider = svgContainer.append("g")
     .attr("class","slider") // css thing I think
-    .attr("transform","translate(13,50)");
+    .attr("transform","translate(15,50)");
 
   faceWidthSlider.append("line")
     .attr("class","track")
@@ -154,13 +169,18 @@
       faceWidthSlider.interrupt();
     })
     .on("start drag", function() {
-      changeHeadWidth(faceWidthScale.invert(event.x));
+      changeHeadWidth(faceWidthScale.invert(event.x-offset));
   }));
 
   let faceWidthHandle = faceWidthSlider.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 10)
     .attr("cx",50);
+
+  faceWidthSlider.append("text")
+    .attr("dx",115)
+    .attr("dy", ".35em")
+    .text("Face Width");
   
   function changeHeadWidth(h) {
     faceWidthHandle.attr("cx", faceWidthScale(h));
@@ -176,7 +196,7 @@
 
   let smileShapeSlider = svgContainer.append("g")
     .attr("class","slider") // css thing I think
-    .attr("transform","translate(13,100)");
+    .attr("transform","translate(15,100)");
 
   smileShapeSlider.append("line")
     .attr("class","track")
@@ -203,13 +223,18 @@
       smileShapeSlider.interrupt();
     })
     .on("start drag", function() {
-      changeSmileShape(smileShapeScale.invert(event.x));
+      changeSmileShape(smileShapeScale.invert(event.x-offset));
   }));
 
-    let smileShapeHandle = smileShapeSlider.insert("circle", ".track-overlay")
+  let smileShapeHandle = smileShapeSlider.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 10)
     .attr("cx",70);
+
+  smileShapeSlider.append("text")
+    .attr("dx",115)
+    .attr("dy", ".35em")
+    .text("Smile Shape");
   
   function changeSmileShape(h) {
     smileShapeHandle.attr("cx", smileShapeScale(h));
@@ -226,13 +251,13 @@
 
   // Nose height slider
   let noseHeightScale = d3.scaleLinear()
-    .domain([175,275]) // The range of nose heights
+    .domain([75,175]) // The range of nose heights
     .range([0,100]) // slider range is 200 pixels
     .clamp(true); //not sure what this does yet
 
   let noseHeightSlider = svgContainer.append("g")
     .attr("class","slider") // css thing I think
-    .attr("transform","translate(13,150)");
+    .attr("transform","translate(15,150)");
 
   noseHeightSlider.append("line")
     .attr("class","track")
@@ -259,17 +284,22 @@
       noseHeightSlider.interrupt();
     })
     .on("start drag", function() {
-      changeNoseHeight(noseHeightScale.invert(event.x));
+      changeNoseHeight(noseHeightScale.invert(event.x-offset));
   }));
 
-    let noseHeightHandle = noseHeightSlider.insert("circle", ".track-overlay")
+  let noseHeightHandle = noseHeightSlider.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 10)
     .attr("cx",30);
+
+  noseHeightSlider.append("text")
+    .attr("dx",115)
+    .attr("dy", ".35em")
+    .text("Nose Height");
   
   function changeNoseHeight(h) {
     noseHeightHandle.attr("cx", noseHeightScale(h));
-    nosePoint1 = "250,"+h;
+    nosePoint1 = "475,"+h;
     nose.attr("points", nosePoint1+" "+nosePoint2+" "+nosePoint3);
   }
 
@@ -281,7 +311,7 @@
 
   let browAngleSlider = svgContainer.append("g")
     .attr("class","slider") // css thing I think
-    .attr("transform","translate(13,200)");
+    .attr("transform","translate(15,200)");
 
   browAngleSlider.append("line")
     .attr("class","track")
@@ -308,7 +338,7 @@
       browAngleSlider.interrupt();
     })
     .on("start drag", function() {
-      changeBrowAngle(browAngleScale.invert(event.x));
+      changeBrowAngle(browAngleScale.invert(event.x-offset));
   }));
 
   let browAngleHandle = browAngleSlider.insert("circle", ".track-overlay")
@@ -316,21 +346,16 @@
     .attr("r", 10)
     .attr("cx",50);
   
+  browAngleSlider.append("text")
+    .attr("dx",115)
+    .attr("dy", ".35em")
+    .text("Eyebrow Angle");
+
   function changeBrowAngle(h) {
     browAngleHandle.attr("cx", browAngleScale(h));
     leftEyebrow.attr("transform","rotate(" + h +","+(-browX-browWidth)+","+browY+")");
-    console.log(h);
     rightEyebrow.attr("transform","rotate(" + -h +","+ (browX+browWidth) +","+browY+")");
   }
 
   // After making the adjustable one make a iris species dataset example
-
-  /** console.log(d3); // test if d3 is loaded **/
-
-
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
 </script>
