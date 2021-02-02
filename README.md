@@ -1,25 +1,30 @@
-Link - The Melodic Experience  
+Assignment 1 • The D3 Melodic Experience  
+===
+
+## Link
 ===
 A working link to the hosted files (usually the gh-pages 'live' url)
 
-Description - The Melodic Experience  
+## Description 
 ===
 A description of what you have created. 
 
-Screenshots - The Melodic Experience  
+## Screenshots 
 ===
 1-2 screenshots are recommended for the README.
 ![alt text](https://github.com/mike3osei/01-ghd3/blob/main/screen2.png)
 
-Technical - Achievements  
+## Technical • Achievements  
 ===
 Section for Technical and Design Achievements
 
-Design - Achievements  
+## Design • Achievements  
 ===
 Section for Technical and Design Achievements
 
-Assignment 1 - Hello World: GitHub and d3  
+
+
+Assignment 1 • Hello World: GitHub and d3  
 ===
 
 This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
