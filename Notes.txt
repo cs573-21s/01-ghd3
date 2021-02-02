@@ -12,4 +12,5 @@ Project ideas brain dump
   kitty to lion art
     move mouse over shape to change color of each shape
     move vertical line side to side to change color of each shape
+    color transition via smooth gradient thing
   piano type thing
