@@ -1,3 +1,8 @@
 How to set up a local server
   brew install http-server (shouldn't have to run this line tho)
   http-server &
+
+
+Help with D3
+  FAQ: https://github.com/arnicas/d3-faq
+  Tutorial by Mike Bostock: https://observablehq.com/collection/@d3/learn-d3
