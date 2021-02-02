@@ -7,7 +7,12 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.4.9/Tone.min.js"
+    ></script>
+
     <style>
       body {
         font-family: "Roboto", sans-serif;
@@ -64,7 +69,7 @@
         align-items: center;
         padding: 1em;
       }
-      .assignment-container--portrait {
+      .assignment-container--piano {
         background: radial-gradient(
           circle,
           rgba(10, 20, 20, 0.8) 0%,
@@ -75,13 +80,44 @@
         display: flex;
         flex-direction: column;
       }
-      .portrait-space {
+      .piano-space {
         flex-grow: 1;
-        margin: 1.4em 4%;
+        margin: 0.2em 4%;
         border: 1px solid rgba(255, 255, 255, 0.041);
         border-radius: 15px;
         overflow: hidden;
       }
+
+      .natural--key,
+      .accidental--key {
+        transition: all 0.2s ease;
+      }
+
+      .natural--key:hover {
+        fill: rgb(207, 207, 207);
+      }
+      .accidental--key:hover {
+        fill: rgb(61, 61, 61);
+      }
+
+      .natural--key:active,
+      .accidental--key:active {
+        fill: rgb(117, 154, 255);
+      }
+      .fade-in--out {
+          -webkit-animation: fadeInOut 7s linear forwards;
+          animation: fadeInOut 7s linear forwards;
+      }
+      @-webkit-keyframes fadeInOut {
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes fadeInOut {
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+
     </style>
   </head>
 
@@ -97,10 +133,10 @@
         <div class="container"></div>
       </div>
 
-      <div class="assignment-container--portrait">
+      <div class="assignment-container--piano">
         <h2>Hi, i'm Michael Osei</h2>
 
-        <div class="portrait-space"></div>
+        <div class="piano-space"></div>
       </div>
     </div>
 
@@ -124,7 +160,6 @@
         .attr("width", 30)
         .attr("height", 30)
         .attr("transform", "rotate(15)")
-
         .attr("fill", "#FFB2FE");
 
       // Add Circles
@@ -155,199 +190,235 @@
         .attr("points", "55, 130 15, 170 100, 170")
         .style("fill", "#606368");
 
-      // Portrait
+      // Piano
 
-      // Portrait - Background
+      // Piano - Background
 
-      let svgPortrait = d3
-        .select(".portrait-space")
+      let svgPiano = d3
+        .select(".piano-space")
         .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", "0 0 960 895");
-      
-      svgPortrait.append("rect")
-      .attr("width", "100%")
-      .attr("height", "100%")
-      .attr("fill", "#FFFFFF");
 
-      let streetBackground = svgPortrait.append("g");
+      let pianoBackground = svgPiano.append("g");
 
-      let leftGrassGroup = streetBackground.append("g");
+      let naturalMusic = pianoBackground.append("g");
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 15)
-        .attr("height", 150)
-        .attr("fill", "#424a38");
+      let naturalDict = {
+        0: "C",
+        1: "D",
+        2: "E",
+        3: "F",
+        4: "G",
+        5: "A",
+        6: "B",
+      };
+      let sharpDict = { 0: "C#", 1: "D#", 3: "F#", 4: "G#", 5: "A#" };
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 30)
-        .attr("y", -30)
-        .attr("width", 10)
-        .attr("height", 150)
-        .attr("transform", "rotate(22)")
-        .attr("fill", "#565c3f");
+      function createOctaves(xStart, octaveCount, currentOctaveCount) {
+        let currentXNaturalPos = xStart;
+        let currentXBlackPos = xStart;
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 50)
-        .attr("y", -100)
-        .attr("width", 7)
-        .attr("height", 150)
-        .attr("transform", "rotate(45)")
-        .attr("fill", "#4D5741");
+        // create octave
+        for (let i = 0; i < 7; i++) {
+          let noteName = naturalDict[i] + (currentOctaveCount + 1);
 
-      leftGrassGroup
-        .append("ellipse")
-        .attr("cx", 0)
-        .attr("cy", 160)
-        .attr("rx", 40)
-        .attr("ry", 40)
-        .attr("fill", "#727845");
+          naturalMusic
+            .append("rect")
 
-      leftGrassGroup
-        .append("ellipse")
-        .attr("cx", 55)
-        .attr("cy", 180)
-        .attr("rx", 40)
-        .attr("ry", 40)
-        .attr("fill", "#6C6D4C");
+            .attr("x", currentXNaturalPos)
+            .attr("data-note", noteName)
+            .attr("class", "natural--key")
+            .attr("y", 0)
+            .attr("width", 40)
+            .attr("height", 150)
+            .attr("stroke", "#000")
+            .attr("stroke-width", "1")
+            .attr("fill", "#ffffff");
+          currentXNaturalPos = currentXNaturalPos + 40;
+        }
+        for (let i = 0; i < 6; i++) {
+          let noteName = sharpDict[i] + (currentOctaveCount + 1);
 
-      leftGrassGroup
-        .append("ellipse")
-        .attr("cx", 150)
-        .attr("cy", 80)
-        .attr("rx", 40)
-        .attr("ry", 40)
-        .attr("fill", "#535e44");
+          if (i != 2) {
+            naturalMusic
+              .append("rect")
+              .attr("data-note", noteName)
+              .attr("class", "accidental--key")
+              .attr("x", currentXBlackPos + 30)
+              .attr("y", 0)
+              .attr("width", 20)
+              .attr("height", 90)
+              .attr("fill", "000");
+          }
+          currentXBlackPos = currentXBlackPos + 40;
+        }
 
-      leftGrassGroup
-        .append("ellipse")
-        .attr("cx", 140)
-        .attr("cy", 0)
-        .attr("rx", 70)
-        .attr("ry", 70)
-        .attr("fill", "#474f3d");
+        if (octaveCount != currentOctaveCount) {
+          currentOctaveCount = currentOctaveCount + 1;
+          createOctaves(currentXNaturalPos, octaveCount, currentOctaveCount);
+        }
+      }
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 145)
-        .attr("y", 100)
-        .attr("width", 20)
-        .attr("height", 150)
-        .attr("fill", "#5E6141");
+      function drawPiano(octaves) {
+        createOctaves(0, octaves, 1);
+      }
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 109)
-        .attr("y", 10)
-        .attr("width", 10)
-        .attr("height", 150)
-        .attr("transform", "rotate(-15)")
-        .attr("fill", "#677551");
+      drawPiano(4);
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 60)
-        .attr("y", 35)
-        .attr("width", 10)
-        .attr("height", 150)
-        .attr("transform", "rotate(-30)")
-        .attr("fill", "#404736");
+      let naturals = document.querySelectorAll(".natural--key");
+      let accidentals = document.querySelectorAll(".accidental--key");
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 180)
-        .attr("y", -65)
-        .attr("width", 10)
-        .attr("height", 150)
-        .attr("transform", "rotate(15)")
-        .attr("fill", "#404736");
+      for (i = 0; i < naturals.length; i++) {
+        naturals[i].addEventListener("click", function () {
+          let dataNote = this.getAttribute("data-note");
+          playNote(dataNote);
+        });
+      }
 
-      leftGrassGroup
-        .append("rect")
-        .attr("x", 160)
-        .attr("y", -50)
-        .attr("width", 10)
-        .attr("height", 150)
-        .attr("transform", "rotate(5)")
-        .attr("fill", "#535e44");
+      for (i = 0; i < accidentals.length; i++) {
+        accidentals[i].addEventListener("click", function () {
+          let dataNote = this.getAttribute("data-note");
+          playNote(dataNote);
+        });
+      }
 
-      leftGrassGroup
-        .append("polygon")
-        .attr("points", "0, 190 0, 420 200, 250")
-        .style("fill", "#C0C9B4");
+      function playNote(note) {
+        generateRandomShape();
+        let synth = new Tone.Synth().toMaster();
+        synth.triggerAttackRelease(note, "4n");
+      }
 
-      leftGrassGroup
-        .append("polygon")
-        .attr("points", "0, 190 0, 398 190, 250")
-        .style("fill", "#949973");
+      function generateRandomShape() {
+        let shapesProduced = getRandomInt(105, 285);
 
-      let rightGrassGroup = streetBackground.append("g");
+        for (i = 0; i < shapesProduced; i++) {
 
-      rightGrassGroup
-        .append("rect")
-        .attr("x", 800)
-        .attr("y", 48)
-        .attr("width", 223)
-        .attr("height", 250)
-        .attr("fill", "#5c5b45");
+          // https://css-tricks.com/snippets/javascript/random-hex-color/
+          let randomColor = "#" +  Math.floor(Math.random()*16777215).toString(16);
 
-      rightGrassGroup
-        .append("rect")
-        .attr("x", 680)
-        .attr("y", 48)
-        .attr("width", 123)
-        .attr("height", 250)
-        .attr("transform", "rotate(-2)")
-        .attr("fill", "#6A694F");
+          let randomY = getRandomInt(255, 600);
+          let randomX = getRandomInt(250, 800);
+          let randomSize = getRandomInt(10, 80);
+          let randomShape = getRandomInt(0, 3);
+          let randomTime = getRandomInt(7000, 10000);
 
-      rightGrassGroup
-        .append("polygon")
-        .attr("points", "970, 190 970, 420 600, 250")
-        .style("fill", "#6A694F");
+          if (randomShape === 0) {
+            // Add Rectangles
+            let obj = svgPiano
+              .append("rect")
+              .attr("class", "fade-in--out")
+              .attr("x", randomY)
+              .attr("y", randomX)
+              .attr("width", randomSize)
+              .attr("height", randomSize)
+              .attr("transform", "rotate(15)")
+              .attr("fill", randomColor);
 
-      rightGrassGroup
-        .append("polygon")
-        .attr("points", "970, 210 970, 420 630, 250")
-        .style("fill", "#C0C9B4");
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
 
-      rightGrassGroup
-        .append("rect")
-        .attr("x", 100)
-        .attr("y", -625)
-        .attr("width", 3)
-        .attr("height", 250)
-        .attr("transform", "rotate(85)")
-        .attr("fill", "#1c1c1c");
+          }
 
-      rightGrassGroup
-        .append("rect")
-        .attr("x", 550)
-        .attr("y", 55)
-        .attr("width", 13)
-        .attr("height", 40)
-        .attr("fill", "#1c1c1c");
+          if (randomShape === 1) {
+            // Add Circles
 
-      rightGrassGroup
-        .append("rect")
-        .attr("x", 620)
-        .attr("y", 48)
-        .attr("width", 13)
-        .attr("height", 40)
-        .attr("fill", "#1c1c1c");
+            let obj = svgPiano
+              .append("ellipse")
+              .attr("class", "fade-in--out")
+              .attr("cx", randomX)
+              .attr("cy", randomY)
+              .attr("rx", randomSize)
+              .attr("ry", randomSize)
+              .attr("fill", randomColor);
 
-      streetBackground
-        .append("defs")
-        .append("filter")
-        .attr("id", "blur")
-        .append("feGaussianBlur")
-        .attr("stdDeviation", 8);
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
 
-      d3.selectAll(streetBackground).style("filter", "url(#blur)");
+          }
+
+          if (randomShape === 2) {
+
+            let points = "";
+            let odd = -1
+
+            if(getRandomInt(0, 1)){
+              points = randomX;
+              odd = 1;
+            }else {
+              points = randomY;
+              odd = -1;
+            }
+            
+            // Add Lines
+            if(getRandomInt(0, 1)){
+
+              let obj = svgPiano
+                .append("line")
+                .attr("class", "fade-in--out")
+                .attr("x1", points)
+                .attr("y1", points)
+                .attr("x2", points + (randomSize * odd))
+                .attr("y2", points + (randomSize * odd))
+                .style("stroke", randomColor)
+                .style("stroke-width", 2);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+            }else{
+              let obj = svgPiano
+                .append("line")
+                .attr("class", "fade-in--out")
+                .attr("x1", points + (randomSize * odd))
+                .attr("y1", points + (randomSize * odd))
+                .attr("x2", points + (randomSize * odd))
+                .attr("y2", points)
+                .style("stroke", randomColor)
+                .style("stroke-width", 2);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+            }
+
+          }
+
+          if (randomShape === 3) {
+            // Add Polygons
+
+            let points = "";
+
+            if(getRandomInt(0, 1)){
+              points = randomY + ", " + randomX + " " + randomY + ", " + randomY + " " + randomX + ", " + randomX;
+            }else {
+              points = randomX + ", " + randomY + " " + randomX + ", " + randomX + " " + randomY + ", " + randomY;
+            }
+
+            let obj = svgPiano
+              .append("polygon")
+              .attr("class", "fade-in--out")
+              .attr("points", points)
+              .style("fill", randomColor);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+          }
+        }
+      }
+
+      // Random -> Mozilla Developer Network
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
     </script>
   </body>
 </html>
