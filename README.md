@@ -1,10 +1,15 @@
-Description - The Melodic Experience  
+Link - The Melodic Experience  
 ===
-A description of what you have created. 1-2 screenshots are recommended for the README.
 A working link to the hosted files (usually the gh-pages 'live' url)
 
-![alt text](https://github.com/mike3osei/01-ghd3/blob/main/screen2.png)
+Description - The Melodic Experience  
+===
+A description of what you have created. 
 
+Screenshots - The Melodic Experience  
+===
+1-2 screenshots are recommended for the README.
+![alt text](https://github.com/mike3osei/01-ghd3/blob/main/screen2.png)
 
 Technical - Achievements  
 ===
