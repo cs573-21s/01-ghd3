@@ -11,6 +11,8 @@ Help with D3
 Project ideas brain dump
   kitty to lion art
     move mouse over shape to change color of each shape
-    move vertical line side to side to change color of each shape
+    OR move vertical line side to side to change color of each shape
     color transition via smooth gradient thing
-  piano type thing
+  pig drawing
+    move vertical line across, pig parts float away
+    move vertical line back, pig parts assemble
