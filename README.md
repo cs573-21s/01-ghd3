@@ -2,7 +2,7 @@ Assignment 1 • The D3 Melodic Experience
 ===
 
 ## Description 
-A description of what you have created. 
+The D3 Melodic Experience is an application that takes a melodic note and creates a abstract painting given a note. No two paintings are the same, just as no two experiences are the same when listening to a new song, album, or performance. One can look at this application as a live performancing application. Play a note and let us visualize together your experience. Special thanks to Mozilla Developer Network for their random integer function CSS-Tricks for their random color generator, Google fonts, Jquery, ToneJS, and ofcourse D3. Without you all this application would not be possible.
 
 ![alt text](https://github.com/mike3osei/01-ghd3/blob/main/map.png)
 
@@ -10,13 +10,10 @@ A description of what you have created.
 https://mike3osei.github.io/01-ghd3/index.html
 
 ## Screenshots 
-1-2 screenshots are recommended for the README.
 ![alt text](https://github.com/mike3osei/01-ghd3/blob/main/screen2.png)
 ![alt text](https://github.com/mike3osei/01-ghd3/blob/main/screen1.png)
 
 ## Technical • Achievements  
-Section for Technical and Design Achievements
 
 ## Design • Achievements  
-Section for Technical and Design Achievements
 
