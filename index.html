@@ -1,10 +1,424 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Assignment 1</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.4.9/Tone.min.js"
+    ></script>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: black;
+        color: white;
+        margin: 0;
+        padding: none;
+      }
+      .sidebar-title {
+        font-size: 0.9em;
+        padding-top: 1em;
+        text-align: center;
+      }
+      .sidebar-description {
+        font-size: 0.8em;
+        padding-bottom: 1em;
+        color: rgba(255, 255, 255, 0.596);
+        text-align: center;
+      }
+      .sidebar-sub--header {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.288);
+        margin-top: 1.5em;
+      }
+      h2 {
+        font-weight: 100;
+        margin: 1.4em 4%;
+      }
+      img.cannon-shot {
+        text-align: center;
+        width: 150px;
+        border-radius: 15px;
+        margin-bottom: 1em;
+        margin-left: 0.5em;
+      }
+      .assignment-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        min-height: 100%;
+        width: 100%;
+        height: 100%;
+      }
+      .assignment-container--sidebar {
+        background: linear-gradient(
+          rgba(5, 10, 10, 0.85) 0%,
+          rgba(10, 20, 20, 0.988) 48%,
+          rgb(7, 12, 12) 100%
+        );
+        justify-content: center;
+        align-items: center;
+        padding: 1em;
+      }
+      .assignment-container--piano {
+        background: radial-gradient(
+          circle,
+          rgba(10, 20, 20, 0.8) 0%,
+          rgba(10, 20, 20, 0.988) 48%,
+          rgba(10, 20, 20, 1) 100%
+        );
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .piano-space {
+        flex-grow: 1;
+        margin: 0.2em 4%;
+        border: 1px solid rgba(255, 255, 255, 0.041);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .natural--key,
+      .accidental--key {
+        transition: all 0.2s ease;
+      }
+
+      .natural--key:hover {
+        fill: rgb(207, 207, 207);
+      }
+      .accidental--key:hover {
+        fill: rgb(61, 61, 61);
+      }
+
+      .natural--key:active,
+      .accidental--key:active {
+        fill: rgb(117, 154, 255);
+      }
+      .fade-in--out {
+          -webkit-animation: fadeInOut 7s linear forwards;
+          animation: fadeInOut 7s linear forwards;
+      }
+      @-webkit-keyframes fadeInOut {
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes fadeInOut {
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="assignment-container">
+      <div class="assignment-container--sidebar">
+        <h1 class="sidebar-title">Assignment 1</h1>
+        <p class="sidebar-description">CS 573</p>
+
+        <img class="cannon-shot" src="mike.jpg" />
+
+        <h3 class="sidebar-sub--header">Toolkit - D3</h3>
+        <div class="container"></div>
+      </div>
+
+      <div class="assignment-container--piano">
+        <h2>Hi, i'm Michael Osei</h2>
+
+        <div class="piano-space"></div>
+      </div>
+    </div>
+
+    <script>
+      // Sidebar
+
+      // Add an SVG
+
+      let svg = d3
+        .select(".container")
+        .append("svg")
+        .attr("width", 170)
+        .attr("height", 200);
+
+      // Add Rectangles
+
+      svg
+        .append("rect")
+        .attr("x", 55)
+        .attr("y", 15)
+        .attr("width", 30)
+        .attr("height", 30)
+        .attr("transform", "rotate(15)")
+        .attr("fill", "#FFB2FE");
+
+      // Add Circles
+
+      svg
+        .append("ellipse")
+        .attr("cx", 57)
+        .attr("cy", 110)
+        .attr("rx", 20)
+        .attr("ry", 20)
+        .attr("fill", "#EA80FB");
+
+      // Add Lines
+
+      svg
+        .append("line")
+        .attr("x1", 20)
+        .attr("y1", 120)
+        .attr("x2", 90)
+        .attr("y2", 42)
+        .style("stroke", "#B64FC8")
+        .style("stroke-width", 2);
+
+      // Add Polygons
+
+      svg
+        .append("polygon")
+        .attr("points", "55, 130 15, 170 100, 170")
+        .style("fill", "#606368");
+
+      // Piano
+
+      // Piano - Background
+
+      let svgPiano = d3
+        .select(".piano-space")
+        .append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 960 895");
+
+      let pianoBackground = svgPiano.append("g");
+
+      let naturalMusic = pianoBackground.append("g");
+
+      let naturalDict = {
+        0: "C",
+        1: "D",
+        2: "E",
+        3: "F",
+        4: "G",
+        5: "A",
+        6: "B",
+      };
+      let sharpDict = { 0: "C#", 1: "D#", 3: "F#", 4: "G#", 5: "A#" };
+
+      function createOctaves(xStart, octaveCount, currentOctaveCount) {
+        let currentXNaturalPos = xStart;
+        let currentXBlackPos = xStart;
+
+        // create octave
+        for (let i = 0; i < 7; i++) {
+          let noteName = naturalDict[i] + (currentOctaveCount + 1);
+
+          naturalMusic
+            .append("rect")
+
+            .attr("x", currentXNaturalPos)
+            .attr("data-note", noteName)
+            .attr("class", "natural--key")
+            .attr("y", 0)
+            .attr("width", 40)
+            .attr("height", 150)
+            .attr("stroke", "#000")
+            .attr("stroke-width", "1")
+            .attr("fill", "#ffffff");
+          currentXNaturalPos = currentXNaturalPos + 40;
+        }
+        for (let i = 0; i < 6; i++) {
+          let noteName = sharpDict[i] + (currentOctaveCount + 1);
+
+          if (i != 2) {
+            naturalMusic
+              .append("rect")
+              .attr("data-note", noteName)
+              .attr("class", "accidental--key")
+              .attr("x", currentXBlackPos + 30)
+              .attr("y", 0)
+              .attr("width", 20)
+              .attr("height", 90)
+              .attr("fill", "000");
+          }
+          currentXBlackPos = currentXBlackPos + 40;
+        }
+
+        if (octaveCount != currentOctaveCount) {
+          currentOctaveCount = currentOctaveCount + 1;
+          createOctaves(currentXNaturalPos, octaveCount, currentOctaveCount);
+        }
+      }
+
+      function drawPiano(octaves) {
+        createOctaves(0, octaves, 1);
+      }
+
+      drawPiano(4);
+
+      let naturals = document.querySelectorAll(".natural--key");
+      let accidentals = document.querySelectorAll(".accidental--key");
+
+      for (i = 0; i < naturals.length; i++) {
+        naturals[i].addEventListener("click", function () {
+          let dataNote = this.getAttribute("data-note");
+          playNote(dataNote);
+        });
+      }
+
+      for (i = 0; i < accidentals.length; i++) {
+        accidentals[i].addEventListener("click", function () {
+          let dataNote = this.getAttribute("data-note");
+          playNote(dataNote);
+        });
+      }
+
+      function playNote(note) {
+        generateRandomShape();
+        let synth = new Tone.Synth().toMaster();
+        synth.triggerAttackRelease(note, "4n");
+      }
+
+      function generateRandomShape() {
+        let shapesProduced = getRandomInt(105, 285);
+
+        for (i = 0; i < shapesProduced; i++) {
+
+          // https://css-tricks.com/snippets/javascript/random-hex-color/
+          let randomColor = "#" +  Math.floor(Math.random()*16777215).toString(16);
+
+          let randomY = getRandomInt(255, 600);
+          let randomX = getRandomInt(250, 800);
+          let randomSize = getRandomInt(10, 80);
+          let randomShape = getRandomInt(0, 3);
+          let randomTime = getRandomInt(7000, 10000);
+
+          if (randomShape === 0) {
+            // Add Rectangles
+            let obj = svgPiano
+              .append("rect")
+              .attr("class", "fade-in--out")
+              .attr("x", randomY)
+              .attr("y", randomX)
+              .attr("width", randomSize)
+              .attr("height", randomSize)
+              .attr("transform", "rotate(15)")
+              .attr("fill", randomColor);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+          }
+
+          if (randomShape === 1) {
+            // Add Circles
+
+            let obj = svgPiano
+              .append("ellipse")
+              .attr("class", "fade-in--out")
+              .attr("cx", randomX)
+              .attr("cy", randomY)
+              .attr("rx", randomSize)
+              .attr("ry", randomSize)
+              .attr("fill", randomColor);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+          }
+
+          if (randomShape === 2) {
+
+            let points = "";
+            let odd = -1
+
+            if(getRandomInt(0, 1)){
+              points = randomX;
+              odd = 1;
+            }else {
+              points = randomY;
+              odd = -1;
+            }
+            
+            // Add Lines
+            if(getRandomInt(0, 1)){
+
+              let obj = svgPiano
+                .append("line")
+                .attr("class", "fade-in--out")
+                .attr("x1", points)
+                .attr("y1", points)
+                .attr("x2", points + (randomSize * odd))
+                .attr("y2", points + (randomSize * odd))
+                .style("stroke", randomColor)
+                .style("stroke-width", 2);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+            }else{
+              let obj = svgPiano
+                .append("line")
+                .attr("class", "fade-in--out")
+                .attr("x1", points + (randomSize * odd))
+                .attr("y1", points + (randomSize * odd))
+                .attr("x2", points + (randomSize * odd))
+                .attr("y2", points)
+                .style("stroke", randomColor)
+                .style("stroke-width", 2);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+
+            }
+
+          }
+
+          if (randomShape === 3) {
+            // Add Polygons
+
+            let points = "";
+
+            if(getRandomInt(0, 1)){
+              points = randomY + ", " + randomX + " " + randomY + ", " + randomY + " " + randomX + ", " + randomX;
+            }else {
+              points = randomX + ", " + randomY + " " + randomX + ", " + randomX + " " + randomY + ", " + randomY;
+            }
+
+            let obj = svgPiano
+              .append("polygon")
+              .attr("class", "fade-in--out")
+              .attr("points", points)
+              .style("fill", randomColor);
+
+              setTimeout(function(){
+                obj.remove();
+              }, randomTime);
+          }
+        }
+      }
+
+      // Random -> Mozilla Developer Network
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+    </script>
+  </body>
+</html>
