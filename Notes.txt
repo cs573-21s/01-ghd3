@@ -1,0 +1,3 @@
+How to set up a local server
+  brew install http-server (shouldn't have to run this line tho)
+  http-server &
