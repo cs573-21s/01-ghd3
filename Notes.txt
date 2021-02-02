@@ -6,3 +6,10 @@ How to set up a local server
 Help with D3
   FAQ: https://github.com/arnicas/d3-faq
   Tutorial by Mike Bostock: https://observablehq.com/collection/@d3/learn-d3
+
+
+Project ideas brain dump
+  kitty to lion art
+    move mouse over shape to change color of each shape
+    move vertical line side to side to change color of each shape
+  piano type thing
