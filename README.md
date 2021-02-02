@@ -1,14 +1,13 @@
 Assignment 1 • The D3 Melodic Experience  
 ===
-![alt text](https://github.com/mike3osei/01-ghd3/blob/main/map.png)
-
-
-## Link
-https://mike3osei.github.io/01-ghd3/index.html
-
 
 ## Description 
 A description of what you have created. 
+
+![alt text](https://github.com/mike3osei/01-ghd3/blob/main/map.png)
+
+## Link
+https://mike3osei.github.io/01-ghd3/index.html
 
 ## Screenshots 
 1-2 screenshots are recommended for the README.
