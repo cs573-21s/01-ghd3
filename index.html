@@ -6,13 +6,22 @@
 		<script src="http://d3js.org/d3.v5.min.js"></script>
 	</head>
 	<body>
-		<h1>Assignment 1 - Junying Li</h1>
+    <p>Assignment 1 - Junying Li</p>
+    <p>    
+      <button onclick="playAudio()" type="button">Play Audio</button>
+      <button onclick="pauseAudio()" type="button">Pause Audio</button>
+    </p>
+    
 		<svg width="960" height="640" id="mainsvg" class="svgs"></svg>
     <script src="https://d3js.org/d3.v6.min.js"></script>
 
     <div id = "value"></div>
     <svg id = "vis"></svg>
     
+    <audio id="This is Christmas">
+      <source src="Scott Holmes Music - This is Christmas.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
       console.log(d3); // test if d3 is loaded
       
@@ -64,6 +73,14 @@
       .attr("style", "fill: none; stroke: rgb(70,136,116); stroke-width: 2");
     
       // Draw a Christmas tree using graphics above
+      // Play Christmas music
+      var backgroundMusic = document.getElementById('This is Christmas');
+      function playAudio() {
+        backgroundMusic.play();
+      }
+      function pauseAudio() {
+        backgroundMusic.pause();
+      }
       // Leaves
       svg.append("polygon")
       .attr("points", "450, 140 330, 260 570, 260")
@@ -177,13 +194,16 @@
         .attr("cy", cy)
         .attr("r", r)
         .style("fill", color)
-        .on("mouseover", blurFilter)
-        .on("mouseout", noFilter);  
+        .on("mouseover", mouseOver)
+        .on("mouseout", mouseOut);  
 
-        function blurFilter() {
+        function mouseOver() {
           d3.select(this)
-          .attr("filter", "url(#blur)");        }
-        function noFilter() {
+          .attr("filter", "url(#blur)");
+          var audio = document.getElementById('This is Christmas');
+          audio.play();
+          }
+        function mouseOut() {
           d3.select(this)
           .attr("filter", null);
         }
@@ -294,7 +314,7 @@
       for (i = 0; i < 100; i++) {
         blurSnow(Math.random() * 960, Math.random() * 640, Math.random() * 3 + 3, Math.random() * 6000 + 3000);
       }
-      for (i = 0; i < 200; i++) {
+      for (i = 0; i < 250; i++) {
         snow(Math.random() * 960, Math.random() * 640, Math.random() * 3 + 4, Math.random() * 6000 + 3000);
       }
 
