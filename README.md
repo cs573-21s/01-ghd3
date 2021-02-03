@@ -19,10 +19,10 @@ Here are two screenshots of my page.
 ## Section for Technical and Design Achievements
 ### Technical achievements
 1. It contains 6 kinds of graphics primitives in defferent colors.
-2. Snow animation and shiny light animation using transition.
+2. Snow animation and shiny light animation using `transition()`.
 3. Play audio by `play()` method.
 ### Design achievements
 1. Draw a Christmas tree by using basic graphics primitives.
-2. The snow animation can help us release stress.
-3. Users can listen to Christmas music.
+2. The snow animation can help users release stress.
+3. Users can play Christmas music.
 4. When mouseover bulbs(circles) on Christmas tree, it will autometically play voice audio of Merry Christmas from woman, little boy, Santa Claus and The Jackson 5.
