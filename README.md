@@ -12,7 +12,7 @@ Here are two screenshots of my page.
 
   *Screenshot1 - My page*
   
-<img src="https://github.com/Junying-Li/01-ghd3/blob/main/screenshot2.PNG?raw=true" width="700">
+<img src="https://github.com/Junying-Li/01-ghd3/blob/main/screenshot2.png?raw=true" width="700">
 
   *Screenshot2 - Show all circles*
 
