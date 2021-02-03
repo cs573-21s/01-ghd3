@@ -18,9 +18,27 @@
     <div id = "value"></div>
     <svg id = "vis"></svg>
     
+    <!--All audios are free resources from soundfxcenter(http://soundfxcenter.com/).-->
     <audio id="This is Christmas">
       <source src="Scott Holmes Music - This is Christmas.mp3" type="audio/mpeg">
     </audio>
+    <audio id="Female_Merry_Christmas_Sound_Effect">
+      <source src="Female_Merry_Christmas_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="Christmas_Santa_Merry_Christmas_Sound_Effect">
+      <source src="Christmas_Santa_Merry_Christmas_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="Little_Boy_Saying_Merry_Christmas_Sound_Effect">
+      <source src="Little_Boy_Saying_Merry_Christmas_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="Santa_Ho_Ho_Merry_Christmas_Sound_Effect">
+      <source src="Santa_Ho_Ho_Merry_Christmas_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="The_Jackson_5_Merry_Christmas_Everybody_Sound_Effect">
+      <source src="The_Jackson_5_Merry_Christmas_Everybody_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    
+    
 
     <script>
       console.log(d3); // test if d3 is loaded
@@ -75,6 +93,7 @@
       // Draw a Christmas tree using graphics above
       // Play Christmas music
       var backgroundMusic = document.getElementById('This is Christmas');
+      backgroundMusic.volume = 0.6; 
       function playAudio() {
         backgroundMusic.play();
       }
@@ -188,7 +207,7 @@
       .append("feGaussianBlur")
       .attr("stdDeviation", 3);      
 
-      function drawBulb(cx, cy, r, color) {
+      function drawBulb(cx, cy, r, color, audioID) {
         svg.append("circle")
         .attr("cx", cx)
         .attr("cy", cy)
@@ -200,8 +219,8 @@
         function mouseOver() {
           d3.select(this)
           .attr("filter", "url(#blur)");
-          var audio = document.getElementById('This is Christmas');
-          audio.play();
+          var audio = document.getElementById(audioID);
+          audio.play(); //Say Merry Christmas.
           }
         function mouseOut() {
           d3.select(this)
@@ -209,17 +228,17 @@
         }
       }
    
-      drawBulb(430, 190, 10, "rgba(249,194,246,255)");
-      drawBulb(490, 240, 8, "rgba(246,26,36,255)");
-      drawBulb(360, 310, 8, "rgba(246,26,36,255)");
-      drawBulb(455, 359, 10, "rgba(243,224,228,255)");
-      drawBulb(535, 310, 10, "rgba(249,194,246,255)");
-      drawBulb(555, 345, 8, "rgba(233,190,52,255)");
-      drawBulb(386, 430, 10, "rgba(233,190,52,255)");
-      drawBulb(301, 460, 9, "rgba(246,26,36,255)");
-      drawBulb(480, 475, 11, "rgba(249,194,246,255)");
-      drawBulb(570, 440, 10, "rgba(243,224,228,255)");
-      drawBulb(630, 460, 8, "rgba(233,190,52,255)");
+      drawBulb(430, 190, 10, "rgba(249,194,246,255)", "Female_Merry_Christmas_Sound_Effect");
+      drawBulb(490, 240, 8, "rgba(246,26,36,255)", "Christmas_Santa_Merry_Christmas_Sound_Effect");
+      drawBulb(360, 310, 8, "rgba(246,26,36,255)", "Little_Boy_Saying_Merry_Christmas_Sound_Effect");
+      drawBulb(455, 359, 10, "rgba(243,224,228,255)", "Santa_Ho_Ho_Merry_Christmas_Sound_Effect");
+      drawBulb(535, 310, 10, "rgba(249,194,246,255)", "The_Jackson_5_Merry_Christmas_Everybody_Sound_Effect");
+      drawBulb(555, 345, 8, "rgba(233,190,52,255)", "Female_Merry_Christmas_Sound_Effect");
+      drawBulb(386, 430, 10, "rgba(233,190,52,255)", "Christmas_Santa_Merry_Christmas_Sound_Effect");
+      drawBulb(301, 460, 9, "rgba(246,26,36,255)", "Little_Boy_Saying_Merry_Christmas_Sound_Effect");
+      drawBulb(480, 475, 11, "rgba(249,194,246,255)", "Santa_Ho_Ho_Merry_Christmas_Sound_Effect");
+      drawBulb(570, 440, 10, "rgba(243,224,228,255)", "The_Jackson_5_Merry_Christmas_Everybody_Sound_Effect");
+      drawBulb(630, 460, 8, "rgba(233,190,52,255)", "Female_Merry_Christmas_Sound_Effect");
 
       function drawLight(cx, cy, color1, color2, duration) {
         var light = svg.append("ellipse");
