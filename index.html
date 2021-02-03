@@ -1,10 +1,244 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 1(rectangulars,circles,polygons,lines)</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <td>梨子</td>
+    </tr>
+  </table>
+  <script>
+    console.log(d3); // test if d3 is loaded
+    width = 300;
+    height = 300;
+
+    var padding = 20;
+    var lables = ['banana', 'apple', 'berry', 'lime', 'pear', 'orange', 'peach'];
+    var dataset = [10, 20, 30, 50, 35, 19, 5];
+    var color = ['yellow', 'red', 'blue', 'yellow', 'green', 'orange', 'pink'];
+
+    /* Add Rectangles*/
+    // Add an SVG to draw a histogram
+    var svgHistogram = d3.select('body')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width)
+      .style('margin', '20px');
+
+    //set the scale
+    var xScale = d3.scaleBand()
+      .domain(lables)
+      .rangeRound([0, width - padding * 2]);
+    var yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset)])
+      .range([height - padding * 2, 0]);
+
+    //create axises function
+    var xais = d3.axisBottom()
+      .scale(xScale)
+      .tickSize(6);
+
+    var yais = d3.axisLeft()
+      .scale(yScale);
+
+    //add rectangles
+    var rects = svgHistogram.selectAll(".MyRect")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("class", "MyRect")
+      .attr("x", function (d, i) {
+        return xScale(lables[i]);
+      })
+      .attr("y", function (d) {
+        return yScale(d) + padding;
+      })
+      .attr('width', (width - padding * 2) / dataset.length / 2)
+      .attr('height', function (d) {
+        return height - yScale(d) - padding * 2;
+      })
+      .attr('fill', 'teal')
+      .style('transform', 'translate(30px,0)');
+
+    //create axises
+    svgHistogram.append("g")
+      .attr('class', 'xaxis')
+      .call(xais);
+
+    var yAxis = svgHistogram.append('g')
+      .attr('class', 'yaxis')
+      .call(yais);
+
+    //set style
+    var xAxis = d3.selectAll('.xaxis')
+      .style('transform', "translate(" + padding + "px," + (height - padding) + "px)");
+
+    var yAxis = d3.selectAll('.yaxis')
+      .style('transform', 'translate(20px,20px)');
+
+    //add text
+    var text = svgHistogram.selectAll('.text')
+      .data(dataset)
+      .enter()
+      .append('text')
+      .attr('class', 'text')
+      .attr("x", function (d, i) {
+        return xScale(lables[i]);
+      })
+      .attr("y", function (d) {
+        return yScale(d) + padding;
+      })
+      .text(function (d, i) {
+        return d;
+      })
+      .style('font-size', (width - padding * 2) / dataset.length / 3 + 'px')
+      .style('transform', 'translate(' + padding * 3 / 2 + 'px, 20px)')
+      .attr('fill', 'white');
+
+    /* Add cirlces*/
+    var svgPiechart = d3.select('body')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width)
+      .style('position', 'relative')
+      .style('margin', '20px');
+
+    var pie = d3.pie();
+    var pieData = pie(dataset);
+    console.log(pieData);
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+
+    var arcs = svgPiechart.selectAll('g')
+      .data(pieData)
+      .enter()
+      .append('g')
+      .style('transform', 'translate(150px,150px)');
+
+    arcs.append('path')
+      .attr('fill', function (d, i) {
+        return color[i];
+      })
+      .attr('d', function (d) {
+        return arc(d)
+      });
+
+    arcs.append('text')
+      .attr('transform', function (d, i) {
+        var c = arc.centroid(d);
+        console.log(c[0]);
+        console.log(c[1]);
+        return "translate(" + c[0] * 2.8 + "," + c[1] * 2.8 + ")";
+      })
+      .text(function (d, i) { return lables[i]; });
+
+    arcs.append('line')
+      .attr('stroke', 'black')
+      .attr('x1', function (d, i) {
+        return arc.centroid(d)[0] * 1.5;
+      })
+      .attr('y1', function (d, i) {
+        return arc.centroid(d)[1] * 1.5;
+      })
+      .attr('x2', function (d, i) {
+        return arc.centroid(d)[0] * 2.5;
+      })
+      .attr('y2', function (d, i) {
+        return arc.centroid(d)[1] * 2.5;
+      })
+
+    // Add Lines
+    var temprature = [['Jan', 5], ['Feb', 8], ['Mar', '10'], ['Apr', '10'], ['May', '10'], ['June', '10'], ['July', '10'], ['Aug', '10'], ['Sep', '10'], ['Oct', '10'], ['Nov', '10'], ['Dec', '10']];
+    var svgLine = d3.selectAll('body')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width)
+      .style('position', 'relative')
+      .style('margin', '20px');
+
+    var lineDotes = svgLine.selectAll('g')
+      .data(temprature)
+      .enter()
+      .append('g');
+
+    function month(array) {
+      var newarray = [];
+      for (var i = 0; i < array.length; i++) {
+        newarray.push(temprature[i][0]);
+      }
+
+      return newarray;
+    };
+
+    function monthTemprature(array) {
+      var newarray = [];
+      for (var i = 0; i < array.length; i++) {
+        newarray.push(temprature[i][1]);
+      }
+
+      return newarray;
+    };
+
+
+
+    var xScaleLine = d3.scaleBand()
+      .domain(month(temprature))
+      .rangeRound([0, width - padding * 2]);
+
+    var yScaleLine = d3.scaleLinear()
+      .domain(monthTemprature(temprature))
+      .range([height - padding * 2, 0]);
+
+    var xaxisLine = d3.axisTop()
+      .scale(xScaleLine);
+    var yaxisLine = d3.axisLeft()
+      .scale(yScaleLine)
+      .tickSize(0.5);
+
+    svgLine.append('g')
+      .call(xaxisLine)
+      .style('transform', "translate(" + padding + "px," + (height - padding) + "px)");
+
+    svgLine.append('g')
+      .call(yaxisLine)
+      .style('transform', 'translate(20px,20px)');
+
+
+
+    // let line = d3.select('.line')
+    //   .append("line")
+    //   .attr("x1", 20)
+    //   .attr("y2", 20)
+    //   .attr("x2", 300)
+    //   .attr("y2", 100)
+    //   .attr("stroke", "black")
+    //   .attr("stroke-width", "2px");
+    // // Add Polygons
+    // let polygon = d3.select('.polygon')
+    //   .attr('width', width)
+    //   .attr('height', height)
+    //   .append('polygon')
+    //   .attr('points', '70,0  150,0  300,50 300,300 0,300')
+    //   .attr('fill', 'brown');
+
+
+
+  </script>
+
+</body>
+
+</html>
