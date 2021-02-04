@@ -11,13 +11,78 @@
       margin: 0;
       padding: 0;
     }
+
+    table {
+      margin: 50px 0 20px 50px;
+    }
+
+    .histogram {
+      width: 100%;
+    }
+
+    table .td-first {
+      background-color: black;
+      color: white;
+    }
   </style>
 </head>
 
 <body>
-  <table>
+  <table border="1">
+    <caption>Survey on the favorite fruits of the class</caption>
     <tr>
-      <td>梨子</td>
+      <td class="td-first">name of friut</td>
+      <td>banana</td>
+      <td>apple</td>
+      <td>berry</td>
+      <td>lime</td>
+      <td>pear</td>
+      <td>orange</td>
+      <td>peach</td>
+    </tr>
+    <tr>
+      <td class="td-first">Number</td>
+      <td>10</td>
+      <td>20</td>
+      <td>30</td>
+      <td>50</td>
+      <td>35</td>
+      <td>19</td>
+      <td>5</td>
+    </tr>
+  </table>
+  <div class="histogram"></div>
+  <table border="1">
+    <caption>Hubei weather trends throughout the year</caption>
+    <tr>
+      <td class="td-first">Month</td>
+      <td>Jan</td>
+      <td>Feb</td>
+      <td>Mar</td>
+      <td>Apr</td>
+      <td>May</td>
+      <td>Jun</td>
+      <td>JUl</td>
+      <td>Aug</td>
+      <td>Sep</td>
+      <td>Oct</td>
+      <td>Nov</td>
+      <td>Dec</td>
+    </tr>
+    <tr>
+      <td class="td-first">temprature</td>
+      <td>4.5</td>
+      <td>6.5</td>
+      <td>12</td>
+      <td>18.5</td>
+      <td>23.5</td>
+      <td>27</td>
+      <td>30.5</td>
+      <td>30</td>
+      <td>25</td>
+      <td>19</td>
+      <td>12</td>
+      <td>6</td>
     </tr>
   </table>
   <script>
@@ -32,7 +97,7 @@
 
     /* Add Rectangles*/
     // Add an SVG to draw a histogram
-    var svgHistogram = d3.select('body')
+    var svgHistogram = d3.select('.histogram')
       .append('svg')
       .attr('width', width)
       .attr('height', width)
@@ -109,7 +174,7 @@
       .attr('fill', 'white');
 
     /* Add cirlces*/
-    var svgPiechart = d3.select('body')
+    var svgPiechart = d3.select('.histogram')
       .append('svg')
       .attr('width', width)
       .attr('height', width)
