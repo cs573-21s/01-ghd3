@@ -118,7 +118,6 @@
 
     var pie = d3.pie();
     var pieData = pie(dataset);
-    console.log(pieData);
     var arc = d3.arc()
       .innerRadius(0)
       .outerRadius(100);
@@ -162,7 +161,7 @@
       })
 
     // Add Lines
-    var temprature = [['Jan', 5], ['Feb', 8], ['Mar', '10'], ['Apr', '10'], ['May', '10'], ['June', '10'], ['July', '10'], ['Aug', '10'], ['Sep', '10'], ['Oct', '10'], ['Nov', '10'], ['Dec', '10']];
+    var temprature = [['Jan', 4.5], ['Feb', 6.5], ['Mar', 12], ['Apr', 18.5], ['May', 23.5], ['June', 27], ['July', 30.5], ['Aug', 30], ['Sep', 25], ['Oct', 19], ['Nov', 12], ['Dec', 6]];
     var svgLine = d3.selectAll('body')
       .append('svg')
       .attr('width', width)
@@ -193,14 +192,12 @@
       return newarray;
     };
 
-
-
     var xScaleLine = d3.scaleBand()
       .domain(month(temprature))
       .rangeRound([0, width - padding * 2]);
 
     var yScaleLine = d3.scaleLinear()
-      .domain(monthTemprature(temprature))
+      .domain([d3.min(monthTemprature(temprature)), d3.max(monthTemprature(temprature))])
       .range([height - padding * 2, 0]);
 
     var xaxisLine = d3.axisTop()
@@ -216,6 +213,30 @@
     svgLine.append('g')
       .call(yaxisLine)
       .style('transform', 'translate(20px,20px)');
+
+    lineDotes.append('circle')
+      .attr('cx', function (d, i) {
+        return xScaleLine(month(temprature)[i]);
+      })
+      .style('transform', "translate(" + padding * 1.5 + "px," + "20px)")
+      .attr('cy', function (d, i) {
+        return yScaleLine(monthTemprature(temprature)[i]);
+      })
+      .attr('r', 5)
+      .attr('fill', 'blue');
+    var linePath = d3.line()
+      .x(function (d, i) {
+        return xScaleLine(d[0]);
+      })
+      .y(function (d, i) {
+        return yScaleLine(d[1]);
+      });
+
+    lineDotes.append('path')
+      .attr('d', linePath(temprature))
+      .attr('fill', 'none')
+      .style('transform', "translate(" + padding * 1.5 + "px," + "20px)")
+      .attr("stroke", "blue");
 
 
 
