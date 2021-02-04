@@ -9,65 +9,84 @@
   // Add Rectangles
   // Add Circles
   // Add Lines
-  // Add Polygons  var 
-  data1 = [1, 1, 2, 5, 8, 13];
-  data2 = [21, 31, 42, 45, 58, 63];
+  // Add Polygons 
+  var data0 = [10, 50];
+  var data1 = [30];
+  var data2 = [12,13,14,15,16,17,18,19,20,21,22];
+  var data4 = [{x: 100, y: 150}, {x: 300, y: 300}, {x: 500, y: 150}]
 
+  
 
-
-  var svg = d3.select('#vis')
-    .attr('width', 1000)
-    .attr('height', 1000);
-
-  var svg2 = d3.select('#vis')
-    .attr('width', 1000)
-    .attr('height', 1000);
+  var svg = d3.select('#vis').attr('width', 1000).attr('height', 1000);
 
   var xscale = d3.scaleLinear()
     .domain([0, 100])
     .range([0, 1000]);
 
   var yscale = d3.scaleLinear()
-    .domain([0, 100])
+    .domain([0, 500])
     .range([0, 1000]);
 
+var lineFunc = d3.line()
+  .x(function(d) { return d.x })
+  .y(function(d) { return d.y })
+
+svg.append('path')
+  .attr('d', lineFunc(data4))
+  .attr('stroke', 'orange')
+  .attr('fill', 'none');
+
+ 
   svg.selectAll('circle')
-   .data(data1)
+   .data(data0)
    .enter().append('circle')
-   .attr('cy', 100)
    .attr('cx', function(d) { console.log(d); return xscale(d); } )
-   .attr('r', 20)
-   .attr('fill', 'steelblue')
-   .on('mouseover', function(e, d) {
-    d3.select(this).attr('fill', 'brown');
-    d3.select('#value').text(d); })
+   .attr('r', 10)
+   .attr('cy', 150)
+   .attr('fill', 'orange')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'blue');
+      d3.select('#value').text(d); })
+    .on('mouseout', function() {d3.select(this).attr('fill', 'orange'); });
     
-    .on('mouseout', function() {
-    d3.select(this).attr('fill', 'steelblue'); })
 
-
-  var svg = d3.select('#vis')
-    .attr('width', 1000)
-    .attr('height', 800);
-
-
-    svg2.selectAll('rectangle')
-   .data(data2)
-   .enter().append('rectangle')
-   .attr('cy', 100)
-   .attr('cx', function(d) { console.log(d); return xscale(d); } )
-   .attr('r', 20)
-   .attr('fill', 'pink')
+  svg.selectAll('rect')
+   .data(data1)
+   .enter().append('rect')
+   .attr('x', function(d) { console.log(d); return xscale(d); } )
+   .attr('y', 300)
+   .attr('width', 20)
+   .attr('height', 20)
+   .attr('fill', 'blue')
    .on('mouseover', function(e, d) {
-    d3.select(this).attr('fill', 'green');
-    d3.select('#value').text(d); })
-    
-    .on('mouseout', function() {
-    d3.select(this).attr('fill', 'pink'); })
+      d3.select(this).attr('fill', 'orange');
+      d3.select('#value').text(d); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'blue'); })
+  .attr("transform", "translate(300,-150) rotate(45)")
+  .transition()
+  .ease(d3.easeLinear)
+  .duration(2000)
+  .attr("height",100)
+
+  svg.selectAll('rect')
+   .data(data1)
+   .enter().append('rect')
+   .attr('x', function(d) { console.log(d); return xscale(d); } )
+   .attr('y', 300)
+   .attr('width', 20)
+   .attr('height', 20)
+   .attr('fill', 'blue')
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'orange');
+      d3.select('#value').text(d); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'blue'); })
+  .attr("transform", "translate(300,-150) rotate(315)")
+  .transition()
+  .ease(d3.easeLinear)
+  .duration(2000)
+  .attr("height",100);
 
 
-  var svg2 = d3.select('#vis')
-    .attr('width', 1000)
-    .attr('height', 800);
+//HELP FROM https://www.d3-graph-gallery.com/graph/shape.html
   
 </script> 
