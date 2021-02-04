@@ -304,6 +304,49 @@
       .style('transform', "translate(" + padding * 1.5 + "px," + "20px)")
       .attr("stroke", "blue");
 
+    /*Draw a hubei map*/
+    var svgMap = d3.select('body')
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500)
+    d3.json('https://geo.datav.aliyun.com/areas_v2/bound/420000_full.json').then(function (data) {
+      var projection = d3.geoMercator().fitExtent(
+        [
+          [0, 0],
+          [500, 500],
+        ], data);
+      var pathGenerator = d3.geoPath()
+        .projection(projection);
+      var mapPath = svgMap.selectAll("path")
+        .data(data.features)
+        .enter()
+        .append("path")
+        .attr("d", pathGenerator)
+        .attr("stroke-width", 0.5)
+        .attr("stroke", "#000000")
+        .attr("fill", "#ffffff")
+        .on('mouseover', function () {
+          d3.select(this)
+            .attr('fill', 'yellow')
+        })
+        .on('mouseout', function () {
+
+          d3.select(this).attr('fill', 'white')
+            .transition()
+            .duration(500);
+
+        })
+
+
+
+
+
+    });
+
+
+
+
+
 
     // // Add Polygons
     // let polygon = d3.select('.polygon')
