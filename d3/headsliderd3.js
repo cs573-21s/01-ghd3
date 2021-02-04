@@ -113,7 +113,7 @@ const nose = svgContainer.append("polygon")
 // Based off: https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute
 
 // Global slider variables
-let offset = document.getElementById('svgZone').offsetLeft;
+let offset = document.getElementById('svgZone').offsetLeft + document.getElementById('svgZoneHolder').offsetLeft + 10;
 
 // Face shape slider
 let faceWidthScale = d3.scaleLinear()
