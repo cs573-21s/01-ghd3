@@ -62,6 +62,8 @@
     d3.selectAll("polygon").raise()
   }
 
+  drawEverything()
+
 
   /**************************************
   * background
@@ -296,21 +298,9 @@
       .attr("id", "hatGradientStop")
       .attr("stop-opacity", 1);
 
-    svg.selectAll("polygon")
-      .data([hat, rightHoof, leftHoof])
-      .enter().append("polygon")
-      .attr("points", function (d) {
-        return d.map(function (d) {
-          return [d.x, d.y].join(",");
-        }).join(" ");
-      })
-      
-      .attr("fill", "brown")
-      .on('click', function () {
-        wakeUpSheep()
-      })
-      
-    d3.select("#hat")
+    svg.append("polygon")
+      .attr("points", coordMap(hat))
+      .attr("fill", "url(#hatGradient)")
       .on('click', function () {
         wakeUpSheep()
         if (isSheepAwake % 3 == 1) {
@@ -348,12 +338,30 @@
   ]
 
 
-  function coordMap() {
+  function coordMap(d) {
     return d.map(function (d) {
           return [d.x, d.y].join(",");
         }).join(" ");
   }
-  
+
+  function sheepHooves() {
+    svg.append("polygon")
+      .attr("points", coordMap(rightHoof))
+      
+      .attr("fill", "brown")
+      .on('click', function () {
+        wakeUpSheep()
+      })
+    svg.append("polygon")
+      .attr("points", coordMap(leftHoof))
+      
+      .attr("fill", "brown")
+      .on('click', function () {
+        wakeUpSheep()
+      })
+  }
+
+  sheepHooves()
   sheepHat()
 
 
