@@ -1,6 +1,5 @@
 How to set up a local server
-  brew install http-server (shouldn't have to run this line tho)
-  http-server &
+  python -m http.server 8000
 
 
 Help with D3
@@ -8,11 +7,12 @@ Help with D3
   Tutorial by Mike Bostock: https://observablehq.com/collection/@d3/learn-d3
 
 
+Where did I steal code from?
+  how to draw a pentagon: https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3
+  how to draw a pentagon: https://vegibit.com/drawing-scalable-vector-graphics-with-d3-javascript/
+
+
 Project ideas brain dump
-  kitty to lion art
-    move mouse over shape to change color of each shape
-    OR move vertical line side to side to change color of each shape
-    color transition via smooth gradient thing
   pig drawing
     move vertical line across, pig parts float away
     move vertical line back, pig parts assemble

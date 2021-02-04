@@ -3,166 +3,246 @@
 
 
 <head>
-  <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="author" content="Jyalu Wu">
-  <title>01-ghd3</title>
-  <script src="https://d3js.org/d3.v6.min.js"></script>
+	<title>01-ghd3</title>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 
 <body>
-	<div>
-		clover will you marry me  i love u !!
-	</div>
-	<br>
+	<p>Pigasso</p>
+	<p>By Jyalu Wu</p>
 
+	<div id = "svgcontainer"></div>
 
 	<script>
-	  console.log(d3); // test if d3 is loaded
+		console.log(d3); // test if d3 is loaded
 
-	  // Add an SVG
-	  var svg = d3.select('body').append('svg')
-	  	.attr('width', 700)
-	  	.attr('height', 700);
+		var w = window.innerWidth - 20
+		var h = window.innerHeight - 120
 
-	  var colors = ['#caff70', '#bcee68', '#a2cd5a', '#6e8b3d']
+		var pig_size = h / 4
+		//console.log(5+'vw') //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		var pig_offset = w/2 - 2*pig_size
 
-	  // background
-	  // svg.append('rect')
-	  // 	.attr('width', '100%')
-	  // 	.attr('height', '100%')
-	  // 	.attr('fill', 'gray')
+		// Add an SVG
+		var svg = d3.select('#svgcontainer')
+			.append('svg')
+			.attr('width', w)
+			.attr('height', h)
 
-	  // Add Rectangles
-	  svg.append("rect")
-	    .attr("width", 100)
-	    .attr("height", 100)
-	    .attr("fill", "#caff70");
+		var hue = 350
 
-	  svg.append("rect")
-	  	.attr('x', 150)
-	    .attr("width", 100)
-	    .attr("height", 100)
-	    .attr("fill", "#bcee68");
+		var pig_colors = ['hsla('+hue+', 100%, 85%, 1)', 
+			'hsla('+hue+', 80%, 70%, 1)', 'hsla('+hue+', 750%, 60%, 1)']
 
-	  svg.append("rect")
-	  	.attr('x', 300)
-	    .attr("width", 100)
-	    .attr("height", 100)
-	    .attr("fill", "#a2cd5a");
+		//var pig_colors = ['#ffabb8', '#f17f92', '#ea576f', '#ce465c']
 
-	  svg.append("rect")
-	  	.attr('x', 450)
-	    .attr("width", 100)
-	    .attr("height", 100)
-	    .attr("fill", "#6e8b3d");
+		//var bg_colors = pig_colors
 
+		//var bg_colors = ['#f1c9d4', '#f7e4f0', '#d9bdc6', 
+		//	'#efc2ce', '#ffe6eb']
+		var bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
+			'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
+			'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
 
-	  // Add Circles
-	  svg.append('circle')
-	  	.attr('cx', 50)
-	  	.attr('cy', 200)
-	  	.attr('r', 50)
-	  	.attr('fill', '#caff70')
-
-	  svg.append('circle')
-	  	.attr('cx', 200)
-	  	.attr('cy', 200)
-	  	.attr('r', 50)
-	  	.attr('fill', '#bcee68')
-
-	  svg.append('circle')
-	  	.attr('cx', 350)
-	  	.attr('cy', 200)
-	  	.attr('r', 50)
-	  	.attr('fill', '#a2cd5a')
-
-	  svg.append('circle')
-	  	.attr('cx', 500)
-	  	.attr('cy', 200)
-	  	.attr('r', 50)
-	  	.attr('fill', '#6e8b3d')
+		// background/rectangles
+		for (i = 0; i < 5; i++) {
+			svg.append('rect')
+				.attr('y', i * (h / 5))
+				.attr('width', w)
+				.attr('height', h / 5)
+				.attr('fill', bg_colors[i])
+		}
+		console.log('background rectangles done')
 
 
-	  // Add Lines
-	  svg.append('line')
-	  	.attr('x1', 0)
-	  	.attr('y1', 300)
-	  	.attr('x2', 100)
-	  	.attr('y2', 300)
-	  	.style('stroke', colors[0])
-	  	.style('stroke-width', 10)
+		// Add Polygons
+		/**
+		 * Helper function for turning point objects to a string of points
+		 */
+		function points_string(data) {
+			output = ''
 
-	  svg.append('line')
-	  	.attr('x1', 150)
-	  	.attr('y1', 300)
-	  	.attr('x2', 250)
-	  	.attr('y2', 300)
-	  	.style('stroke', colors[1])
-	  	.style('stroke-width', 10)
+			for (i = 0; i < data.length; i++) {
+				output = output + Math.floor(data[i].x) + ', ' + Math.floor(data[i].y)
+				if (i != data.length - 1)
+					output = output + ' '
+			}
+			console.log(output)
+			return output
+		}
 
-	  svg.append('line')
-	  	.attr('x1', 300)
-	  	.attr('y1', 300)
-	  	.attr('x2', 400)
-	  	.attr('y2', 300)
-	  	.style('stroke', colors[2])
-	  	.style('stroke-width', 10)
-
-	  svg.append('line')
-	  	.attr('x1', 450)
-	  	.attr('y1', 300)
-	  	.attr('x2', 550)
-	  	.attr('y2', 300)
-	  	.style('stroke', colors[3])
-	  	.style('stroke-width', 10)
-
-	  // Add Polygons
-	  // star
- var w = 800;
-var h = 800;
-		var xScale = d3.scaleLinear()
-		             //accepts
-		             .domain([0, 100])
-		             //outputs
-		             .range([0, w]);
-
-		var yScale = d3.scaleLinear()
-		             //accepts
-		             .domain([0, 100])
-		             //outputs
-		             .range([0, h]);
+		// Add Head
+		head = [
+			{'x':pig_size + pig_offset, 		'y':3*pig_size/2},
+			{'x':pig_size + pig_offset, 		'y':5*pig_size/2},
+			{'x':2 * pig_size + pig_offset, 	'y':3*pig_size},
+			{'x':3*pig_size + pig_offset, 		'y':5*pig_size/2},
+			{'x':3*pig_size + pig_offset, 		'y':3*pig_size/2},
+			{'x':5*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':3*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':pig_size + pig_offset, 		'y':3*pig_size/2}
+		]
+		svg.append('polygon')
+			.attr('points', points_string(head))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[0])
 
 
-	  var radialLineGenerator = d3.radialArea()
-                         .innerRadius(function(d) {
-                          return xScale(d[1])})
-                         .outerRadius(function(d) {
-                          return xScale(d[2])});   
-		var radialpoints = [
-		    [0, 0, 15],
-		    [Math.PI * 0.2, 0, 6],
-		    [Math.PI * 0.4, 0, 15],
-		    [Math.PI * 0.6, 0, 6],
-		    [Math.PI * 0.8, 0, 15],
-		    [Math.PI * 1, 0, 6],       
-		    [Math.PI * 1.2, 0, 15],
-		    [Math.PI * 1.4, 0, 6],
-		    [Math.PI * 1.6, 0, 15],
-		    [Math.PI * 1.8, 0, 6],
-		    [Math.PI * 2, 0, 15]
-		];
+		// Add Lines
+		svg.append('line')
+			.attr('x1', pig_size+pig_offset)
+			.attr('y1', 3*pig_size/2)
+			.attr('x2', 3*pig_size+pig_offset)
+			.attr('y2', 3*pig_size/2)
+			.style('stroke', pig_colors[1])
 
-		var radialData = radialLineGenerator(radialpoints);
-		var radial = svg.append("path")
-		             .attr("class", "freeradial")
-		             .attr("d", radialData)
-		             .attr("class", "radial")
-		             .attr("transform", function(d) {
-		              return "translate("+xScale(60)+","+yScale(60)+")"
-		              });
+		svg.append('line')
+			.attr('x1', 2*pig_size+pig_offset)
+			.attr('y1', 2*pig_size)
+			.attr('x2', 2*pig_size+pig_offset)
+			.attr('y2', 3*pig_size/2)
+			.style('stroke', pig_colors[1])
+
+		svg.append('line')
+			.attr('x1', pig_size+pig_offset)
+			.attr('y1', 3*pig_size/2)
+			.attr('x2', 2*pig_size+pig_offset)
+			.attr('y2', 2*pig_size)
+			.style('stroke', pig_colors[1])
+
+		svg.append('line')
+			.attr('x1', 2*pig_size+pig_offset)
+			.attr('y1', 2*pig_size)
+			.attr('x2', 3*pig_size+pig_offset)
+			.attr('y2', 3*pig_size/2)
+			.style('stroke', pig_colors[1])
+
+		svg.append('line')
+			.attr('x1', pig_size+pig_offset)
+			.attr('y1', 5*pig_size/2)
+			.attr('x2', 2*pig_size+pig_offset)
+			.attr('y2', 3*pig_size/2)
+			.style('stroke', pig_colors[1])
+
+		svg.append('line')
+			.attr('x1', 2*pig_size+pig_offset)
+			.attr('y1', 3*pig_size/2)
+			.attr('x2', 3*pig_size+pig_offset)
+			.attr('y2', 5*pig_size/2)
+			.style('stroke', pig_colors[1])
+		
+
+		// Add Nose
+		nose = [
+			{'x':7*pig_size/4 + pig_offset, 	'y':17*pig_size/8},
+			{'x':7*pig_size/4 + pig_offset, 	'y':19*pig_size/8},
+			{'x':2 * pig_size + pig_offset, 	'y':5*pig_size/2},
+			{'x':9*pig_size/4 + pig_offset, 	'y':19*pig_size/8},
+			{'x':9*pig_size/4 + pig_offset, 	'y':17*pig_size/8},
+			{'x':2*pig_size + pig_offset, 		'y':2*pig_size}
+		]
+		svg.append('polygon')
+			.attr('points', points_string(nose))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[2])
+
+		// Add Nostrils
+		svg.append('circle')
+			.attr('cx', 15*pig_size/8+pig_offset)
+			.attr('cy', 9*pig_size/4)
+			.attr('r', pig_size/30)
+			.attr('fill', 'black')
+		
+		svg.append('circle')
+			.attr('cx', 17*pig_size/8+pig_offset)
+			.attr('cy', 9*pig_size/4)
+			.attr('r', pig_size/30)
+			.attr('fill', 'black')
 
 
-    // Add Hearts
+	  	// Add Eyes
+		svg.append('circle')
+			.attr('cx', 3*pig_size/2+pig_offset)
+			.attr('cy', 2*pig_size)
+			.attr('r', pig_size/10)
+			.attr('fill', 'black')
+		
+		svg.append('circle')
+			.attr('cx', 5*pig_size/2+pig_offset)
+			.attr('cy', 2*pig_size)
+			.attr('r', pig_size/10)
+			.attr('fill', 'black')
+		
+
+		// Add Ears
+		l_ear1 = [
+			{'x':pig_size + pig_offset, 	'y':3*pig_size/2},
+			{'x':3*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':3*pig_size/4 + pig_offset, 	'y':pig_size/2},
+			{'x':pig_size + pig_offset, 	'y':3*pig_size/2}
+		]
+
+		l_ear2 = [
+			{'x':pig_size + pig_offset, 	'y':3*pig_size/2},
+			{'x':3*pig_size/4 + pig_offset, 	'y':pig_size/2},
+			{'x':3*pig_size/4 + pig_offset, 	'y':5*pig_size/4},
+			{'x':pig_size + pig_offset, 	'y':3*pig_size/2}
+		]
+
+		r_ear1 = [
+			{'x':5*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':3*pig_size + pig_offset, 	'y':3*pig_size/2},
+			{'x':13*pig_size/4 + pig_offset, 	'y':pig_size/2},
+			{'x':5*pig_size/2 + pig_offset, 	'y':pig_size}
+		]
+
+		r_ear2 = [
+			{'x':3*pig_size + pig_offset, 	'y':3*pig_size/2},
+			{'x':13*pig_size/4 + pig_offset, 	'y':pig_size/2},
+			{'x':13*pig_size/4 + pig_offset, 	'y':5*pig_size/4},
+			{'x':3*pig_size + pig_offset, 	'y':3*pig_size/2}
+		]
+
+		svg.append('polyline')
+			.attr('points', points_string(l_ear1))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[1])
+
+		svg.append('polyline')
+			.attr('points', points_string(l_ear2))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[2])
+
+		svg.append('polyline')
+			.attr('points', points_string(r_ear1))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[1])
+
+		svg.append('polyline')
+			.attr('points', points_string(r_ear2))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[2])
+
+
+		// Add Airbender Triangle
+		airbender = [
+			{'x':3*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':2*pig_size + pig_offset, 	'y':3*pig_size/2},
+			{'x':5*pig_size/2 + pig_offset, 	'y':pig_size},
+			{'x':3*pig_size/2 + pig_offset, 	'y':pig_size}
+		]
+
+		svg.append('polyline')
+			.attr('points', points_string(airbender))
+			//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
+			.attr('fill', pig_colors[2])
+
+		  
+		// Changing color on click
+
+				
 	</script>
 </body>
 
