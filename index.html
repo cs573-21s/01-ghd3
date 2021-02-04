@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <!-- A1 - Andrew Nolan-->
 
 <!--Sources:-->
@@ -27,6 +29,10 @@
 
 <head>
   <title>CS 573 - A1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="description" content="My introduction to d3 and data visualization through an exploration of Chernoff Faces.">
+  <meta name="keywords" content="Andrew Nolan, CS 573, Chernoff Faces, Iris Dataset">
   <link rel="stylesheet" href="./styles/style.css">
   <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
 </head>
@@ -162,7 +168,7 @@
   <div class="textContent">
     <p>Unfortunately, I learned far too late into this assignment, that planning your d3 is important. After writing about 1000 lines of Javascript, it's hard to go back and resize the svgs due to the hard coded values I used. Note to self: use percentages and dynamic variables for drawing d3 next time! Anyway, I included a side by side screen shot of the three iris classes below:</p>
     <div class="imageContent">
-      <img src="./images/iris_comparisons.PNG" width="100%" height="300">
+      <img src="./images/iris_comparisons.PNG" width="100%" height="300" alt="A comparison of Iris species data using Chernoff Faces">
     </div>
     <p>Looking at these faces, we can see that the faces look distinctly similar within their respective classes. Specifically it seems eyebrow shape and nose height (petal length and petal width respectively) are the features that best represent the classes. Based on these results, we can determine that chernoff faces are a pretty good visualization for clustering and classifying data visually. Of course as the number of attributes grow, the facial features will become more obscure. So it's very important to assign the most important data attributes to the most visible facial features. One noticeable drawback of this vis is identifying values. It seems good for differentiating and classifying clusters, but it does not provide an easy way to tell which values are bigger or smaller than others. It doesn't translate to numeric values it just says that they are different.</p>
 
@@ -181,3 +187,4 @@
   <br><br><br><br>
   <br><br><br><br>
 </body>
+</html>
