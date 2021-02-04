@@ -1,10 +1,169 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1-kaluaim</title>
+</head>
+
+<body>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <div>
+        <code>Color:</code>
+        <select id="colorsSelect">
+            <option value="red" selected>🟥 Red</option>
+            <option value="green">🟩 Green</option>
+            <option value="blue">🟦 Blue</option>
+        </select>
+        <span>&nbsp;|&nbsp;</span>
+
+        <code>Shape:</code>
+        <button id="addCircle">⚫</button>
+        <button id="addRect">⬛</button>
+        <button id="addLine">/</button>
+        <button id="addPolygon">▲</button>
+        <span>&nbsp;|&nbsp;</span>
+        <button id="clear"><code>❌ Clear</code></button>
+    </div>
+    <hr />
+    <div>
+        <svg id="vis"></svg>
+    </div>
+
+
+
+    <script>
+        /**
+         * https://observablehq.com/@d3/circle-dragging-i
+        */
+        console.log(d3); // test if d3 is loaded
+
+        let circles = []
+        let rects = []
+        let lines = []
+        let polygons = []
+
+        const clearButton = document.getElementById('clear')
+        const colorsSelect = document.getElementById('colorsSelect')
+        const circlesButton = document.getElementById('addCircle')
+        const rectButton = document.getElementById('addRect')
+        const lineButton = document.getElementById('addLine')
+        const polygonButton = document.getElementById('addPolygon')
+
+        // Redraw when page resize
+        window.addEventListener('resize', draw);
+
+        clearButton.addEventListener('click', event => {
+            circles = []
+            rects = []
+            lines = []
+            polygons = []
+            draw()
+        })
+
+        circlesButton.addEventListener('click', event => {
+            circles.push({ type: 'circle', color: colorsSelect.value })
+            draw()
+        })
+
+        rectButton.addEventListener('click', event => {
+            rects.push({ type: 'rect', color: colorsSelect.value })
+            draw()
+        })
+
+        lineButton.addEventListener('click', event => {
+            lines.push({ type: 'line', color: colorsSelect.value })
+            draw()
+        })
+
+        polygonButton.addEventListener('click', event => {
+            polygons.push({ type: 'polygon', color: colorsSelect.value })
+            draw()
+        })
+
+        function draw() {
+            // Add an SVG
+            const svg = d3.select('#vis')
+                .attr("width", window.innerWidth - 10)
+                .attr("height", window.innerHeight - 59)
+                .style("background-color", "#D0D0D0")
+
+            // Add Circles
+            const circle = svg.selectAll("circle").data(circles)
+
+            circle.enter()
+                .append("circle")
+                .attr("cy", 50)
+                .attr("cx", 50)
+                .attr("r", 20)
+                .attr("fill", d => { return d.color })
+                .call(drag)
+
+            circle.exit().remove()
+
+            // Add Rectangles
+            const rect = svg.selectAll("rect").data(rects)
+
+            rect.enter()
+                .append("rect")
+                .attr("y", 150)
+                .attr("x", (d, i) => { return i * 100; })
+                .attr("width", 60)
+                .attr("height", 60)
+                .attr("fill", d => { return d.color })
+                .call(drag)
+
+            rect.exit().remove()
+
+            // Add Lines
+            const line = svg.selectAll("line").data(lines)
+
+            line.enter()
+                .append("line")
+                .attr("x1", (d, i) => { return i * 100 + 40 })
+                .attr("y1", 250)
+                .attr("x2", (d, i) => { return i * 100 + 20 })
+                .attr("y2", 350)
+                .attr("stroke", d => { return d.color })
+                .attr('stroke-width', 8)
+                .call(drag)
+
+            line.exit().remove()
+
+            // Add Polygons
+            const polygon = svg.selectAll("polygon").data(polygons)
+
+            polygon.enter()
+                .append("polygon")
+                .attr("points", (d, i) => { return `${i * 100 + 30},450 ${i * 100},500 ${i * 100 + 60},500` })
+                .attr("fill", d => { return d.color })
+                .call(drag)
+
+            polygon.exit().remove()
+        }
+
+        function dragstarted(event, d) {
+            console.log(d.type);
+            d3.select(this).raise().attr("stroke", "black");
+        }
+
+        function dragged(event, d) {
+            if (d.type === 'circle') d3.select(this).attr("cx", d.x = event.x).attr("cy", d.y = event.y)
+        }
+
+        function dragended(event, d) {
+            if (d.type === 'line') d3.select(this).attr("stroke", d => { return d.color });
+        }
+
+        const drag = d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+
+        draw()
+    </script>
+</body>
+
+</html>
