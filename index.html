@@ -263,7 +263,7 @@
       .rangeRound([0, width - padding * 2]);
 
     var yScaleLine = d3.scaleLinear()
-      .domain([d3.min(monthTemprature(temprature)), d3.max(monthTemprature(temprature))])
+      .domain([0, d3.max(monthTemprature(temprature))])
       .range([height - padding * 2, 0]);
 
     var xaxisLine = d3.axisTop()
