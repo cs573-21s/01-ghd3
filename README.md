@@ -1,8 +1,12 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 CS 573: Data Visualization
+
 Imogen Cleaver-Stigum
+
 February 2021
+
+Project URL: http://imogencs.github.io/01-ghd3/index.html 
 
 Technical and Design Elements
 ===
