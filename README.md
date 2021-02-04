@@ -6,7 +6,7 @@ Imogen Cleaver-Stigum
 
 February 2021
 
-Project URL: http://imogencs.github.io/01-ghd3/index.html 
+Project URL: https://imogencs.github.io/01-ghd3/
 
 Technical and Design Elements
 ===
