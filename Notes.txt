@@ -9,7 +9,10 @@ Help with D3
 
 Where did I steal code from?
   how to draw a pentagon: https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3
-  how to draw a pentagon: https://vegibit.com/drawing-scalable-vector-graphics-with-d3-javascript/
+      https://vegibit.com/drawing-scalable-vector-graphics-with-d3-javascript/
+  javascript on click: https://javascript.info/mouse-events-basics
+  resizing svg when window changes: https://chartio.com/resources/tutorials/how-to-resize-an-svg-when-the-window-is-resized-in-d3-js/
+      https://css-tricks.com/scale-svg/
 
 
 Project ideas brain dump
