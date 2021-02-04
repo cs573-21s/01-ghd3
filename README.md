@@ -1,12 +1,11 @@
-CS 573: Data Visualization
-===
 Assignment 1 - Hello World: GitHub and d3  
 ===
+CS 573: Data Visualization
 Imogen Cleaver-Stigum
 February 2021
 
-Design Elements
----
+Technical and Design Elements
+===
 
 The sheep is made of circles (the body and wool, as well as the open eyes), an ellipse (the head), rectangles (the legs), polygons (the hat and hooves), paths (the sleepy eyes).
 
@@ -17,9 +16,6 @@ The texture of the grass is also a design element. Textures can be an essential 
 Another design element of this picure is the gradients. The gradients add to the visual inerest of the picture, as well as making it clearer what the elements are. For example, it is appropriate and more realistic for the sky to have a gradient because the real sky has variation in the light. The sky's gradient is a linear gradient from white to light blue. The hat's gradient is a radial gradient from light green to light blue, which makes it more stylish.
 
 The different colors are also a design element because they add to the clarity of the image. In real data visualization, having distinct colors to represent different elements will be important so they are distinguishable. As we discussed in class, too many colors, like the rainbow gradients, can be overwhelming and confusing to the viewer. This is why I chose a simple color scheme with only black, white, green, and blue. This is enough colors to make the picture interesting and pleasant to look at, and to establish the differences between elements like the sky and the ground; but it is not so many colors that the colors detract from the more important parts of the picture. 
-
-Technical Elements
----
 
 There are several technical aspects in this project that go beyond just drawing shapes: the wool rotating around the sheep's body, the grass waving in the wind, the dynamic resizing of the SVG rectangle, and the sheep blinking when clicked. 
 

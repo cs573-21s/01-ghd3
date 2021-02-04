@@ -337,13 +337,6 @@
 
   ]
 
-
-  function coordMap(d) {
-    return d.map(function (d) {
-          return [d.x, d.y].join(",");
-        }).join(" ");
-  }
-
   function sheepHooves() {
     svg.append("polygon")
       .attr("points", coordMap(rightHoof))
@@ -451,6 +444,10 @@
 
   window.addEventListener("resize", drawEverything);
 
-
+  function coordMap(d) {
+    return d.map(function (d) {
+          return [d.x, d.y].join(",");
+        }).join(" ");
+  }
 
 </script>
