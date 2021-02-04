@@ -95,7 +95,7 @@
     var dataset = [10, 20, 30, 50, 35, 19, 5];
     var color = ['yellow', 'red', 'blue', 'yellow', 'green', 'orange', 'pink'];
 
-    /* Add Rectangles*/
+    /* Draw a histogram*/
     // Add an SVG to draw a histogram
     var svgHistogram = d3.select('.histogram')
       .append('svg')
@@ -173,7 +173,7 @@
       .style('transform', 'translate(' + padding * 3 / 2 + 'px, 20px)')
       .attr('fill', 'white');
 
-    /* Add cirlces*/
+    /* Draw a pi chart*/
     var svgPiechart = d3.select('.histogram')
       .append('svg')
       .attr('width', width)
@@ -185,7 +185,8 @@
     var pieData = pie(dataset);
     var arc = d3.arc()
       .innerRadius(0)
-      .outerRadius(100);
+      .outerRadius(100)
+      .cornerRadius(5);
 
     var arcs = svgPiechart.selectAll('g')
       .data(pieData)
@@ -225,7 +226,7 @@
         return arc.centroid(d)[1] * 2.5;
       })
 
-    // Add Lines
+    // Draw a line chart
     var temprature = [['Jan', 4.5], ['Feb', 6.5], ['Mar', 12], ['Apr', 18.5], ['May', 23.5], ['June', 27], ['July', 30.5], ['Aug', 30], ['Sep', 25], ['Oct', 19], ['Nov', 12], ['Dec', 6]];
     var svgLine = d3.selectAll('body')
       .append('svg')
@@ -290,10 +291,10 @@
       .attr('r', 5)
       .attr('fill', 'blue');
     var linePath = d3.line()
-      .x(function (d, i) {
+      .x(function (d) {
         return xScaleLine(d[0]);
       })
-      .y(function (d, i) {
+      .y(function (d) {
         return yScaleLine(d[1]);
       });
 
@@ -304,15 +305,6 @@
       .attr("stroke", "blue");
 
 
-
-    // let line = d3.select('.line')
-    //   .append("line")
-    //   .attr("x1", 20)
-    //   .attr("y2", 20)
-    //   .attr("x2", 300)
-    //   .attr("y2", 100)
-    //   .attr("stroke", "black")
-    //   .attr("stroke-width", "2px");
     // // Add Polygons
     // let polygon = d3.select('.polygon')
     //   .attr('width', width)
