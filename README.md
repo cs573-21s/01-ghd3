@@ -9,9 +9,9 @@ February 2021
 Project URL: https://imogencs.github.io/01-ghd3/
 
 
-![Screenshot 1](/images/ss1.png)
-![Screenshot 2](/images/ss2.png)
-![Screenshot 3](/images/ss3.png)
+![Screenshot 1](/Screenshot (2).png)
+![Screenshot 2](/Screenshot (3).png)
+![Screenshot 3](/Screenshot (4).png)
 
 Technical Achievements
 ---
