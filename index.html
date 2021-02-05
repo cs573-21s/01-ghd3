@@ -1,10 +1,127 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CS 573: Assignment 1</title>
+        <meta name="author" content="Aaron Haim">
+        <meta name="description" content="CS 573: Data Visualization's Assignment 1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./format.css">
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="./draw.js" type="module"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="editor">
+                <h1 class="editor-header">Editor</h1>
+                <div class="editor-selector">
+                    <div id="element-selector">
+                        <p>Element Type:</p>
+                        <select id="element-type">
+                            <option value="c">Circle</option>
+                            <option value="e">Ellipse</option>
+                            <option value="r">Rectangle</option>
+                            <option value="p">Polygon</option>
+                            <option value="l">Line</option>
+                        </select>
+                    </div>
+                    <div id="element-c">
+                        <p>Center X:</p>
+                        <input id="ccx" type="number" min="0" max="500" placeholder="0-500" required>
+                        <p id="ccx-c" style="display: none;">Invalid</p>
+                        <p>Center Y:</p>
+                        <input id="ccy" type="number" min="0" max="500" placeholder="0-500" required>
+                        <p id="ccy-c" style="display: none;">Invalid</p>
+                        <p>Radius:</p>
+                        <input id="cr" type="number" min="1" max="500" placeholder="1-500" required>
+                        <p id="cr-c" style="display: none;">Invalid</p>
+                        <p>Stroke:</p>
+                        <input id="cs" type="color" value="#000000" required>
+                        <p>Fill:</p>
+                        <input id="cf" type="color" value="#000000" required>
+                    </div>
+                    <div id="element-e" style="display: none;">
+                        <p>Center X:</p>
+                        <input id="ecx" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="ecx-c" style="display: none;">Invalid</p>
+                        <p>Center Y:</p>
+                        <input id="ecy" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="ecy-c" style="display: none;">Invalid</p>
+                        <p>Radius X:</p>
+                        <input id="erx" type="number" min="1" max="500" placeholder="1-500">
+                        <p id="erx-c" style="display: none;">Invalid</p>
+                        <p>Radius Y:</p>
+                        <input id="ery" type="number" min="1" max="500" placeholder="1-500">
+                        <p id="ery-c" style="display: none;">Invalid</p>
+                        <p>Stroke:</p>
+                        <input id="es" type="color" value="#000000">
+                        <p>Fill:</p>
+                        <input id="ef" type="color" value="#000000">
+                    </div>
+                    <div id="element-r" style="display: none;">
+                        <p>Start X:</p>
+                        <input id="rx" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="rx-c" style="display: none;">Invalid</p>
+                        <p>Start Y:</p>
+                        <input id="ry" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="ry-c" style="display: none;">Invalid</p>
+                        <p>Width:</p>
+                        <input id="rw" type="number" min="1" max="500" placeholder="1-500">
+                        <p id="rw-c" style="display: none;">Invalid</p>
+                        <p>Height:</p>
+                        <input id="rh" type="number" min="1" max="500" placeholder="1-500">
+                        <p id="rh-c" style="display: none;">Invalid</p>
+                        <p>Border Radius X:</p>
+                        <input id="rrx" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="rrx-c" style="display: none;">Invalid</p>
+                        <p>Border Radius Y:</p>
+                        <input id="rry" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="rry-c" style="display: none;">Invalid</p>
+                        <p>Stroke:</p>
+                        <input id="rs" type="color" value="#000000">
+                        <p>Fill:</p>
+                        <input id="rf" type="color" value="#000000">
+                    </div>
+                    <div id="element-p" style="display: none;">
+                        <p>Center X:</p>
+                        <input id="pcx" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="pcx-c" style="display: none;">Invalid</p>
+                        <p>Center Y:</p>
+                        <input id="pcy" type="number" min="0" max="500" placeholder="0-500">
+                        <p id="pcy-c" style="display: none;">Invalid</p>
+                        <p>Radius:</p>
+                        <input id="pr" type="number" min="1" max="500" placeholder="1-500">
+                        <p id="pr-c" style="display: none;">Invalid</p>
+                        <p>Sides:</p>
+                        <input id="psi" type="number" min="3" max="20" placeholder="3-20">
+                        <p id="psi-c" style="display: none;">Invalid</p>
+                        <p>Initial Rotation:</p>
+                        <input id="pa" type="number" min="0" max="359" placeholder="0-359">
+                        <p id="pa-c" style="display: none;">Invalid</p>
+                        <p>Stroke:</p>
+                        <input id="ps" type="color" value="#000000">
+                        <p>Fill:</p>
+                        <input id="pf" type="color" value="#000000">
+                    </div>
+                    <div id="element-l" style="display: none;">
+                        <p>Points:</p>
+                        <input id="lp" type="text" placeholder="123,1.23 34.5,345">
+                        <p id="lp-c" style="display: none;">Invalid</p>
+                        <p>Stroke:</p>
+                        <input id="ls" type="color" value="#000000">
+                    </div>
+                    <div id="new-element">
+                        <button id="create" type="submit">Create</button>
+                        <button id="remove-all" type="submit">Remove All</button>
+                    </div>
+                    <div id="existing-element" style="display: none;">
+                        <button id="update" type="submit">Update</button>
+                        <button id="remove" type="submit">Remove</button>
+                        <button id="back" type="submit">Back</button>
+                    </div>
+                </div>
+            </div>
+            <svg id="draw"></svg>
+        </div>
+    </body>
+</html>

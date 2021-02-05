@@ -1,86 +1,79 @@
-Assignment 1 - Hello World: GitHub and d3  
-===
+# [Simple Element Editor](https://cs573.ashwork.net/01-ghd3/)
 
-This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
+## Abstract
 
-The primary goal is to be able to generate graphics primitives (circles, rectangles, lines, polygons) at different locations on the screen with different colors. 
+This is an editor which allows the user to draw, update, and remove elements on or from the screen. It comes preloaded with a simple house built using predefined elements when the window first loads in. The svg elements scale to the current size of the screen to show off the dynamism of element structure when stored in raw form.
 
-The secondary goal is to introduce you to coding on GitHub, including creating a gh-pages branch to host your visualizations.
+## Technical
 
-You may write everything from scratch, or start with demo programs from books or the web. 
-If you do start with code that you found, you **must identify** the source of the code in your README and, most importantly, make non-trivial changes to the code to make it your own so you really learn what you're doing. 
+This webpage is the first assignment for CS 573: Data Visualization. The requirements were to draw simple svg elements onto the screen. These could include circles, ellipses, and other objects. Due to a lack of front-end design skill, an editor is used to allow users to design their own information.
 
-For example, you could download one of the d3.js examples, read it through so you understand what it's doing, and then change the appearance of the graphical output to use different color schemes, different primitive shapes, different layouts of the primitives, and so on.
+### Objects
 
-Resources
----
+Classes are built upon inheritance from `IndexedElement`, a class that holds an index of the element's current location within a list. This is favored above `Array#indexOf` as that will return the first index a given element is found in the array which cannot be necessarily assumed with an editor. From there, it is expanded upon with `Colorable` to all the user to specify a stroke and fill for each drawn element. Finally, the exported shapes are constructed: `Circle`, `Ellipse`, `Rectangle`, `Polyline`, and `Polygon`. Polyline is favored over line since it is an easy way to chain multiple points together using a single element.
 
-If you need a JavaScript/HTML/CSS refresher, see [JavaScript Codeacademy](https://www.codecademy.com/en/tracks/javascript) or find one of your choosing on the web.
+### Data Verification
 
-If you need a Git/GitHub refreseher, some possible resources include [Getting Started with GitHub](https://help.github.com/categories/bootcamp/), the [GitHub Guides](https://guides.github.com/) (especially the ones on Hello World, and Understanding the GitHub Flow, and Forking Projects), and [CodeSchool's Try Git Course](https://www.codeschool.com/courses/try-git).
+Each entry passed into the editor is verified using a regex function to verify its validity. This must be used at a bare minimum to verify the data is being written in the specified format. Each `input` has a placeholder tag which specifies the valid range and format accepted. Each value is then checked and then parsed as a float except for one specific case.
 
-Requirements
----
+### Indexed Information
 
-1. Your project should contain at least four kinds of graphics primitives (circles, rectangles, lines, polygons) in different colors. 
-2. Your document should identify the source of the code if you start with code that you found. 
-3. Your code should be forked from the GitHub repo and linked using GitHub pages. See the "GitHub Details" section below for detailed instructions on how to do this.
+Data is broken up into five arrays, each holding their own element data. Every element holds an index which can be used to uniquely identify it when querying directly from html. The arrays are updated in a semi-functional programming standard. Elements are created and removed as intended; however, updated elements are removed and appended to the end of the list.
 
-GitHub Details
----
+This supports a scoped editor used to specify elements to create by their designated geometry properties. Any element can be created, updated, or removed by the user.
 
-- Fork the GitHub Repository for Assignment 1. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "main" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit the README.md with a link to your gh-pages site "http://YourUsernameGoesHere.github.io/01-ghd3/index.html".
+### Resize
 
-Submission Details
----
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Note: name your pull request using the following scheme: 
-```
-a1-your Gh username-your first name-your lastname
+All elements are mapped to a coordinate range of [0, 500] on the x-axis and [0, 500] on the y-axis. The elements drawn to screen are transformed based on the corresponding space available not including that taken up by the editor. For example, if the available svg size is 1920x1080, then the x-axis would map to [0, 1920] and [0, 1080] for the y-axis. The page can then be resized as wanted to which all the elements will be redrawn to the screen to accompany the increased size.
 
-```
+## Design
 
-Vis Details
----
+### Geometry Properties
 
-For this project you should use d3.js. 
-You can learn from examples on the [d3.js](http://d3js.org) site or start from scratch.
+Each element is created by their designated geometry properties except for polygons. Polygons are created using a central x and y, radius, number of sides, and initial angle offset. This allows for regular polyhedra to be created much more easily with better readability.
 
-See the [Using d3js](https://github.com/mbostock/d3/wiki#using) documentation for how to run your own local server.
+### Selected Element
 
-Creative solutions are welcome! In the past I've seen recreations of paintings, interactives, and more.
+The selected element will always update the editor to the specified type with the element information. The element will also be fully opaque to signal that it is the one selected. Furthermore, the type editor will be hidden as updating elements should not change the type; otherwise, arbitrary data might emerge. An element can be deselected by clicking off the element within the svg or by selecting the 'Back' button within the editor. The ability to create a new element or remove all elements is hidden while an element is selected as they have no standing on what a selected element should do.
 
-Go beyond the minimum requirements of this project.
-Experiment with other aspects of the [d3 API](https://github.com/mbostock/d3/wiki/API-Reference) and [d3 Tutorials](https://github.com/mbostock/d3/wiki/Tutorials). 
-Try making the elements interactive, for example, or animate them.
+### Cleanup
 
-Grading
----
+To prevent the user from having to remove editor data when written, the editor is cleared every time create, update, or remove is called for the corresponding type.
 
-Grades are on a 120 point scale. 
-96 points will be graded for functionality: the program does what the assignment requests with an informative README. 
+### Color
 
-We will use Google Chrome to view submissions. 
-Be sure to test your code there.
+Each element can be specified with a stroke and fill to determine how the element should look on screen.
 
-Below are some, but not necessarily all, of the key points we will consider during grading:
+### Invalidity
 
-- Circles and Rectangles  
-- Lines  
-- Polygons  
-- Different colors  
-- README Quality
-    - A description of what you have created. 1-2 screenshots are recommended for the README.  
-    - A working link to the hosted files (usually the gh-pages 'live' url)  
-    - Section for Technical and Design Achievements
+Any element that does not match the regex will notify the user with an 'Invalid' message underneath the specified parameter.
 
-Technical Achievement Desription -- 12  
-Design Achievement Description -- 12
+## Limitations and Further Work
 
-Remember, it is up to *you* to define what constitutes a technical and design achievements.
-Be ambitious as these are designed to allow you to shape your learning.
-These are the only way to move from B to A territory.
+D3 might be a powerful API for arbitrary data points; however, its usability in this case is quite limited for a reason. There are also some shortcomings for this project itself that will be addressed here.
 
+### Data Ordering
+
+Data is not technically ordered within d3. Therefore, using a select to match all possible elements will force all elements to be drawn on top of each other. This means that a list of certain element type will draw first, then the next, and the next. This prevents what's known as stack ordering: elements drawn on screen in order of creation. You also cannot force an element to update without it having been drawn on top of all the rest.
+
+**Future Solution**: Force each class object to hold a creator which is called to draw each element on the screen reducing the amount of lists to one and allowing elements to be drawn in a consistent order. This would also give way for future elements to have their drawn order manipulated. Note that every element above the current element would need to be redrawn.
+
+### Client-Side Storage
+
+User element data is not cached to allow a user to pick up where they left off once they finish. This would mean that each time, the user would need to redo everything from scratch each time the page was loaded.
+
+**Future Solution**: Implement the [IndexedDB API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) to store object data and check if present before drawing the default solution.
+
+### Complex Polyhedra
+
+Currently, the only way to implement a valid polyhedra is by creating a regular one. The issue with this is that there is no way to design irregular shapes.
+
+**Future Solution**: Create a new class/editor that allows `polygon`s to take in point data similar to that of `polyline`s.
+
+## References
+
+* [Mozilla Developer Network Documentation - Basic Shapes](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes)
+* [HTML 5.2 Language Specification](https://www.w3.org/TR/2021/SPSD-html52-20210128/)
+* [CSS Snapshot 2020 Language Specification](https://www.w3.org/TR/CSS/)
+* [ECMAScript 2015 Language Specification](https://262.ecma-international.org/ecma-262/6.0/ECMA-262.pdf)
+* [D3 Documentation](https://github.com/d3/d3/wiki)
