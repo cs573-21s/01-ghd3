@@ -1,10 +1,317 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<style>
+  body{
+    background-color: #b2bfd9;
+  }
+  #vis{
+    margin-top:20;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+  }
+  #button{
+    margin-top: 20;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border: none;
+    background-color: #526eab;
+    color:rgb(235, 227, 212);
+    padding: 15px 25px;
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 9px #29488c;
+    cursor: pointer;
+  }
+  #button:hover {
+    background-color: #466099;}
+  #button:active {
+    background-color: #466099;
+    box-shadow: 0 5px #29488c;
+    transform: translateY(4px);
+  }
+  #button:focus {outline:0;}
+  
+</style>
 
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<svg id="vis">
+  <defs>
+    <linearGradient id="city"></linearGradient>
+  </defs>
+</svg>
+<button id="button" onclick="changeTime()">Change Time</button> 
 <script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+  console.log(d3);
+
+  var width = 500,
+    height = width,
+    numStars = 30,
+    periodStars = 5000,
+    numBuildings = 8,
+    periodBuildings = 4000,
+    time = -1,
+    //colors
+    sky1 = "#36507B",
+    sky2 = "#84bde8",
+    city1 = "#486594",
+    city2 = "#6ca3cc",
+    moon1 = "#f0eec5",
+    moon2 = "#fcd535",
+    building1 = "#617dab",
+    building2 = "#5084ab",
+    buildingCur = building1;
+
+// scaling
+  var xscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, width]);
+
+  var yscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, height]);
+
+  var rscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, height]);
+
+  function coordScale(d) {
+    return d.map(function(d) {
+            return [xscale(d.x),yscale(d.y)].join(",");
+        }).join(" ");
+  }
+
+//making SVG
+  var svg = d3.select("#vis")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", sky1);
+  
+  var defs = svg.select("defs");
+
+//background city -------------------------------------------------
+  var city = [
+    { "x": -1, "y": 30 },
+    { "x": 1, "y": 30 },
+    { "x": 5, "y": 20 },
+    { "x": 9, "y": 30 },
+    { "x": 10, "y": 30 },
+    { "x": 10, "y": 50 },
+    { "x": 20, "y": 50 },
+    { "x": 20, "y": 35 },
+    { "x": 32, "y": 35 },
+    { "x": 32, "y": 45 },
+    { "x": 42, "y": 45 },
+    { "x": 42, "y": 47 },
+    { "x": 53, "y": 47 },
+    { "x": 53, "y": 29 },
+    { "x": 64, "y": 29 },
+    { "x": 64, "y": 60 },
+    { "x": 76, "y": 60 },
+    { "x": 76, "y": 40 },
+    { "x": 90, "y": 40 },
+    { "x": 90, "y": 45 },
+    { "x": 110, "y": 45 },
+    { "x": 110, "y": 100 },
+    { "x": -1, "y": 100 },
+  ]
+
+  addPoly(city, city1, "city")
+
+// moving buildings -------------------------------------------------
+  var data = d3.range(0, numBuildings)
+  .map(function(i) {
+      var gradient = defs.append("linearGradient")
+        .attr("id", "g" + i);
+      d = {};
+      randomize(d);
+      d.x += i * (width / numBuildings);
+        return d;
+    });
+
+  function randomize(d) {
+    d.x = Math.random() * 5;
+    d.y = 0.2 * height + Math.random() * 40;
+    d.w = 80 + Math.random() * 30;
+    d.h = height;
+    return d;
+  }
+
+  var g = svg.selectAll("g")
+    .data(data)
+    .enter().append("g");
+
+  g.append("rect")
+    .attr("class", "building");
+
+  function building(d, i) {
+    var g = d3.select(this);
+
+    g.attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+    });
+
+    g.selectAll(".building")
+    .attr("x", function(d){ return d.x; })
+    .attr("y", function(d){ return d.y; })
+    .attr("width", function(d){ return d.w; })
+    .attr("height", function(d){ return d.h; })
+    .style("fill", buildingCur)
+  };
+
+  var t0 = 0;
+
+  d3.timer(function(t1) {
+    dt = t1 - t0;
+    t0 = t1;
+
+    data.forEach(function(d) {
+        d.x += 0.13 * dt;
+        if (d.x > width ) {
+            d.x = d.x % width - 50;
+        }
+    });
+
+    g.each(building);
+  });
+
+  // road -------------------------------------------------
+
+  var road = [
+    {x: 0, y: 80, width: 100, height: 100, fill: "#262c42", class: "road"}
+  ]
+  addRect(road);
+
+  // car -------------------------------------------------
+
+  var carBody = [
+  { "x": 28, "y": 73 },
+  { "x": 34, "y": 73 },
+  { "x": 43, "y": 62.5 },
+  { "x": 56, "y": 62.5 },
+  { "x": 64, "y": 73 },
+  { "x": 66, "y": 73 },
+  { "x": 66, "y": 83 },
+  { "x": 28, "y": 83 }
+  ]
+  var wheels = [
+    {cx: 40, cy: 82, r: 6, fill: "#3b3f4a", class: "tire"}, 
+    {cx: 56, cy: 82, r: 6, fill: "#3b3f4a", class: "tire"},
+    {cx: 40, cy: 82, r: 4, fill: "#606678", class: "innerWheel"}, 
+    {cx: 56, cy: 82, r: 4, fill: "#606678", class: "innerWheel"}
+  ]
+  var headlight = [ {x: 29, y: 74, width: 3, height: 3, fill: "#f2cf30", class: "headlight"} ]
+  var lightBeams = [ {x1: 24, y1: 76.5, x2:0, y2: 80, class: "lightBeams"} ]
+
+  addPoly(carBody, "white", "car");
+  addRect(headlight);
+  svg.append("line")
+    .data(lightBeams)
+    .attr("class", "lightBeams")
+    .attr("x1", d=> xscale(d.x1))
+    .attr("y1", d=> yscale(d.y1))
+    .attr("x2", d=> xscale(d.x2))
+    .attr("y2", d=> yscale(d.y2))
+    .style("stroke", "#fff7d1")
+    .style("stroke-width", 40)
+    .style("stroke-linecap", "round")
+    .style("opacity", 0.4);
+  svg.selectAll("circle")
+    .data(wheels)
+    .enter().append("circle")
+    .attr("class", d=> d.class)
+    .attr("cx", d=> xscale(d.cx))
+    .attr("cy",  d=> yscale(d.cy))
+    .attr("r", d=>rscale(d.r))
+    .style("fill", d=>d.fill);
+
+  // moon
+  var moon = [{cx: 72, cy: 16, r: 8, fill: moon1, class:"moon" }]
+    svg.append("circle")
+    .data(moon)
+    .attr("class", d=> d.class)
+    .attr("cx", d=> xscale(d.cx))
+    .attr("cy",  d=> yscale(d.cy))
+    .attr("r", d=>rscale(d.r))
+    .style("fill", d=>d.fill);
+
+  //adding shapes functions -------------------------------------------------
+  function addRect(d) {
+    svg.append("rect")
+    .data(d)
+    .attr("class", d=> d.class)
+    .attr("x", d=> xscale(d.x))
+    .attr("y",  d=> yscale(d.y))
+    .attr("width",  d=> xscale(d.width))
+    .attr("height",  d=> yscale(d.height))
+    .style("fill",  d=> d.fill)
+  }
+
+  function addPoly(d, color, cla ){
+    svg.append("polygon")
+    .data([d])
+    .attr("points", d=>coordScale(d))
+    .attr("class",  cla)
+    .style("fill", color);
+  }
+  
+  //transition functions -------------------------------------------------
+  function changeColor(d, night, day) {
+    var nextColor
+    if (time < 0){
+      nextColor = day;
+    }else{
+      nextColor = night;
+    }
+    d3.selectAll(d)
+    .transition()
+    .duration(2000)
+    .style("fill", nextColor)
+  }
+
+  function buildingTrans(night, day){
+    var nextColor
+    if (time < 0){
+      nextColor = day;
+    }else{
+      nextColor = night;
+    }
+    var d = d3.selectAll(".building")
+    .transition()
+    .duration(2000)
+    .style("fill", nextColor)
+    .on("end", function(){
+      buildingCur = nextColor;
+      return;
+      })
+    }
+
+  // on click -------------------------------------------------
+  function changeTime(){
+    changeColor(".city", city1, city2)
+    changeColor(".moon", moon1, moon2)
+    buildingTrans(building1, building2)
+
+    var skyColor, light;
+    if (time < 0){
+      skyColor = sky2
+      light = 0
+    }else{
+      skyColor = sky1
+      light = 40
+    }
+
+    d3.selectAll("#vis")
+    .transition()
+    .duration(2000)
+    .style("background", skyColor);
+
+    d3.selectAll(".lightBeams")
+    .transition()
+    .duration(2000)
+    .style("stroke-width", light);
+
+    time = -time;
+        //console.log(buildingCur)
+  }
+  </script>
