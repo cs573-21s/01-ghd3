@@ -1,11 +1,3 @@
-
-
-
-- README Quality
-    - A description of what you have created. 1-2 screenshots are recommended for the README.  
-    - A working link to the hosted files (usually the gh-pages 'live' url)  
-
-
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
