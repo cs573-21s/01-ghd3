@@ -16,6 +16,8 @@ http://ephie06.github.io/01-ghd3/index.html
 I used the in class demo as a starting point for the assignment. In addition I used the following sites for reference on how to create graphics primitives. 
 
 https://www.d3-graph-gallery.com/graph/shape.html
+https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3
+https://www.d3indepth.com/shapes/
 
 Technical Achievement Desription
 ---
