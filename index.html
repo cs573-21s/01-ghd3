@@ -1,10 +1,500 @@
 <script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://unpkg.com/geometric@1.0.9/build/geometric.min.js"></script>
+
+<style>
+  body {
+    background-color: #ddffdd;
+  }
+
+  h1 {
+    color: #22aa22;
+  }
+
+  h2 {
+    color: #22aa22;
+  }
+
+  p {
+    color: #22aa22;
+  }
+
+  .svg-container {
+    overflow: hidden;
+  }
+</style>
+
+<h1>Assignment 1 for CS 573: Data Visualization </h1>
+<p>Imogen Cleaver-Stigum </p>
+<p>February 2021 </p>
+<p> Click the sheep to wake it up! </p>
+<p> Click the hat to change styles. </p>
+<p> Mouse over the grass to see it blow in the wind. </p>
+<p> Click on the sky to make a butterfly fly by. </p>
+
+<div id="value" class="svg-container"> </div>
+<svg id="vis"> </svg>
+
 
 <script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
+
+  var width = window.innerWidth
+  var height = 700
+  var svg = d3.select("#vis")
+    .attr('width', width)
+    .attr('height', height)
+    .attr("viewbox", "0 0 " + width + " " + height)
+
+
+  /**************************************
+  * draw everything
+  **************************************/
+  function drawEverything() {
+    d3.select("#sky").remove()
+    d3.select("#grassBlock").remove()
+    width = window.innerWidth
+    svg = d3.select("#vis")
+      .attr('width', width)
+      .attr('height', height)
+      .attr("viewbox", "0 0 " + width + " " + height)
+    background()
+    showGrass()
+    sheepLegs()
+    sheepBody()
+    sheepHead()
+    sheepEyes()
+    d3.selectAll("polygon").raise()
+  }
+
+  drawEverything()
+
+
+  /**************************************
+  * background
+  **************************************/
+
+  // sky
+  var defs = svg.append("defs");
+  var skyGradient = defs.append("linearGradient")
+    .attr("id", "skyGradient")
+    .attr("x1", "0%")
+    .attr("x2", "100%")
+    .attr("y1", "0%")
+    .attr("y2", "100%");
+  skyGradient.append("stop")
+    .attr('class', 'start')
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1);
+  skyGradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "100%")
+    .attr("stop-color", "LightSkyBlue")
+    .attr("stop-opacity", 1);
+
+  function background() {
+
+    svg.append("rect")
+      .attr("width", width)
+      .attr("height", height * 2 / 3)
+      .attr("fill", "url(#skyGradient)")
+      .attr("id", "sky")
+
+      .on("click", function () {
+        butterfly(d3.pointer(event)[0], d3.pointer(event)[1])
+      })
+    // grass
+    svg.append("rect")
+      .attr("x", 0)
+      .attr("y", height * 2 / 3)
+      .attr("width", width)
+      .attr("height", height / 3)
+      .attr("fill", "green")
+      .attr("id", "grassBlock")
+      .on("mouseover", function () { grassInterval = setInterval(showGrass, 200); })
+      .on("mouseout", function () { clearInterval(grassInterval); })
+  }
+
+  background()
+
+  var butterflyInterval
+  // butterfly
+  function butterfly(x, y) {
+    d3.select("#butterfly").remove()
+    clearInterval(butterflyInterval)
+    const curve = d3.line().curve(d3.curveBasis);
+    let size = 30
+    let butterflyPoints = [
+      [x, y],
+      [x + size, y + size],
+      [x, y],
+      [x - size, y + size],
+      [x, y],
+      [x + size, y - size],
+      [x, y],
+      [x - size, y - size],
+      [x, y]
+    ]
+    svg.append('path')
+      .attr('d', curve(butterflyPoints))
+      .attr('stroke', "pink")
+      .attr('fill', 'blue')
+      .attr("id", "leftEyeSleepy")
+      .style("stroke-width", 2)
+      .attr("id", "butterfly")
+    // animate it moving across the page
+    let i = 0;
+    butterflyInterval = setInterval(function () {
+      i += 1
+      svg.select("#butterfly")
+        .attr("transform", "translate(" + i + " 0)");
+    }, 10);
+  }
+
+
+  /**************************************
+  * grass that is made of lines 
+  **************************************/
+  var grassHeight = 0
+  var grassHeightVariance = height / 30
+  var grassBaseHeight = height / 30
+  var grassX1 = 0
+  var grassX2 = grassX1 + grassHeight / 3
+  var grassY2 = height / 3 * 2 - grassHeight
+  var grassY1 = grassY2 + grassHeight
+  let grassCounter = 0;
+  var grassInterval;
+
+  showGrass()
+
+  function showGrass() {
+    d3.selectAll("#grass").remove()
+    for (var i = -20; i < width; i += 1) {
+
+      grassHeight = (Math.random() * grassHeightVariance) + grassBaseHeight
+      grassX1 = i
+      grassX2 = grassX1 + grassHeight / 3
+      var grassY2 = height / 3 * 2 - grassHeight + 1
+      var grassY1 = grassY2 + grassHeight
+      svg.append("line")
+        .style("stroke", "green")
+        .style("stroke-width", 2)
+        .attr("x1", grassX1)
+        .attr("y1", grassY1)
+        .attr("x2", grassX2)
+        .attr("y2", grassY2)
+        .attr("id", "grass")
+    }
+
+    sheepLegs()
+    sheepBody()
+    sheepHead()
+    sheepEyes()
+    d3.selectAll("polygon").raise()
+  }
+
+
+
+
+  /**************************************
+  * sheep
+  **************************************/
+
+  // sheep coordinates refer to the point at the center of the body
+  var sheepX = width / 3
+  var sheepY = height / 2
+  var sheepR = 150 // how big is the sheep
+  var woolR = sheepR / 4
+
+  var isSheepAwake = 0
+
+
+  // sheep legs
+  var legWidth = sheepR / 4
+  var legHeight = sheepR / 1.2
+  var legXDisp = sheepR / 3
+  var legY = sheepY + sheepR / 1.2
+
+  sheepLegs()
+
+  function sheepLegs() {
+    svg.append("rect")
+      .attr("x", sheepX + legXDisp)
+      .attr("y", legY)
+      .attr("width", legWidth)
+      .attr("height", legHeight)
+      .on('click', function () { wakeUpSheep() })
+      .attr("id", "rightLeg")
+      .attr("fill", "black");
+    svg.append("rect")
+      .attr("x", sheepX - legXDisp - legWidth)
+      .attr("y", legY)
+      .attr("width", legWidth)
+      .attr("height", legHeight)
+      .attr("id", "leftLeg")
+      .on('click', function () { wakeUpSheep() })
+      .attr("fill", "black");
+  }
+
+
+  // shadow
+  svg.append("ellipse")
+    .attr("cx", sheepX)
+    .attr("cy", legY + legHeight)
+    .attr("rx", sheepR)
+    .attr("ry", sheepR / 3)
+    .attr("id", "shadow")
+    .attr("opacity", .3)
+    .attr("fill", "black")
+
+  // the body is a circle and the wool is circles rotating around the body
+
+  sheepBody()
+
+  function sheepBody() {
+    var body = svg.append("circle")
+      .attr("cx", sheepX)
+      .attr("cy", sheepY)
+      .attr("r", sheepR)
+      .attr("fill", "white")
+      .attr("id", "body")
+      .on('click', function () { wakeUpSheep() });
+
+    for (var i = 0; i < 360; i += 24) {
+      svg.append("circle")
+        .attr("cx", sheepX + sheepR)
+        .attr("cy", sheepY)
+        .attr("r", woolR)
+        .attr("fill", "white")
+        .attr("id", "wool" + i)
+        .on('click', function () { wakeUpSheep() })
+        .attr("transform", "rotate(" + i + ", " + sheepX + ", " + sheepY + ")");
+    }
+  }
+
+
+
+
+
+  // sheep head
+  var sheepHeadY = sheepY - sheepR / 2.5
+  var sheepHeadRX = sheepR / 2
+  var sheepHeadRY = sheepR / 1.5
+
+  sheepHead()
+
+  function sheepHead() {
+    svg.append("ellipse")
+      .attr("cx", sheepX)
+      .attr("cy", sheepHeadY)
+      .attr("rx", sheepHeadRX)
+      .attr("ry", sheepHeadRY)
+      .attr("id", "head")
+      .on('click', function () { wakeUpSheep() })
+      .attr("fill", "black");
+  }
+
+  // sheep eyes
+  var sheepEyeXDisp = sheepHeadRX / 2.5
+  var sheepEyeR = sheepR / 10
+  var sheepPupilR = sheepR / 15
+  var sheepEyeColor = "green"
+
+  sheepEyes()
+
+
+
+  /**************************************
+  * cowboy hat
+  **************************************/
+
+  var hat = [
+    { "x": sheepX + sheepHeadRX, "y": sheepHeadY - sheepHeadRY * 2 / 3 },
+    { "x": sheepX - sheepR, "y": sheepHeadY - sheepHeadRY * 2 / 3 },
+    { "x": sheepX - sheepR, "y": sheepHeadY - sheepHeadRY / 2 },
+    { "x": sheepX + sheepR, "y": sheepHeadY - sheepHeadRY / 2 },
+    { "x": sheepX + sheepR, "y": sheepHeadY - sheepHeadRY * 2 / 3 },
+    { "x": sheepX - sheepHeadRX, "y": sheepHeadY - sheepHeadRY * 2 / 3 },
+    { "x": sheepX - sheepHeadRX / 2, "y": sheepHeadY - sheepHeadRY * 1.6 }, // left point of top of hat
+    { "x": sheepX, "y": sheepHeadY - sheepHeadRY * 1.4 }, // indent in top of hat
+    { "x": sheepX + sheepHeadRX / 2, "y": sheepHeadY - sheepHeadRY * 1.6 }, // right point of top of hat
+    { "id": "hat" }
+  ];
+
+  function sheepHat() {
+    var hatGradient = defs.append("radialGradient")
+      .attr("id", "hatGradient")
+      .attr("x1", "0%")
+      .attr("x2", "100%")
+      .attr("y1", "0%")
+      .attr("y2", "100%");
+
+    hatGradient.append("stop")
+      .attr('class', 'start')
+      .attr("offset", "0%")
+      .attr("stop-color", "LightSkyBlue")
+      .attr("id", "hatGradientStart")
+      .attr("stop-opacity", 1);
+
+    hatGradient.append("stop")
+      .attr('class', 'end')
+      .attr("offset", "100%")
+      .attr("stop-color", "LightGreen")
+      .attr("id", "hatGradientStop")
+      .attr("stop-opacity", 1);
+
+    svg.append("polygon")
+      .attr("points", coordMap(hat))
+      .attr("fill", "url(#hatGradient)")
+      .on('click', function () {
+        wakeUpSheep()
+
+        // change hats
+        if (isSheepAwake % 3 == 1) {
+          d3.select("#hatGradientStart").attr("stop-color", 'black')
+          d3.select("#hatGradientStop").attr("stop-color", 'purple')
+        } else if (isSheepAwake % 3 == 2) {
+          d3.select("#hatGradientStart").attr("stop-color", 'red')
+          d3.select("#hatGradientStop").attr("stop-color", 'pink')
+        } else {
+          d3.select("#hatGradientStart").attr("stop-color", 'LightSkyBlue')
+          d3.select("#hatGradientStop").attr("stop-color", 'LightGreen')
+        }
+        d3.select("#hat").style("fill", "url(#hatGradient)");
+      })
+  }
+
+
+  // hooves
+  let hoofLowerWidth = legWidth * 1.3
+  let hoofHeight = legWidth
+  var rightHoof = [
+    { "x": sheepX + legXDisp, "y": legY + legHeight },
+    { "x": sheepX + legXDisp, "y": legY + legHeight - hoofHeight },
+    { "x": sheepX + legXDisp + legWidth, "y": legY + legHeight - hoofHeight },
+    { "x": sheepX + legXDisp + hoofLowerWidth, "y": legY + legHeight },
+    { "id": "rightHoof" }
+  ]
+
+  var leftHoof = [
+    { "x": sheepX - legXDisp, "y": legY + legHeight },
+    { "x": sheepX - legXDisp, "y": legY + legHeight - hoofHeight },
+    { "x": sheepX - legXDisp - legWidth, "y": legY + legHeight - hoofHeight },
+    { "x": sheepX - legXDisp - hoofLowerWidth, "y": legY + legHeight },
+    { "id": "leftHoof" }
+
+  ]
+
+  function sheepHooves() {
+    svg.append("polygon")
+      .attr("points", coordMap(rightHoof))
+
+      .attr("fill", "brown")
+      .on('click', function () {
+        wakeUpSheep()
+      })
+    svg.append("polygon")
+      .attr("points", coordMap(leftHoof))
+
+      .attr("fill", "brown")
+      .on('click', function () {
+        wakeUpSheep()
+      })
+  }
+
+  sheepHooves()
+  sheepHat()
+
+
+  /**************************************
+  * make the eyes open/close when the canvas is clicked!
+  **************************************/
+
+  function wakeUpSheep() {
+    isSheepAwake = isSheepAwake + 1
+    sheepEyes()
+  }
+
+
+
+  function sheepEyes() {
+
+    if (isSheepAwake % 2 == 1) {
+
+      // creepy open eyes 
+      svg.append("circle")
+        .attr("cx", sheepX + sheepEyeXDisp)
+        .attr("cy", sheepHeadY)
+        .attr("r", sheepEyeR)
+        .attr("id", "leftEyeOpen")
+        .on('click', function () { wakeUpSheep() })
+        .attr("fill", "white");
+      svg.append("circle")
+        .attr("cx", sheepX - sheepEyeXDisp)
+        .attr("cy", sheepHeadY)
+        .attr("r", sheepEyeR)
+        .attr("id", "rightEyeOpen")
+        .on('click', function () { wakeUpSheep() })
+        .attr("fill", "white");
+      svg.append("circle")
+        .attr("cx", sheepX + sheepEyeXDisp)
+        .attr("cy", sheepHeadY)
+        .attr("r", sheepPupilR)
+        .attr("id", "leftPupil")
+        .on('click', function () { wakeUpSheep() })
+        .attr("fill", sheepEyeColor);
+      svg.append("circle")
+        .attr("cx", sheepX - sheepEyeXDisp)
+        .attr("cy", sheepHeadY)
+        .attr("r", sheepPupilR)
+        .attr("id", "rightPupil")
+        .on('click', function () { wakeUpSheep() })
+        .attr("fill", sheepEyeColor);
+      d3.select("#leftEyeSleepy").remove();
+      d3.select("#rightEyeSleepy").remove();
+
+    } else {
+      sheepSleepyEyes()
+      d3.select("#leftEyeOpen").remove();
+      d3.select("#rightEyeOpen").remove();
+      d3.select("#leftPupil").remove();
+      d3.select("#rightPupil").remove();
+    }
+  }
+
+  function sheepSleepyEyes() {
+    const curve = d3.line().curve(d3.curveNatural);
+    const leftEyePoints = [
+      [sheepX - sheepEyeXDisp + sheepEyeR, sheepHeadY],
+      [sheepX - sheepEyeXDisp, sheepHeadY + sheepEyeR],
+      [sheepX - sheepEyeXDisp - sheepEyeR, sheepHeadY]];
+    const rightEyePoints = [
+      [sheepX + sheepEyeXDisp + sheepEyeR, sheepHeadY],
+      [sheepX + sheepEyeXDisp, sheepHeadY + sheepEyeR],
+      [sheepX + sheepEyeXDisp - sheepEyeR, sheepHeadY]];
+    svg.append('path')
+      .attr('d', curve(leftEyePoints))
+      .attr('stroke', "white")
+      .attr('fill', 'none')
+      .attr("id", "leftEyeSleepy")
+      .style("stroke-width", 2)
+      .on('click', function () { wakeUpSheep() })
+    svg.append('path')
+      .attr('d', curve(rightEyePoints))
+      .attr('stroke', "white")
+      .attr('fill', 'none')
+      .attr("id", "rightEyeSleepy")
+      .style("stroke-width", 2)
+      .on('click', function () { wakeUpSheep() })
+  }
+
+
+
+  window.addEventListener("resize", drawEverything);
+
+  function coordMap(d) {
+    return d.map(function (d) {
+      return [d.x, d.y].join(",");
+    }).join(" ");
+  }
+
 </script>

@@ -1,5 +1,70 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
+CS 573: Data Visualization
+
+Imogen Cleaver-Stigum
+
+February 2021
+
+Project URL: https://imogencs.github.io/01-ghd3/
+
+
+![Screenshot 1](/ss.png)
+![Screenshot 2](/ss2.png)
+![Screenshot 3](/ss3.png)
+
+Technical Achievements
+---
+1. The sheep's eyes open and close when it is clicked. 
+2. The butterfly appearrs where you click on the sky and flies to the right. 
+3. The picture resized to fit the window width. 
+4. The sheep's hat changes color when clicked. 
+5. The grass is re-drawn at random heights when it is moused over. 
+6. The wool rotates around the sheep's body. 
+
+Design Achievements
+--- 
+1. There are many different shapes that make the sheep. 
+2. There are different colors, as well as gradients and variations in opacity. 
+3. The grass has a texture. 
+
+
+Description
+---
+
+The sheep is made of circles (the body and wool, as well as the open eyes), an ellipse (the head), rectangles (the legs), polygons (the hat and hooves), paths (the sleepy eyes).
+
+The grass and sky are made of rectangles and lines.
+
+The texture of the grass is also a design element. Textures can be an essential part of data visuzlizations (as we discussed in class) because they can distinguish between elements. In this picture, the texture of the grass makes it clear that it is grass, as well as adding to the visual interest.
+
+Another design element of this picure is the gradients. The gradients add to the visual inerest of the picture, as well as making it clearer what the elements are. For example, it is appropriate and more realistic for the sky to have a gradient because the real sky has variation in the light. The sky's gradient is a linear gradient from white to light blue. The hat's gradient is a radial gradient from light green to light blue, which makes it more stylish.
+
+The different colors are also a design element because they add to the clarity of the image. In real data visualization, having distinct colors to represent different elements will be important so they are distinguishable. As we discussed in class, too many colors, like the rainbow gradients, can be overwhelming and confusing to the viewer. This is why I chose a simple color scheme with only black, white, green, and blue. This is enough colors to make the picture interesting and pleasant to look at, and to establish the differences between elements like the sky and the ground; but it is not so many colors that the colors detract from the more important parts of the picture. In addition to the colors, the shadow has a reduced opacity so it looks like a shadow on the grass. 
+
+There are several technical aspects in this project that go beyond just drawing shapes: the wool rotating around the sheep's body, the grass waving in the wind, the dynamic resizing of the SVG rectangle, and the sheep blinking when clicked. 
+
+The sheep opens and closes its eyes when you click on any part of the sheep or its hat. This is done by removing the previous eyes and drawing the new set of eyes. There is a variable which keeps track of which eyes are the current ones so that it can alternate between the two sets of eyes. In real data visualizations, interactivity can be an essential aspect. One reason for this is that you can show more information overall when you only show the information that the user is currently asking for at a given time. For example, you could show more details or specifications of an element of a visualization when the mouse hovers over it. This is better than simply not having that information, or having all the information cluttering the sreen at once. In this picture, the interactivity allowed me to show the sheep both sleepy and awake rather than having it static and having to choose between the two states, or clutter the page with two sheep. The same principles apply to real data visualization. 
+
+It is also important that the eyes open when you click anywhere on the sheep, rather than anywhere on the canvas, or a particular place on the sheep. This makes it more user friendly because clicking on a particular place on the sheep would be more tedious for the user, and clicking anywhere on the canvas would be counterintuitive when the click only affects the sheep. 
+
+The grass is waving in the wind when the mouse is over the grass. It is updating and re-drawing the grass 5 times every second, which makes the illusion of blowing in the wind. Each time it does this, it also has to move the sheep back on top of the grass to maintain the perspective. It starts waving when the mouse is over the grass, and becomes still again when the mouse leaves the grass. It is important that the grass is only waving when the mouse is on the grass for several reasons: 
+(1) As a technical consideration, the grass moving slows down the overall performance because it has to update and re-draw so many elements each second. It would get bogged down if it had to do this continuously while the page was open. 
+(2) As a design consideration, movement should be used sparingly. As we discussed in class, movement draws the attention of the viewer very effectively. It could be overwhelming if the grass was moving the whole time, so it gives a visual break when the grass stops flowing. 
+(3) The grass responds to the users, so the user has mroe control over what is happening in the picture (and how overwhelming the picture is at any given moment). 
+
+The wool around the sheep is also a technical element. The wool is created by drawing smaller circles around the larger circle that is the body. This is done by looping through the angles around the sheep and drawing wooly circles at each interval rotating around the sheep's center.
+
+When the user changes the window size, the width of the picture also changes width. It can get both larger and smaller. The sheep stays in the same x position as before - with its center at the x position of width/3. This feature is an important technical feature because it can be awkward on web pages to have to scroll left and right if it is not necessary. This is especially true when the text in the HTML part is adjusting ot fit the new window size - if the picture did not resize, it would be awkward looking. It is also important for consistency: because the size of the picture depends on the window width when it renders originally, it makes sense that it should depend on the window resizing later so it remains consistent. 
+
+Another technical element is that the sheep's hat changes both colors of the radial gradient each time it is clicked, alternating between 3 hat styles. The eyes still open and close when the hat is clicked, but no other polygons or shapes change their colors on this mouse event. 
+
+The butterfly is also a technical element. The butterfly appears where the user has clicked on the sky and flies toward the right until it is off the screen. If the user clicks on the sky again while the butterfly is flying, the original butterfly will disappear (because otherwise it flashes because it is updating too much) and a new butterlfy will appear in the new spot. This demonstrates the transform attribute that can be used to animate objects. 
+
+
+
+Project Description/Requirements
+===
 
 This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
 
