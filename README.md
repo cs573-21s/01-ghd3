@@ -11,14 +11,15 @@ Assignment 1 - Hello World: GitHub and d3
 
 http://ephie06.github.io/01-ghd3/index.html
 
-<img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.59.49%20AM.png?raw=true"></img>
+<img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.59.49%20AM.png?raw=true"></img><br>
+---
 <img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.43.54%20AM.png?raw=true"> </img>
 
 I used the in class demo as a starting point for the assignment. In addition I used the following sites for reference on how to create graphics primitives. 
 
-https://www.d3-graph-gallery.com/graph/shape.html
-https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3
-https://www.d3indepth.com/shapes/
+https://www.d3-graph-gallery.com/graph/shape.html<br>
+https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3<br>
+https://www.d3indepth.com/shapes/<br>
 
 Technical Achievement Desription
 ---
