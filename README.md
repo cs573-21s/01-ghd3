@@ -11,8 +11,8 @@ Description
 ---
 For this project, I drew a pig that can change colors. Depending on which button you press, the pig will turn pink, red/yellow/blue, gray, or loop through the colors of the rainbow.
 
-![Pink Pig] (Images/pink-pig.png)
-![RYB Pig] (Images/ryb-pig.png)
+![Pink Pig](Images/pink-pig.png)
+![RYB Pig](Images/ryb-pig.png)
 
 
 Technical Achievements
