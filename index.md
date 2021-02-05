@@ -1,27 +1,3 @@
-Last login: Thu Feb  4 13:44:52 on ttys000
-steph@Stephanies-MBP CS573 % touch index.html
-steph@Stephanies-MBP CS573 % ls
-index.html
-steph@Stephanies-MBP CS573 % vim index.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
 <svg id="vis"></svg>
