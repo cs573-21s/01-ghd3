@@ -13,13 +13,12 @@ let margin = {
   bottom: 30, 
   left: 30
 }
+let selectedDay = 0;
 
 let svg = d3.select('#wind-chart')
   .attr('width', width)
   .attr('height', height);
 
-let selectedDay = 0;
-// displayForDay(selectedDay);
 
 function nextDay() {
   LOAD_DATA.then(data => {
@@ -92,6 +91,7 @@ function displayForDay(day) {
           color: "#9966ff" // purple
         },
       ]);
+      document.getElementById('data-date').innerHTML = `Showing data for ${data[0][day]["Date"]}`
   });
 }
 
