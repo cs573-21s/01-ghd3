@@ -24,6 +24,36 @@
       background-color: black;
       color: white;
     }
+
+    .lineChart {
+      width: 100%;
+    }
+
+    .map {
+      position: absolute;
+      display: none;
+      border: 2px solid black;
+      width: 70px;
+      height: 50px;
+      background-color: black;
+      color: white;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .map span {
+      overflow: visible;
+      display: block;
+      position: absolute;
+      left: 25px;
+      top: 50px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-top: 10px solid black;
+    }
   </style>
 </head>
 
@@ -85,6 +115,8 @@
       <td>6</td>
     </tr>
   </table>
+  <div class="lineChart"></div>
+  <div class="map"><span></span></div>
   <script>
     console.log(d3); // test if d3 is loaded
     width = 300;
@@ -228,7 +260,7 @@
 
     // Draw a line chart
     var temprature = [['Jan', 4.5], ['Feb', 6.5], ['Mar', 12], ['Apr', 18.5], ['May', 23.5], ['June', 27], ['July', 30.5], ['Aug', 30], ['Sep', 25], ['Oct', 19], ['Nov', 12], ['Dec', 6]];
-    var svgLine = d3.selectAll('body')
+    var svgLine = d3.selectAll('.lineChart')
       .append('svg')
       .attr('width', width)
       .attr('height', width)
@@ -308,13 +340,19 @@
     var svgMap = d3.select('body')
       .append('svg')
       .attr('width', 500)
-      .attr('height', 500)
+      .attr('height', 500);
+    // var divMap = svgMap.append('div')
+    //   .attr('class', 'map');
+    // var spanMap = divMap.append('span')
+
+
     d3.json('https://geo.datav.aliyun.com/areas_v2/bound/420000_full.json').then(function (data) {
       var projection = d3.geoMercator().fitExtent(
         [
           [0, 0],
           [500, 500],
         ], data);
+      // console.log(data);
       var pathGenerator = d3.geoPath()
         .projection(projection);
       var mapPath = svgMap.selectAll("path")
@@ -325,39 +363,33 @@
         .attr("stroke-width", 0.5)
         .attr("stroke", "#000000")
         .attr("fill", "#ffffff")
-        .on('mouseover', function () {
+        .on('mouseover', function (e, d) {
+          // console.log(e);
+          console.log(d);
           d3.select(this)
-            .attr('fill', 'yellow')
-        })
-        .on('mouseout', function () {
-
-          d3.select(this).attr('fill', 'white')
             .transition()
-            .duration(500);
-
+            .duration(400)
+            .attr('fill', 'yellow');
+          // var xbord = d[i].properties.center[0];
+          // var ybord = d[i].properties.center[1];
+          d3.select('.map')
+            .style('display', 'block')
+            .style('top', (e.pageY - 90) + 'px')
+            .style('left', (e.pageX - 35) + 'px')
+            .text(d.properties.name);
         })
+        .on('mouseout', function (e) {
 
+          d3.select(this)
+            .transition()
+            .duration(400)
+            .attr('fill', 'white');
 
-
-
-
+          d3.select('.map')
+            .style('display', 'none');
+          ;
+        })
     });
-
-
-
-
-
-
-    // // Add Polygons
-    // let polygon = d3.select('.polygon')
-    //   .attr('width', width)
-    //   .attr('height', height)
-    //   .append('polygon')
-    //   .attr('points', '70,0  150,0  300,50 300,300 0,300')
-    //   .attr('fill', 'brown');
-
-
-
   </script>
 
 </body>
