@@ -236,6 +236,16 @@
   }
 
 
+  // shadow
+  svg.append("ellipse")
+    .attr("cx", sheepX)
+    .attr("cy", legY + legHeight)
+    .attr("rx", sheepR)
+    .attr("ry", sheepR / 3)
+    .attr("id", "shadow")
+    .attr("opacity", .3)
+    .attr("fill", "black")
+
   // the body is a circle and the wool is circles rotating around the body
 
   sheepBody()
