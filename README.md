@@ -3,6 +3,9 @@ Assignment 1: One-Capture Checkers
 Description
 ---
 This is a two player checkers game with king promotions and single capture per turn.
+![snap1.png](https://github.com/wtt102/01-ghd3/blob/main/snap1.png)
+![snap2.png](https://github.com/wtt102/01-ghd3/blob/main/snap2.png)
+
 
 Rules
 ---
