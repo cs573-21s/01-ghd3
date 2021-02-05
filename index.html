@@ -1,10 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- A1 - Andrew Nolan-->
+
+<!--Sources:-->
+<!-- https://www.youtube.com/watch?v=-RQWC4I2I1s -->
+<!-- https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute -->
+<!-- https://en.wikipedia.org/wiki/Chernoff_face -->
+
+<!--Atleast 4 primitives-->
+<!--Circles - eyes-->
+<!--Rectanges - eyebrows-->
+<!--Polygon - nose-->
+<!--Line - sliders-->
+<!--Ellipses - head-->
+
+<!-- Loads d3 -->
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<!-- Loads the d3 code for the face sliders -->
+<script defer src="./d3/headsliderd3.js"></script>
+
+<!-- Loads the d3 code for the iris dataset -->
+<script defer src="./d3/setosa_d3.js"></script>
+<!-- Loads the d3 code for the iris dataset -->
+<script defer src="./d3/virginica_d3.js"></script>
+<!-- Loads the d3 code for the iris dataset -->
+<script defer src="./d3/versicolor_d3.js"></script>
+
+<head>
+  <title>CS 573 - A1</title>
+  <meta charset="utf-8">
+  <meta name="description" content="My introduction to d3 and data visualization through an exploration of Chernoff Faces.">
+  <meta name="keywords" content="Andrew Nolan, CS 573, Chernoff Faces, Iris Dataset">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+  <div class="textContent">
+    <h1>A Brief Journey Into Chernoff Faces</h1>
+    <h2>Andrew Nolan</h2>
+    <p>In the summer of 2020 I took the course CS 548, knowledge discover and data mining. One week we had lectures about data visualization. In one short slide, in one of those lectures, the professor mentioned Chernoff Faces. Since then, for some reason these faces have infiltrated my brain much more often than they should. Since I am now going to learn d3 and data visualizations, I thought trying to recreate the data visualization that haunts my thoughts would be a good place to start. So here is my brief journey into Chernoff Faces...</p>
+
+    <p>For those unfamiliar with the data vis, Chernoff Faces were invented in 1973 by the American Mathematician, Herman Chernoff. Chernoff Faces provide a way to visualize multivariate data by mapping data features to visual features on the face. The benefits of this visualization come from the claim that humans can easily recognize faces and identify small changes between them.</p>
+
+    <p>Consider a a dataset with 4 features. We can map these data features to facial features such as face width, smile shape, nose height, and eyebrow angle. In the following interactive d3 example, you can adjust these 4 features to see how the face changes as the features changes.</p>
+  </div>
+
+  <div class="content" id="svgZoneHolder">
+    <div id="svgZone"></div>
+  </div>
+  <div class="textContent">
+    <p>For a more real example, consider the famous <a href="https://archive.ics.uci.edu/ml/datasets/iris" target="_blank" rel="noopener noreferrer">Iris Data Set</a>. This dataset has 4 attributes used to identify 3 species classes. It is often used for introductory machine learning challenges. My d3 chernoff face has 4 features as well. So what would it look like if we tried to visualize the iris data? </p>
+
+    <p>I selected the follwing subset of data:</p>
+
+    <table>
+      <tr>
+        <td>Sepal Length</td>
+        <td>Sepal Width</td>
+        <td>Petal Length</td>
+        <td>Petal Width</td>
+        <td>Species</td>
+      </tr>
+      <tr>
+        <td>5.1</td>
+        <td>3.5</td>
+        <td>1.4</td>
+        <td>0.2</td>
+        <td>Setosa</td>
+      </tr>
+      <tr>
+        <td>4.9</td>
+        <td>3.0</td>
+        <td>1.4</td>
+        <td>0.2</td>
+        <td>Setosa</td>
+      </tr>
+      <tr>
+        <td>4.7</td>
+        <td>3.2</td>
+        <td>1.3</td>
+        <td>0.2</td>
+        <td>Setosa</td>
+      </tr>
+      <tr>
+        <td>3.6</td>
+        <td>3.1</td>
+        <td>1.5</td>
+        <td>0.2</td>
+        <td>Setosa</td>
+      </tr>
+      <tr>
+        <td>6.3</td>
+        <td>3.3</td>
+        <td>6.0</td>
+        <td>2.5</td>
+        <td>Virginica</td>
+      </tr>
+      <tr>
+        <td>5.8</td>
+        <td>2.7</td>
+        <td>5.1</td>
+        <td>1.9</td>
+        <td>Virginica</td>
+      </tr>
+      <tr>
+        <td>7.1</td>
+        <td>3.0</td>
+        <td>5.9</td>
+        <td>2.1</td>
+        <td>Virginica</td>
+      </tr>
+      <tr>
+        <td>6.3</td>
+        <td>2.9</td>
+        <td>5.6</td>
+        <td>1.8</td>
+        <td>Virginica</td>
+      </tr>
+      <tr>
+        <td>7.0</td>
+        <td>3.2</td>
+        <td>4.7</td>
+        <td>1.4</td>
+        <td>Versicolor</td>
+      </tr>
+      <tr>
+        <td>6.4</td>
+        <td>3.2</td>
+        <td>4.5</td>
+        <td>1.5</td>
+        <td>Versicolor</td>
+      </tr>
+      <tr>
+        <td>6.9</td>
+        <td>3.1</td>
+        <td>4.9</td>
+        <td>1.5</td>
+        <td>Versicolor</td>
+      </tr>
+      <tr>
+        <td>5.5</td>
+        <td>2.3</td>
+        <td>4.1</td>
+        <td>1.3</td>
+        <td>Versicolor</td>
+      </tr>
+    </table>
+
+    <p>Now we can use this data to scale the Chernoff faces in d3 and see what the results are. We will map the data features to facial features as follows: sepal length -> face width, sepal width -> smile shape, petal length -> nose height, and petal width -> eyebrow angle. You can see the results in the three d3 visualizations below:</p>
+  </div>
+
+  <div class="content">
+    <div id="setosa"></div>
+  </div>
+  <br>
+  <div class="content">
+    <div id="virginica"></div>
+  </div>
+  <br>
+  <div class="content">
+    <div id="versicolor"></div>
+  </div>
+
+  <div class="textContent">
+    <p>Unfortunately, I learned far too late into this assignment, that planning your d3 is important. After writing about 1000 lines of Javascript, it's hard to go back and resize the svgs due to the hard coded values I used. Note to self: use percentages and dynamic variables for drawing d3 next time! Anyway, I included a side by side screen shot of the three iris classes below:</p>
+    <div class="imageContent">
+      <img src="./images/iris_comparisons.PNG" width="100%" height="300" alt="A comparison of Iris species data using Chernoff Faces">
+    </div>
+    <p>Looking at these faces, we can see that the faces look distinctly similar within their respective classes. Specifically it seems eyebrow shape and nose height (petal length and petal width respectively) are the features that best represent the classes. Based on these results, we can determine that chernoff faces are a pretty good visualization for clustering and classifying data visually. Of course as the number of attributes grow, the facial features will become more obscure. So it's very important to assign the most important data attributes to the most visible facial features. One noticeable drawback of this vis is identifying values. It seems good for differentiating and classifying clusters, but it does not provide an easy way to tell which values are bigger or smaller than others. It doesn't translate to numeric values it just says that they are different.</p>
+
+    <p>Thank you for joining me on this brief exploratory journey into Chernoff Faces! Maybe you can use them some day in the future too!</p>
+
+    <br><br>
+    <h3>Sources:</h3>
+    <ul>
+      <li>Intro to D3.js - Let's Make a Face: <a href="https://www.youtube.com/watch?v=-RQWC4I2I1s" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=-RQWC4I2I1s</a></li>
+      <li>Using D3 slider to change attribute: <a href="https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute" target="_blank" rel="noopener noreferrer">https://stackoverflow.com/questions/42878866/using-d3-slider-to-change-attribute</a></li>
+      <li>Chernoff Face Wikipedia: <a href="https://en.wikipedia.org/wiki/Chernoff_face" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Chernoff_face</a></li>
+      <li>Iris Data Set: <a href="https://archive.ics.uci.edu/ml/datasets/iris" target="_blank" rel="noopener noreferrer">https://archive.ics.uci.edu/ml/datasets/iris</a></li>
+    </ul>
+  </div>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+</body>
+</html>
