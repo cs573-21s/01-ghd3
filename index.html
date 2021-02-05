@@ -1,10 +1,159 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!-- 
+Biovis Assignment 1 -- Meadow Wicke
+-->
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<!DOCTYPE html>
+<html lang = 'en'>
+
+<head>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+  <svg id = 'vis'></svg>
+
+  <script>
+    //console.log(d3); // test if d3 is loaded
+  
+    //canvas
+    var svg = d3.select("#vis")
+      .attr('width', 600)
+      .attr('height', 600)
+
+    // Fun lines
+    var data = [{x: 0, y: 37}, {x: 142, y: 170}, {x: 315, y: 140}, {x: 455, y: 47}, {x: 600, y: 133}]
+    var curveFunc = d3.line()
+      .curve(d3.curveBasis)              
+      .x(function(d) { return d.x })
+      .y(function(d) { return d.y })
+    svg.append('path')
+      .attr('d', curveFunc(data))
+      .attr('stroke', 'black')
+      .attr('fill', 'red');
+    
+    var data = [{x: 0, y: 337}, {x: 172, y: 230}, {x: 257, y: 280}, {x: 420, y: 345}, {x: 600, y: 250}]
+    var curveFunc = d3.line()
+      .curve(d3.curveStep)
+      .x(function(d) { return d.x })
+      .y(function(d) { return d.y })
+    svg.append('path')
+      .attr('d', curveFunc(data))
+      .attr('stroke', 'black')
+      .attr('fill', 'blue');
+
+    var data = [{x: 0, y: 500}, {x: 83, y: 420}, {x: 144, y: 567}, {x: 355, y: 400}, {x: 600, y: 444}]
+    var curveFunc = d3.line()
+      .curve(d3.curveNatural)
+      .x(function(d) { return d.x })
+      .y(function(d) { return d.y })
+    svg.append('path')
+      .attr('d', curveFunc(data))
+      .attr('stroke', 'black')
+      .attr('fill', 'yellow');
+
+    //circles
+    svg.append('circle')
+      .attr('cx', 200)
+      .attr('cy', 50)
+      .attr('r', 30)
+      .attr('stroke', 'black')
+      .attr('fill', '#80D7F8');
+
+    svg.append('circle')
+      .attr('cx', 200)
+      .attr('cy', 150)
+      .attr('r', 50)
+      .attr('stroke', 'black')
+      .attr('fill', '#8089F8');
+    
+    svg.append('circle')
+      .attr('cx', 200)
+      .attr('cy', 285)
+      .attr('r', 70)
+      .attr('stroke', 'black')
+      .attr('fill', '#9B80F8');
+    
+    svg.append('circle')
+      .attr('cx', 200)
+      .attr('cy', 420)
+      .attr('r', 50)
+      .attr('stroke', 'black')
+      .attr('fill', '#CC80F8');
+    
+    svg.append('circle')
+      .attr('cx', 200)
+      .attr('cy', 520)
+      .attr('r', 30)
+      .attr('stroke', 'black')
+      .attr('fill', '#F880F6');
+    
+    //rectangles
+    svg.append('rect')
+      .attr('x', 320)
+      .attr('y', 35)
+      .attr('width', 60)
+      .attr('height', 30)
+      .attr('stroke', 'black')
+      .attr('fill', '#80F8B1');
+    
+    svg.append('rect')
+      .attr('x', 310)
+      .attr('y', 125)
+      .attr('width', 80)
+      .attr('height', 50)
+      .attr('stroke', 'black')
+      .attr('fill', '#80F8BE');
+    
+    svg.append('rect')
+      .attr('x', 300)
+      .attr('y', 235)
+      .attr('width', 100)
+      .attr('height', 100)
+      .attr('stroke', 'black')
+      .attr('fill', '#80B1F8');
+    
+    svg.append('rect')
+      .attr('x', 325)
+      .attr('y', 380)
+      .attr('width', 50)
+      .attr('height', 80)
+      .attr('stroke', 'black')
+      .attr('fill', '#B180F8');
+    
+    svg.append('rect')
+      .attr('x', 335)
+      .attr('y', 490)
+      .attr('width', 30)
+      .attr('height', 60)
+      .attr('stroke', 'black')
+      .attr('fill', '#F880AC');
+
+    //polygons
+    svg.append('polygon')
+      .attr('points', '495,25 530,25 560,50 540,75 485,75 465,50')
+      .attr('stroke', 'black')
+      .attr('fill', '#98F880');
+
+    svg.append('polygon')
+      .attr('points', '450,150 512,110 575,150 512, 190')
+      .attr('stroke', 'black')
+      .attr('fill', '#E8F880');
+
+    svg.append('polygon')
+      .attr('points', '450,350 512,225 575,350')
+      .attr('stroke', 'black')
+      .attr('fill', '#F8E880');
+    
+    svg.append('polygon')
+      .attr('points', '450,425 512,385 575,425 512, 465')
+      .attr('stroke', 'black')
+      .attr('fill', '#F8B380');
+    
+    svg.append('polygon')
+      .attr('points', '512,500 530,550 490,525 540,525 500,550')
+      .attr('stroke', 'black')
+      .attr('fill', '#F89880');
+
+  </script>
+</body>
+
+</html>
