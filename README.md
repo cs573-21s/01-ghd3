@@ -1,11 +1,11 @@
 Assignment 1 - Hello World: GitHub and d3  
 ---
 For this assignment I considered exploring the following svg componenets:
--lines 
--text
--circle
--color components with different colors
--rectangle
+- lines 
+- text
+- circle
+- color components with different colors
+- rectangle
 
  Below are a few examples of the d3 exploration.
  
