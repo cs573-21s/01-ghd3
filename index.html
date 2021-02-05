@@ -1,10 +1,295 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS573 a1</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    body {
+      margin: 0px; 
+      width: 100vw; 
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    console.log(d3); // test if d3 is loaded
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+    // Add an SVG
+    var svg = d3.select('body')
+      .append('svg')
+      .attr('width', '100vw')
+      .attr('height', '100vh')
+
+    // Add Lines
+    var frame1 = svg.append('line')
+      .attr('x1', '35vw')
+      .attr('y1', '54vh')
+      .attr('x2', '48vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame2 = svg.append('line')
+      .attr('x1', '46.2vw')
+      .attr('y1', '64vh')
+      .attr('x2', '48vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame3 = svg.append('line')
+      .attr('x1', '49.5vw')
+      .attr('y1', '44vh')
+      .attr('x2', '48vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame4 = svg.append('line')
+      .attr('x1', '58vw')
+      .attr('y1', '38vh')
+      .attr('x2', '48vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame5 = svg.append('line')
+      .attr('x1', '38vw')
+      .attr('y1', '28vh')
+      .attr('x2', '48vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame6 = svg.append('line')
+      .attr('x1', '42vw')
+      .attr('y1', '37vh')
+      .attr('x2', '35vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame7 = svg.append('line')
+      .attr('x1', '42vw')
+      .attr('y1', '37.5vh')
+      .attr('x2', '58vw')
+      .attr('y2', '37.5vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var frame8 = svg.append('line')
+      .attr('x1', '54.5vw')
+      .attr('y1', '25vh')
+      .attr('x2', '63vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 12)
+      .attr('stroke', 'gray')
+
+    var wheel2line1 = svg.append('line')
+      .attr('x1', '56vw')
+      .attr('y1', '54vh')
+      .attr('x2', '70vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel2line2 = svg.append('line')
+      .attr('x1', '63vw')
+      .attr('y1', '42vh')
+      .attr('x2', '63vw')
+      .attr('y2', '66vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+    
+    var wheel2line3 = svg.append('line')
+      .attr('x1', '66.5vw')
+      .attr('y1', '44vh')
+      .attr('x2', '59.5vw')
+      .attr('y2', '65vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel2line4 = svg.append('line')
+      .attr('x1', '69vw')
+      .attr('y1', '48.5vh')
+      .attr('x2', '57vw')
+      .attr('y2', '60vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel2line5 = svg.append('line')
+      .attr('x1', '57vw')
+      .attr('y1', '48.5vh')
+      .attr('x2', '69vw')
+      .attr('y2', '60vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray') 
+
+    var wheel2line6 = svg.append('line')
+      .attr('x1', '59.5vw')
+      .attr('y1', '44vh')
+      .attr('x2', '66.5vw')
+      .attr('y2', '65vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+      
+      var wheel1line1 = svg.append('line')
+      .attr('x1', '28vw')
+      .attr('y1', '54vh')
+      .attr('x2', '42vw')
+      .attr('y2', '54vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel1line2 = svg.append('line')
+      .attr('x1', '35vw')
+      .attr('y1', '42vh')
+      .attr('x2', '35vw')
+      .attr('y2', '66vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+    
+    var wheel1line3 = svg.append('line')
+      .attr('x1', '38.5vw')
+      .attr('y1', '44vh')
+      .attr('x2', '31.5vw')
+      .attr('y2', '65vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel1line4 = svg.append('line')
+      .attr('x1', '41vw')
+      .attr('y1', '48.5vh')
+      .attr('x2', '29vw')
+      .attr('y2', '60vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+
+    var wheel1line5 = svg.append('line')
+      .attr('x1', '29vw')
+      .attr('y1', '48.5vh')
+      .attr('x2', '41vw')
+      .attr('y2', '60vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray') 
+
+    var wheel1line6 = svg.append('line')
+      .attr('x1', '31.5vw')
+      .attr('y1', '44vh') 
+      .attr('x2', '38.5vw')
+      .attr('y2', '65vh')
+      .attr('stroke-width', 2)
+      .attr('stroke', 'gray')
+      
+    // Add Polygons
+    // add group to scale and position polygon
+    var group = svg.append('g')
+      .attr('transform', 'scale(2,2)')
+      .attr('transform', 'translate(550,230)')
+
+    
+    var seat = group.append('polygon')
+      .attr('points', '10,10 30,0 50,10 160,5 180,30 150,25 40,50')
+      .attr('fill', 'orange')
+
+    // Add Rectangles
+    var pedal1 = svg.append('rect')
+      .attr('x', '48vw')
+      .attr('y', '43vh')
+      .attr('width', '3vw')
+      .attr('height', '2vh')
+      .attr('fill', 'navy')
+
+    var pedal2 = svg.append('rect')
+      .attr('x', '45vw')
+      .attr('y', '63vh')
+      .attr('width', '3vw')
+      .attr('height', '2vh')
+      .attr('fill', 'navy')
+
+    var handle = svg.append('rect')
+      .attr('x', '54vw')
+      .attr('y', '24vh')
+      .attr('width', '5vw')
+      .attr('height', '2vh')
+      .attr('fill', 'navy')
+
+    // Add Circles
+    var wheel1 = svg.append('circle')
+      .attr('cx', '35vw')
+      .attr('cy', '54vh')
+      .attr('r', '8.5%')
+      .attr('fill', 'none')
+      .style('stroke', 'black')
+      .style('stroke-width', '10px')
+
+    var wheel2 = svg.append('circle')
+      .attr('cx', '63vw')
+      .attr('cy', '54vh')
+      .attr('r', '8.5%')
+      .attr('fill', 'none')
+      .style('stroke', 'black')
+      .style('stroke-width', '10px')
+
+    var gear = svg.append('circle')
+      .attr('cx', '48vw')
+      .attr('cy', '54vh')
+      .attr('r', '3vh')
+      .attr('fill', 'none')
+      .style('stroke', 'black')
+      .style('stroke-width', '5px')
+
+    var wheelcover1 = svg.append('circle')
+      .attr('cx', '35vw')
+      .attr('cy', '54vh')
+      .attr('r', '2vh')
+      .attr('fill', 'black')
+
+    var wheelcover2 = svg.append('circle')
+      .attr('cx', '63vw')
+      .attr('cy', '54vh')
+      .attr('r', '2vh')
+      .attr('fill', 'black')
+
+    var gearcover = svg.append('circle')
+      .attr('cx', '48vw')
+      .attr('cy', '54vh')
+      .attr('r', '2vh')
+      .attr('fill', 'gray')
+
+    // Text
+    var title = svg.append('text')
+      .attr('x', '5vw')
+      .attr('y', '92vh')
+      .text("BIKE")
+      .style('font-size', '10vw')
+      .style('font-family', 'Helvetica')
+      .style('font-weight', 'bold')
+
+    var subtitle = svg.append('text')
+      .attr('x', '59.5vw')
+      .attr('y', '92.5vh')
+      .text("Hover over shapes to interact with them")
+      .style('font-size', '2vw')
+      .style('font-family', 'Helvetica')
+      .style('font-weight', 'normal')
+
+    // Technical Achievement
+    // Add hover ability to change colors of shapes
+    // Resizeable shapes
+
+    // Design Achievement
+    // Show design sketch draft
+    // 
+  
+    // TODO
+    // Set each shape to a different color
+    // Reference: https://lucidar.me/en/d3.js/d3-js-summary/
+
+    // https://chartio.com/resources/tutorials/how-to-resize-an-svg-when-the-window-is-resized-in-d3-js/
+    // Resize
+
+  </script>
+</body>
+</html>
