@@ -14,19 +14,24 @@
     <!-- <script src="/script.js" defer></script> -->
   </head>  
   <body>
-    <h1>Hi there!</h1>
-    
-    <p>
-      I'm your cool new webpage. Made with Glitch!
-    </p>
-
-    <button onclick="nextDay()">Next day</button>
-
-    <svg id="wind-chart"></svg>
+    <div id="content">
+      <h1>Hi there!</h1>
+      
+      <p>
+        I'm your cool new webpage. Made with Glitch!
+      </p>
+      
+      <button onclick="nextDay()">Next day</button>
+      
+      <svg id="wind-chart"></svg>
+    </div>
 
     <style>
       svg {
         background-color: lightblue;
+      }
+      body {
+        background-color: darkgrey;
       }
     </style>
 
@@ -54,18 +59,40 @@
         .attr('height', height);
 
       let selectedDay = 0;
-      displayForDay(selectedDay);
+      // displayForDay(selectedDay);
       
       function nextDay() {
         selectedDay++;
         displayForDay(selectedDay);
       }
 
+      let loadDataPromise = new Promise((resolve, reject) => {
+        Promise.all([
+          d3.csv("50Hertz.csv"),
+          d3.csv("Amprion.csv"),
+          d3.csv("TenneTTSO.csv"),
+          d3.csv("TransnetBW.csv"),
+        ]).then(values => {
+          displayForDay(selectedDay);
+          console.log('All data loaded!');
+          resolve(values);
+        }).catch(err => {
+          console.error(`Error loading the csv data: ${err}`);
+          reject(err);
+        })
+      });
+
       function displayForDay(day) {
         svg.selectAll("g").remove()
         svg.selectAll("path").remove()
 
-        d3.csv("50Hertz.csv").then(data => {
+        // d3.csv("50Hertz.csv").then(data => {
+        loadDataPromise
+          .then(data => {
+            debugger;
+            return data[0];
+          }, err => `Problem loading data: ${err}`)
+          .then(data => {
             console.log(data);
             let timesArray = [];
             let date = data[day]["Date"]
