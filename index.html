@@ -1,10 +1,441 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS573 a1</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    body {
+      margin: 0px; 
+      width: 100vw; 
+      height: 100vh;
+    }
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+    .svg-container {
+      display: inline-block;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      vertical-align: top;
+      overflow: hidden;
+    }
+
+    .svg-content {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+    <div id="container" class="svg-container">
+    </div>
+
+    <script>
+        console.log(d3); // test if d3 is loaded
+
+        // Add an SVG
+        var svg = d3.select('div#container')
+            .append('svg')
+            .attr('viewBox', '0 0 1920 1080')
+            .attr('preserveAspectRatio', 'xMinYMin meet')
+            .classed('svg-content', true)
+
+        // Add wheel groups
+        var wheel1group = svg.append('g')
+            .attr('id','wheelgroup')
+        var wheel2group = svg.append('g')
+            .attr('id','wheelgroup')
+
+        // Add lines and circles
+        var frame3 = svg.append('line')
+            .attr('x1', '950')
+            .attr('y1', '430')
+            .attr('x2', '920')
+            .attr('y2', '530')
+            .attr('stroke-width', 12)
+            .attr('stroke', 'gray')
+
+        var frame4 = svg.append('line')
+            .attr('x1', '1120')
+            .attr('y1', '370')
+            .attr('x2', '920')
+            .attr('y2', '530')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var frame7 = svg.append('line')
+            .attr('x1', '805')
+            .attr('y1', '370')
+            .attr('x2', '1120')
+            .attr('y2', '370')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var wheel2line1 = wheel2group.append('line')
+            .attr('x1', '1080')
+            .attr('y1', '530')
+            .attr('x2', '1340')
+            .attr('y2', '530')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel2line2 = wheel2group.append('line')
+            .attr('x1', '1210')
+            .attr('y1', '400')
+            .attr('x2', '1210')
+            .attr('y2', '660')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel2line3 = wheel2group.append('line')
+            .attr('x1', '1270')
+            .attr('y1', '410')
+            .attr('x2', '1150')
+            .attr('y2', '650')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel2line4 = wheel2group.append('line')
+            .attr('x1', '1330')
+            .attr('y1', '470')
+            .attr('x2', '1090')
+            .attr('y2', '590')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel2line5 = wheel2group.append('line')
+            .attr('x1', '1090')
+            .attr('y1', '470')
+            .attr('x2', '1330')
+            .attr('y2', '590')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray') 
+
+        var wheel2line6 = wheel2group.append('line')
+            .attr('x1', '1150')
+            .attr('y1', '410')
+            .attr('x2', '1270')
+            .attr('y2', '650')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel1line1 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '800')
+            .attr('y2', '530')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line2 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '670')
+            .attr('y2', '660')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel1line3 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '610')
+            .attr('y2', '650')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line4 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '550')
+            .attr('y2', '590')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line5 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '790')
+            .attr('y2', '590')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray') 
+
+        var wheel1line6 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530') 
+            .attr('x2', '730')
+            .attr('y2', '650')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line7 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '540')
+            .attr('y2', '530')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line8 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '670')
+            .attr('y2', '400')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel1line9 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '610')
+            .attr('y2', '410')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line10 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '730')
+            .attr('y2', '410')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line11 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '550')
+            .attr('y2', '470')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray') 
+
+        var wheel1line12 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530') 
+            .attr('x2', '790')
+            .attr('y2', '470')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel1 = svg.append('circle')
+            .attr('cx', '670')
+            .attr('cy', '530')
+            .attr('r', '130')
+            .style('fill', 'none')
+            .style('stroke', 'black')
+            .style('stroke-width', '10')
+            .attr('id','wheel')
+
+        var frame6 = svg.append('line')
+            .attr('x1', '805')
+            .attr('y1', '370')
+            .attr('x2', '670')
+            .attr('y2', '530')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var frame5 = svg.append('line')
+            .attr('x1', '730')
+            .attr('y1', '260')
+            .attr('x2', '920')
+            .attr('y2', '530')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var wheel2 = svg.append('circle')
+            .attr('cx', '1210')
+            .attr('cy', '530')
+            .attr('r', '130')
+            .style('fill', 'none')
+            .style('stroke', 'black')
+            .style('stroke-width', '10')
+            .attr('id','wheel')
+
+        var frame1 = svg.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '920')
+            .attr('y2', '530')
+            .attr('stroke-width', 12)
+            .attr('stroke', 'gray')
+
+        var gear = svg.append('circle')
+            .attr('cx', '920')
+            .attr('cy', '530')
+            .attr('r', '30')
+            .style('fill', 'none')
+            .style('stroke', 'black')
+            .style('stroke-width', '5')
+            .attr('id','wheel')
+
+        var frame2 = svg.append('line')
+            .attr('x1', '890')
+            .attr('y1', '630')
+            .attr('x2', '920')
+            .attr('y2', '530')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var wheelcover1 = svg.append('circle')
+            .attr('cx', '670')
+            .attr('cy', '530')
+            .attr('r', '20')
+            .style('fill', 'black')
+            .attr('id','cover')
+
+        var frame8 = svg.append('line')
+            .attr('x1', '1050')
+            .attr('y1', '240')
+            .attr('x2', '1210')
+            .attr('y2', '530')
+            .style('stroke-width', 12)
+            .style('stroke', 'gray')
+
+        var wheelcover2 = svg.append('circle')
+            .attr('cx', '1210')
+            .attr('cy', '530')
+            .attr('r', '20')
+            .style('fill', 'black')
+            .attr('id','cover')
+
+        var gearcover = svg.append('circle')
+            .attr('cx', '920')
+            .attr('cy', '530')
+            .attr('r', '20')
+            .style('fill', 'gray')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','gray')
+            })
+
+        // Add Rectangles
+        var pedal1 = svg.append('rect')
+            .attr('x', '920')
+            .attr('y', '420')
+            .attr('width', '60')
+            .attr('height', '20')
+            .style('fill', 'navy')
+
+        var pedal2 = svg.append('rect')
+            .attr('x', '860')
+            .attr('y', '620')
+            .attr('width', '60')
+            .attr('height', '20')
+            .style('fill', 'navy')
+
+        var handle = svg.append('rect')
+            .attr('x', '1040')
+            .attr('y', '230')
+            .attr('width', '100')
+            .attr('height', '20')
+            .style('fill', 'navy')
+
+        // Text
+        var title = svg.append('text')
+            .attr('x', '80')
+            .attr('y', '900')
+            .text("BIKE")
+            .style('font-size', '160')
+            .style('font-family', 'Helvetica')
+            .style('font-weight', 'bold')
+
+        var subtitle = svg.append('text')
+            .attr('x', '1120')
+            .attr('y', '900')
+            .text("Hover over shapes to change their color")
+            .style('font-size', '40')
+            .style('font-family', 'Helvetica')
+            .style('font-weight', 'normal')
+
+        // Add Polygons
+        var group = svg.append('g')
+            .attr('transform', 'translate(650,240)')
+
+        var seat = group.append('polygon')
+            .attr('points', '10,10 30,0 50,10 160,5 180,30 150,25 40,50')
+            .style('fill', 'orange')
+        
+        // Animation
+        var wheels = d3.selectAll('#wheel')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('stroke','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('stroke', 'black')
+            })
+
+        var covers = d3.selectAll('#cover')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','black')
+            })
+            
+        var rectangles = d3.selectAll('rect')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','navy')
+            })
+
+        var lines = d3.selectAll('line')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('stroke','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('stroke','gray')
+
+            })
+        
+        var lines = d3.selectAll('polygon')
+            .on('mouseover', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','green')
+            })
+            .on('mouseout', function(d,i) {
+                d3.select(this).transition()
+                    .duration('50')
+                    .style('fill','orange')
+            })
+
+        var t0 = Date.now();
+        var speed = .1
+        
+        // Wheel Animation
+        d3.timer(function() {
+            var delta = (Date.now() - t0);
+            wheel1group.attr("transform", function() {
+                return "rotate(" + delta * speed + ", 670, 530)";
+            })
+
+            wheel2group.attr("transform", function() {
+                return "rotate(" + delta * speed + ", 1210, 530)";
+            })
+        });
+    </script>
+</body>
+</html>
