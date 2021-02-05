@@ -13,8 +13,19 @@
 <body>
 	<h1 id='title' style='text-align:center; font-family:Geneva, Arial, Serif'>Pigasso</h1>
 	<p id='author' style='text-align:center; font-family:Geneva, Arial, Serif'>By Jyalu Wu</p>
+	<div>
+		<button style='background-color: #ffb3bf; border: 2px solid #ff6680; color:#f35' 
+			onClick='change_colors(pink)'>PNK</button>
+		<button style='background-color: #ffd24d; border: 2px solid #4da6ff; color:#ff4d4d' 
+			onClick='change_colors(primary_colors)'>RYB</button>
+		<button style='background-color: #d9d9d9; border: 2px solid #b3b3b3; color:#999' 
+			onClick='change_colors(gray)'>GRY</button>
+		<button style='background-image: linear-gradient(90deg, lightCoral, lightPink, lightSalmon, gold, greenYellow, skyBlue, plum);
+   		border: 2px solid #ff6680; color:#999' 
+			onClick='change_colors(rainbow)'>RBW</button>
+	</div>
 
-	<div id = "svgcontainer" class='svg-container' onClick='change_color()'></div>
+	<div id = "svgcontainer" class='svg-container'></div>
 
 	<script>
 		//console.log(d3); // test if d3 is loaded
@@ -28,45 +39,37 @@
 		// Add an SVG
 		var svg = d3.select('#svgcontainer')
 			.append('svg')
-			//.attr('preserveAspectRatio', 'xMinYMin slice')
 			.attr('preserveAspectRatio','none')
 			.attr('viewBox', 0+' '+0+' '+w+' '+h)
-			//.classed('svg-content', true)
-			//.attr('width', w)
-			//.attr('height', h)
 
 		// color variables
 		var hue = 350
-		var pig_colors = []
-		var bg_colors = []
+		var pig_colors = ['hsla('+hue+', 100%, 85%, 1)', 
+				'hsla('+hue+', 100%, 70%, 1)', 'hsla('+hue+', 100%, 60%, 1)']
+		var bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
+				'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
+				'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
+
+		var rainbow_interval
 
 		draw()
-		d3.select(window).on('resize', resize);
-		//window.onresize = resize
+		//d3.select(window).on('resize', resize) // does the same thing as the next line
+		window.onresize = resize
 
-		//sresize();
 
 		/**
 		 * Resize the svg every time the window size changes
 		 */
 		 function resize() {
-			 console.log('resizing')
-
+			 // update variables
 			 w = window.innerWidth - 20
 			 h = window.innerHeight - 150
 			 pig_size = h / 2
 			 pig_offset = w/2 - pig_size
 
-			 console.log('width', w)
-			 console.log('height',h)
-
+			// clear svg and change its size
 			 svg.selectAll("*").remove();
-			 //document.getElementById("svgcontainer").setAttribute('viewBox', 0+' '+0+' '+w+' '+h)
 			 svg.attr('viewBox', 0+' '+0+' '+w+' '+h)
-			 
-			 console.log(document.getElementById("svgcontainer").getAttribute('viewBox'))
-			 //document.getElementById("svgcontainer").setAttribute('width', w)
-			 //console.log(svg._groups[0][0])
 			 
 			 draw()
 		 }
@@ -92,14 +95,10 @@
 		/*                                   Drawing                                  */
 		/* -------------------------------------------------------------------------- */
 
-		// TODO: d3.interval
 		function draw() {
-			bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
-				'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
-				'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
+			//bg_colors = 
 
-			pig_colors = ['hsla('+hue+', 100%, 85%, 1)', 
-				'hsla('+hue+', 100%, 70%, 1)', 'hsla('+hue+', 100%, 60%, 1)']
+			//pig_colors = 
 
 			draw_bg()
 			draw_pig()
@@ -295,15 +294,68 @@
 
 		}
 
-		  
+		function change_colors(fx) {
+			console.log('changing colors')
+			if (fx.toString() == rainbow.toString()) {
+				pink()
+				rainbow_interval = setInterval(rainbow, 100)
+			}
+			else {
+				console.log('clearing rainbow interval')
+				clearInterval(rainbow_interval);
+			}
+
+			fx()
+			draw()
+		}
+
 		// Changing color on click
-		function change_color() {
-			console.log('changing color')
+		function rainbow() {
+			console.log('rainbow called')
 			hue = (hue + 10) % 360
+			console.log('hue',hue)
+			pig_colors = ['hsla('+hue+', 100%, 85%, 1)', 
+				'hsla('+hue+', 100%, 70%, 1)', 'hsla('+hue+', 100%, 60%, 1)']
+			bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
+				'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
+				'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
 			//hue = Math.random() * 360
 			// clear svg
 			draw()
 		}
+
+		function pink() {
+			console.log('pink called')
+			hue = 350
+			pig_colors = ['hsla(350, 100%, 85%, 1)', 
+				'hsla(350, 100%, 70%, 1)', 'hsla(350, 100%, 60%, 1)']
+			bg_colors = ['hsla(350, 10%, 90%, 1)', 
+				'hsla(350, 10%, 80%, 1)', 'hsla(350, 10%, 70%, 1)', 
+				'hsla(350, 10%, 60%, 1)', 'hsla(350, 10%, 50%, 1)']
+		}
+
+		function gray() {
+			console.log('gray called')
+			hue = 350
+			pig_colors = ['hsla(350, 0%, 85%, 1)', 
+				'hsla(350, 0%, 70%, 1)', 'hsla(350, 0%, 60%, 1)']
+			bg_colors = ['hsla(350, 0%, 90%, 1)', 
+				'hsla(350, 0%, 80%, 1)', 'hsla(350, 0%, 70%, 1)', 
+				'hsla(350, 0%, 60%, 1)', 'hsla(350, 0%, 50%, 1)']
+		}
+
+		function primary_colors() {
+			console.log('primary_colors called')
+			hue = 350
+			pig_colors = ['hsla(45, 100%, 65%, 1)', 
+				'hsla(210, 100%, 65%, 1)', 'hsla(0, 100%, 65%, 1)']
+			bg_colors = ['hsla(210, 10%, 90%, 1)', 
+				'hsla(210, 10%, 80%, 1)', 'hsla(210, 10%, 70%, 1)', 
+				'hsla(210, 10%, 60%, 1)', 'hsla(210, 10%, 50%, 1)']
+		}
+
+		//setInterval(rainbow, 100)
+		//clearInterval(rainbow);
 				
 	</script>
 </body>
