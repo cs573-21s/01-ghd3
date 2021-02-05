@@ -121,7 +121,7 @@
             .style('stroke', 'gray')
         
         var wheel1line1 = wheel1group.append('line')
-            .attr('x1', '540')
+            .attr('x1', '670')
             .attr('y1', '530')
             .attr('x2', '800')
             .attr('y2', '530')
@@ -130,41 +130,89 @@
 
         var wheel1line2 = wheel1group.append('line')
             .attr('x1', '670')
-            .attr('y1', '400')
+            .attr('y1', '530')
             .attr('x2', '670')
             .attr('y2', '660')
             .style('stroke-width', 2)
             .style('stroke', 'gray')
         
         var wheel1line3 = wheel1group.append('line')
-            .attr('x1', '730')
-            .attr('y1', '410')
+            .attr('x1', '670')
+            .attr('y1', '530')
             .attr('x2', '610')
             .attr('y2', '650')
             .style('stroke-width', 2)
             .style('stroke', 'gray')
 
         var wheel1line4 = wheel1group.append('line')
-            .attr('x1', '790')
-            .attr('y1', '470')
+            .attr('x1', '670')
+            .attr('y1', '530')
             .attr('x2', '550')
             .attr('y2', '590')
             .style('stroke-width', 2)
             .style('stroke', 'gray')
 
         var wheel1line5 = wheel1group.append('line')
-            .attr('x1', '550')
-            .attr('y1', '470')
+            .attr('x1', '670')
+            .attr('y1', '530')
             .attr('x2', '790')
             .attr('y2', '590')
             .style('stroke-width', 2)
             .style('stroke', 'gray') 
 
         var wheel1line6 = wheel1group.append('line')
-            .attr('x1', '610')
-            .attr('y1', '410') 
+            .attr('x1', '670')
+            .attr('y1', '530') 
             .attr('x2', '730')
             .attr('y2', '650')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line7 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '540')
+            .attr('y2', '530')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line8 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '670')
+            .attr('y2', '400')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+        
+        var wheel1line9 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '610')
+            .attr('y2', '410')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line10 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '730')
+            .attr('y2', '410')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray')
+
+        var wheel1line11 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530')
+            .attr('x2', '550')
+            .attr('y2', '470')
+            .style('stroke-width', 2)
+            .style('stroke', 'gray') 
+
+        var wheel1line12 = wheel1group.append('line')
+            .attr('x1', '670')
+            .attr('y1', '530') 
+            .attr('x2', '790')
+            .attr('y2', '470')
             .style('stroke-width', 2)
             .style('stroke', 'gray')
         
@@ -381,17 +429,32 @@
                 .attr('transform', 'rotate(50, 650, 530)')
         }, 500);
 
-        */
+        
         wheel1group
             .transition()
                 .duration(1000)
-                .attr('transform', 'rotate(45, 670, 530)')
+                .attr('transform', 'rotate(5, 670, 530)')
 
+                
         wheel2group
             .transition()
                 .duration(1000)
-                .attr('transform', 'rotate(45, 1210, 530)')
+                .attr('transform', 'rotate(90, 1210, 530)')
 
+        */
+        var t0 = Date.now();
+        var speed = .1
+
+        d3.timer(function() {
+            var delta = (Date.now() - t0);
+            wheel1group.attr("transform", function() {
+                return "rotate(" + delta * speed + ", 670, 530)";
+            })
+
+            wheel2group.attr("transform", function() {
+                return "rotate(" + delta * speed + ", 1210, 530)";
+            })
+        });
     </script>
 </body>
 </html>
