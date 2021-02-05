@@ -1,10 +1,10 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
-Github Pages link:https://zihao777.github.io/01-ghd3/
+  Github Pages link:https://zihao777.github.io/01-ghd3/
 
 - According to statistical data, draw histograms and pie charts to reflect statistical characteristics
-- According to temparature data, Reflect the temperature trend of Hubei Province throughout the year through the line chart
+- According to temparature dataset, reflect the temperature trend of Hubei Province throughout the year through the line chart
 - Draw the map of Hubei Province
 
 Technical achievement
@@ -13,7 +13,7 @@ Technical achievement
 1. Learned to create basic primitives, scales and coordinate axes with d3.js.
 2. Learned to create pie chart, histogram and line chart.
 3. Learned to draw a map with d3 based on the obtained geoJson file.
-4. Added some interactive features
+4. Added some interactive animate features.
 
 Design Achievement
 ---
