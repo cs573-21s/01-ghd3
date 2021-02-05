@@ -77,13 +77,20 @@ Below are some, but not necessarily all, of the key points we will consider duri
     - A working link to the hosted files (usually the gh-pages 'live' url)  
     - Section for Technical and Design Achievements
 
+Assignment 1 - Hello World: GitHub and d3  
+===
+
+http://ephie06.github.io/01-ghd3/index.html
+
+I used the in class demo as a starting point for the assignment. In addition I used the following sites for reference on how to create graphics primitives. 
+
 Technical Achievement Desription
 ---
 
-I have never worked in d3 and only a very little in Terminal and GitHub, so it was a technical achievement for me to get up to speed on those things. 
-Design Achievement Description -- 12
+I have never worked in d3 or JavaScript and only a very little in Terminal and GitHub, so it was a technical achievement for me to get up to speed on those things. I made interactive elements on the circles and rectangles. 
 
-Remember, it is up to *you* to define what constitutes a technical and design achievements.
-Be ambitious as these are designed to allow you to shape your learning.
-These are the only way to move from B to A territory.
+Design Achievement Description
+---
+
+I played around with placement, size, color, and opacity of the graphics primitives to make the assignment visually interesting
 
