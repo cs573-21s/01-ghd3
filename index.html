@@ -12,12 +12,27 @@
       padding: 0;
     }
 
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+      background: black;
+      color: white;
+      font-weight: bold;
+    }
+
+    svg {
+      display: inline-block;
+    }
+
     table {
-      margin: 50px 0 20px 50px;
+      margin: 50px auto 20px auto;
     }
 
     .histogram {
       width: 100%;
+      text-align: center;
+      margin: 0 auto;
     }
 
     table .td-first {
@@ -27,32 +42,34 @@
 
     .lineChart {
       width: 100%;
+      text-align: center;
+
+    }
+
+    .lineChart svg {
+      position: relative;
+    }
+
+    .mapGeo {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 50px;
     }
 
     .map {
       position: absolute;
       display: none;
-      border: 2px solid black;
-      width: 70px;
-      height: 50px;
-      background-color: black;
+      line-height: 40px;
+      border-radius: 20px;
+      width: 100px;
+      height: 80px;
+      padding: 0 5px;
+      background-color: #606060;
       color: white;
       z-index: 1;
       text-align: center;
-    }
-
-    .map span {
-      overflow: visible;
-      display: block;
-      position: absolute;
-      left: 25px;
-      top: 50px;
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-top: 10px solid black;
+      font-size: 10px;
     }
   </style>
 </head>
@@ -61,7 +78,7 @@
   <table border="1">
     <caption>Survey on the favorite fruits of the class</caption>
     <tr>
-      <td class="td-first">name of friut</td>
+      <td class="td-first">Name of friut</td>
       <td>banana</td>
       <td>apple</td>
       <td>berry</td>
@@ -100,7 +117,7 @@
       <td>Dec</td>
     </tr>
     <tr>
-      <td class="td-first">temprature</td>
+      <td class="td-first">Temprature</td>
       <td>4.5</td>
       <td>6.5</td>
       <td>12</td>
@@ -116,7 +133,9 @@
     </tr>
   </table>
   <div class="lineChart"></div>
-  <div class="map"><span></span></div>
+  <p>Hubei Provice</p>
+  <div class="mapGeo"></div>
+  <div class="map"></div>
   <script>
     console.log(d3); // test if d3 is loaded
     width = 300;
@@ -125,15 +144,14 @@
     var padding = 20;
     var lables = ['banana', 'apple', 'berry', 'lime', 'pear', 'orange', 'peach'];
     var dataset = [10, 20, 30, 50, 35, 19, 5];
-    var color = ['yellow', 'red', 'blue', 'yellow', 'green', 'orange', 'pink'];
+    var color = ['#cf0', 'red', 'blue', 'yellow', 'green', 'orange', 'pink'];
 
     /* Draw a histogram*/
     // Add an SVG to draw a histogram
     var svgHistogram = d3.select('.histogram')
       .append('svg')
       .attr('width', width)
-      .attr('height', width)
-      .style('margin', '20px');
+      .attr('height', width);
 
     //set the scale
     var xScale = d3.scaleBand()
@@ -210,8 +228,7 @@
       .append('svg')
       .attr('width', width)
       .attr('height', width)
-      .style('position', 'relative')
-      .style('margin', '20px');
+      .style('position', 'relative');
 
     var pie = d3.pie();
     var pieData = pie(dataset);
@@ -237,9 +254,13 @@
     arcs.append('text')
       .attr('transform', function (d, i) {
         var c = arc.centroid(d);
-        console.log(c[0]);
-        console.log(c[1]);
-        return "translate(" + c[0] * 2.8 + "," + c[1] * 2.8 + ")";
+        if (i == 6) {
+          return "translate(" + c[0] * 2.0 + "," + c[1] * 2.2 + ")";
+        } else if (i == 1) {
+          return "translate(" + c[0] * 3.0 + "," + c[1] * 8 + ")";
+        } else {
+          return "translate(" + c[0] * 2.8 + "," + c[1] * 2.8 + ")";
+        };
       })
       .text(function (d, i) { return lables[i]; });
 
@@ -263,9 +284,7 @@
     var svgLine = d3.selectAll('.lineChart')
       .append('svg')
       .attr('width', width)
-      .attr('height', width)
-      .style('position', 'relative')
-      .style('margin', '20px');
+      .attr('height', width);
 
     var lineDotes = svgLine.selectAll('g')
       .data(temprature)
@@ -337,24 +356,22 @@
       .attr("stroke", "blue");
 
     /*Draw a hubei map*/
-    var svgMap = d3.select('body')
+    var svgMap = d3.select('.mapGeo')
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500);
-    // var divMap = svgMap.append('div')
-    //   .attr('class', 'map');
-    // var spanMap = divMap.append('span')
+      .attr('width', 700)
+      .attr('height', 400);
 
 
     d3.json('https://raw.githack.com/zihao777/01-ghd3/main/hubeiGeo.json').then(function (data) {
       var projection = d3.geoMercator().fitExtent(
         [
           [0, 0],
-          [500, 500],
+          [700, 400],
         ], data);
       // console.log(data);
       var pathGenerator = d3.geoPath()
         .projection(projection);
+
       var mapPath = svgMap.selectAll("path")
         .data(data.features)
         .enter()
@@ -364,22 +381,17 @@
         .attr("stroke", "#000000")
         .attr("fill", "#ffffff")
         .on('mouseover', function (e, d) {
-          // console.log(e);
-          console.log(d);
           d3.select(this)
             .transition()
             .duration(400)
-            .attr('fill', 'yellow');
-          // var xbord = d[i].properties.center[0];
-          // var ybord = d[i].properties.center[1];
+            .attr('fill', '#ff9933');
           d3.select('.map')
             .style('display', 'block')
-            .style('top', (e.pageY - 90) + 'px')
+            .style('top', (e.pageY - 100) + 'px')
             .style('left', (e.pageX - 35) + 'px')
-            .text(d.properties.name);
+            .text('name:' + d.properties.name);
         })
         .on('mouseout', function (e) {
-
           d3.select(this)
             .transition()
             .duration(400)
