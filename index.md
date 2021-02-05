@@ -29,7 +29,7 @@
     .domain([0, 100])
     .range([0, 400]);
 
-svg.selectAll('circle')
+  svg.selectAll('circle')
     .data(c_data)
     .enter().append('circle')
     .attr('cx', d=> xscale(d))
@@ -59,13 +59,12 @@ svg.selectAll('circle')
 
   var lineGenerator = d3.line()
     .curve(d3.curveCardinal);
-
-  svg.append('path')
+     svg.append('path')
     .attr('d', lineGenerator(line_points))
     .attr('stroke', 'cadetblue')
     .attr('stroke-width', 5)
     .attr('fill', 'none');
-  
+
   svg.append('line')
     .attr('x1', 150)
     .attr('y1', 315)
