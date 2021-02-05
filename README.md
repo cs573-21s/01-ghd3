@@ -8,7 +8,7 @@ For this assignment I considered exploring the following svg componenets:
 - rectangle
 
  Below are a few examples of the d3 exploration.
- 
+ ![Example Image](./image/demo1.png)
  
 
 Grades are on a 120 point scale. 
