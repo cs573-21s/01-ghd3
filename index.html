@@ -1,10 +1,409 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 1(rectangulars,circles,polygons,lines)</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+      background: black;
+      color: white;
+      font-weight: bold;
+    }
+
+    svg {
+      display: inline-block;
+    }
+
+    table {
+      margin: 50px auto 20px auto;
+    }
+
+    .histogram {
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    table .td-first {
+      background-color: black;
+      color: white;
+    }
+
+    .lineChart {
+      width: 100%;
+      text-align: center;
+
+    }
+
+    .lineChart svg {
+      position: relative;
+    }
+
+    .mapGeo {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .map {
+      position: absolute;
+      display: none;
+      line-height: 40px;
+      border-radius: 20px;
+      width: 100px;
+      height: 80px;
+      padding: 0 5px;
+      background-color: #606060;
+      color: white;
+      z-index: 1;
+      text-align: center;
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <table border="1">
+    <caption>Survey on the favorite fruits of the class</caption>
+    <tr>
+      <td class="td-first">Name of friut</td>
+      <td>banana</td>
+      <td>apple</td>
+      <td>berry</td>
+      <td>lime</td>
+      <td>pear</td>
+      <td>orange</td>
+      <td>peach</td>
+    </tr>
+    <tr>
+      <td class="td-first">Number</td>
+      <td>10</td>
+      <td>20</td>
+      <td>30</td>
+      <td>50</td>
+      <td>35</td>
+      <td>19</td>
+      <td>5</td>
+    </tr>
+  </table>
+  <div class="histogram"></div>
+  <table border="1">
+    <caption>Hubei weather trends throughout the year</caption>
+    <tr>
+      <td class="td-first">Month</td>
+      <td>Jan</td>
+      <td>Feb</td>
+      <td>Mar</td>
+      <td>Apr</td>
+      <td>May</td>
+      <td>Jun</td>
+      <td>JUl</td>
+      <td>Aug</td>
+      <td>Sep</td>
+      <td>Oct</td>
+      <td>Nov</td>
+      <td>Dec</td>
+    </tr>
+    <tr>
+      <td class="td-first">Temprature</td>
+      <td>4.5</td>
+      <td>6.5</td>
+      <td>12</td>
+      <td>18.5</td>
+      <td>23.5</td>
+      <td>27</td>
+      <td>30.5</td>
+      <td>30</td>
+      <td>25</td>
+      <td>19</td>
+      <td>12</td>
+      <td>6</td>
+    </tr>
+  </table>
+  <div class="lineChart"></div>
+  <p>Hubei Province</p>
+  <div class="mapGeo"></div>
+  <div class="map"></div>
+  <script>
+    console.log(d3); // test if d3 is loaded
+    width = 300;
+    height = 300;
+
+    var padding = 20;
+    var lables = ['banana', 'apple', 'berry', 'lime', 'pear', 'orange', 'peach'];
+    var dataset = [10, 20, 30, 50, 35, 19, 5];
+    var color = ['#cf0', 'red', 'blue', 'yellow', 'green', 'orange', 'pink'];
+
+    /* Draw a histogram*/
+    // Add an SVG to draw a histogram
+    var svgHistogram = d3.select('.histogram')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width);
+
+    //set the scale
+    var xScale = d3.scaleBand()
+      .domain(lables)
+      .rangeRound([0, width - padding * 2]);
+    var yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset)])
+      .range([height - padding * 2, 0]);
+
+    //create axises function
+    var xais = d3.axisBottom()
+      .scale(xScale)
+      .tickSize(6);
+
+    var yais = d3.axisLeft()
+      .scale(yScale);
+
+    //add rectangles
+    var rects = svgHistogram.selectAll(".MyRect")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("class", "MyRect")
+      .attr("x", function (d, i) {
+        return xScale(lables[i]);
+      })
+      .attr("y", function (d) {
+        return yScale(d) + padding;
+      })
+      .attr('width', (width - padding * 2) / dataset.length / 2)
+      .attr('height', function (d) {
+        return height - yScale(d) - padding * 2;
+      })
+      .attr('fill', 'teal')
+      .style('transform', 'translate(30px,0)');
+
+    //create axises
+    svgHistogram.append("g")
+      .attr('class', 'xaxis')
+      .call(xais);
+
+    var yAxis = svgHistogram.append('g')
+      .attr('class', 'yaxis')
+      .call(yais);
+
+    //set style
+    var xAxis = d3.selectAll('.xaxis')
+      .style('transform', "translate(" + padding + "px," + (height - padding) + "px)");
+
+    var yAxis = d3.selectAll('.yaxis')
+      .style('transform', 'translate(20px,20px)');
+
+    //add text
+    var text = svgHistogram.selectAll('.text')
+      .data(dataset)
+      .enter()
+      .append('text')
+      .attr('class', 'text')
+      .attr("x", function (d, i) {
+        return xScale(lables[i]);
+      })
+      .attr("y", function (d) {
+        return yScale(d) + padding;
+      })
+      .text(function (d, i) {
+        return d;
+      })
+      .style('font-size', (width - padding * 2) / dataset.length / 3 + 'px')
+      .style('transform', 'translate(' + padding * 3 / 2 + 'px, 20px)')
+      .attr('fill', 'white');
+
+    /* Draw a pi chart*/
+    var svgPiechart = d3.select('.histogram')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width)
+      .style('position', 'relative');
+
+    var pie = d3.pie();
+    var pieData = pie(dataset);
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100)
+      .cornerRadius(5);
+
+    var arcs = svgPiechart.selectAll('g')
+      .data(pieData)
+      .enter()
+      .append('g')
+      .style('transform', 'translate(150px,150px)');
+
+    arcs.append('path')
+      .attr('fill', function (d, i) {
+        return color[i];
+      })
+      .attr('d', function (d) {
+        return arc(d)
+      });
+
+    arcs.append('text')
+      .attr('transform', function (d, i) {
+        var c = arc.centroid(d);
+        if (i == 6) {
+          return "translate(" + c[0] * 2.0 + "," + c[1] * 2.2 + ")";
+        } else if (i == 1) {
+          return "translate(" + c[0] * 3.0 + "," + c[1] * 8 + ")";
+        } else {
+          return "translate(" + c[0] * 2.8 + "," + c[1] * 2.8 + ")";
+        };
+      })
+      .text(function (d, i) { return lables[i]; });
+
+    arcs.append('line')
+      .attr('stroke', 'black')
+      .attr('x1', function (d, i) {
+        return arc.centroid(d)[0] * 1.5;
+      })
+      .attr('y1', function (d, i) {
+        return arc.centroid(d)[1] * 1.5;
+      })
+      .attr('x2', function (d, i) {
+        return arc.centroid(d)[0] * 2.5;
+      })
+      .attr('y2', function (d, i) {
+        return arc.centroid(d)[1] * 2.5;
+      })
+
+    // Draw a line chart
+    var temprature = [['Jan', 4.5], ['Feb', 6.5], ['Mar', 12], ['Apr', 18.5], ['May', 23.5], ['June', 27], ['July', 30.5], ['Aug', 30], ['Sep', 25], ['Oct', 19], ['Nov', 12], ['Dec', 6]];
+    var svgLine = d3.selectAll('.lineChart')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', width);
+
+    var lineDotes = svgLine.selectAll('g')
+      .data(temprature)
+      .enter()
+      .append('g');
+
+    function month(array) {
+      var newarray = [];
+      for (var i = 0; i < array.length; i++) {
+        newarray.push(temprature[i][0]);
+      }
+
+      return newarray;
+    };
+
+    function monthTemprature(array) {
+      var newarray = [];
+      for (var i = 0; i < array.length; i++) {
+        newarray.push(temprature[i][1]);
+      }
+
+      return newarray;
+    };
+
+    var xScaleLine = d3.scaleBand()
+      .domain(month(temprature))
+      .rangeRound([0, width - padding * 2]);
+
+    var yScaleLine = d3.scaleLinear()
+      .domain([0, d3.max(monthTemprature(temprature))])
+      .range([height - padding * 2, 0]);
+
+    var xaxisLine = d3.axisTop()
+      .scale(xScaleLine);
+    var yaxisLine = d3.axisLeft()
+      .scale(yScaleLine)
+      .tickSize(0.5);
+
+    svgLine.append('g')
+      .call(xaxisLine)
+      .style('transform', "translate(" + padding + "px," + (height - padding) + "px)");
+
+    svgLine.append('g')
+      .call(yaxisLine)
+      .style('transform', 'translate(20px,20px)');
+
+    lineDotes.append('circle')
+      .attr('cx', function (d, i) {
+        return xScaleLine(month(temprature)[i]);
+      })
+      .style('transform', "translate(" + padding * 1.5 + "px," + "20px)")
+      .attr('cy', function (d, i) {
+        return yScaleLine(monthTemprature(temprature)[i]);
+      })
+      .attr('r', 5)
+      .attr('fill', 'blue');
+    var linePath = d3.line()
+      .x(function (d) {
+        return xScaleLine(d[0]);
+      })
+      .y(function (d) {
+        return yScaleLine(d[1]);
+      });
+
+    lineDotes.append('path')
+      .attr('d', linePath(temprature))
+      .attr('fill', 'none')
+      .style('transform', "translate(" + padding * 1.5 + "px," + "20px)")
+      .attr("stroke", "blue");
+
+    /*Draw a hubei map*/
+    var svgMap = d3.select('.mapGeo')
+      .append('svg')
+      .attr('width', 700)
+      .attr('height', 400);
+
+
+    d3.json('https://raw.githack.com/zihao777/01-ghd3/main/hubeiGeo.json').then(function (data) {
+      var projection = d3.geoMercator().fitExtent(
+        [
+          [0, 0],
+          [700, 400],
+        ], data);
+      // console.log(data);
+      var pathGenerator = d3.geoPath()
+        .projection(projection);
+
+      var mapPath = svgMap.selectAll("path")
+        .data(data.features)
+        .enter()
+        .append("path")
+        .attr("d", pathGenerator)
+        .attr("stroke-width", 0.5)
+        .attr("stroke", "#000000")
+        .attr("fill", "#ffffff")
+        .on('mouseover', function (e, d) {
+          d3.select(this)
+            .transition()
+            .duration(400)
+            .attr('fill', '#ff9933');
+          d3.select('.map')
+            .style('display', 'block')
+            .style('top', (e.pageY - 100) + 'px')
+            .style('left', (e.pageX - 35) + 'px')
+            .text('name:' + d.properties.name);
+        })
+        .on('mouseout', function (e) {
+          d3.select(this)
+            .transition()
+            .duration(400)
+            .attr('fill', 'white');
+
+          d3.select('.map')
+            .style('display', 'none');
+          ;
+        })
+    });
+  </script>
+
+</body>
+
+</html>
