@@ -1,11 +1,4 @@
-Assignment 1 - Hello World: GitHub and d3  
-===
 
-
-
-Go beyond the minimum requirements of this project.
-Experiment with other aspects of the [d3 API](https://github.com/mbostock/d3/wiki/API-Reference) and [d3 Tutorials](https://github.com/mbostock/d3/wiki/Tutorials). 
-Try making the elements interactive, for example, or animate them.
 
 
 - README Quality
@@ -18,7 +11,7 @@ Assignment 1 - Hello World: GitHub and d3
 
 http://ephie06.github.io/01-ghd3/index.html
 
-<img src = "/Users/steph/Desktop/Screen Shot 2021-02-05 at 11.43.54 AM.png"> </img>
+<img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.43.54%20AM.png?raw=true"> </img>
 
 I used the in class demo as a starting point for the assignment. In addition I used the following sites for reference on how to create graphics primitives. 
 
