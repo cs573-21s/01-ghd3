@@ -4,13 +4,14 @@
 - README Quality
     - A description of what you have created. 1-2 screenshots are recommended for the README.  
     - A working link to the hosted files (usually the gh-pages 'live' url)  
-    - Section for Technical and Design Achievements
+
 
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
 http://ephie06.github.io/01-ghd3/index.html
 
+<img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.59.49%20AM.png?raw=true"></img>
 <img src = "https://github.com/ephie06/01-ghd3/blob/main/Screen%20Shot%202021-02-05%20at%2011.43.54%20AM.png?raw=true"> </img>
 
 I used the in class demo as a starting point for the assignment. In addition I used the following sites for reference on how to create graphics primitives. 
