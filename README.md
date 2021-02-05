@@ -1,23 +1,54 @@
-Assignment 1 - Hello World: GitHub and d3  
+Assignment 1 - Hello World: GitHub and d3
 ===
+By Jyalu Wu
 
-This is a starting project to make sure you can write and host a webpage that generates graphics using d3. 
-
-The primary goal is to be able to generate graphics primitives (circles, rectangles, lines, polygons) at different locations on the screen with different colors. 
-
-The secondary goal is to introduce you to coding on GitHub, including creating a gh-pages branch to host your visualizations.
-
-You may write everything from scratch, or start with demo programs from books or the web. 
-If you do start with code that you found, you **must identify** the source of the code in your README and, most importantly, make non-trivial changes to the code to make it your own so you really learn what you're doing. 
-
-For example, you could download one of the d3.js examples, read it through so you understand what it's doing, and then change the appearance of the graphical output to use different color schemes, different primitive shapes, different layouts of the primitives, and so on.
-
-Resources
+GitHub Site
 ---
+https://jwu2018.github.io/Pigasso/index.html
 
-If you need a JavaScript/HTML/CSS refresher, see [JavaScript Codeacademy](https://www.codecademy.com/en/tracks/javascript) or find one of your choosing on the web.
 
-If you need a Git/GitHub refreseher, some possible resources include [Getting Started with GitHub](https://help.github.com/categories/bootcamp/), the [GitHub Guides](https://guides.github.com/) (especially the ones on Hello World, and Understanding the GitHub Flow, and Forking Projects), and [CodeSchool's Try Git Course](https://www.codeschool.com/courses/try-git).
+Description
+---
+For this project, I drew a pig that can change colors. Depending on which button you press, the pig will turn pink, red/yellow/blue, gray, or loop through the colors of the rainbow.
+
+![Pink Pig] (pink-pig.png)
+![RYB Pig] (ryb-pig.png)
+
+
+Technical Achievements
+---
+### Rainbow Loop
+When you click the "RBW" button, the pig changes colors on its own! This was done using the `setInterval` and `clearInterval` functions.
+
+### Dynamic Resizing
+When you change the size of your window, the pig rescales so that it fits the screen. This was done by using a `viewBox` and telling the svg to redraw itself whenever the window was resized.
+
+
+Design Achievements
+---
+### Colors
+There are four coloring options to choose from:
+- Pink
+- Red/yellow/blue
+- Gray
+- Rainbow
+The colors of the text and background also change when the pig changes color, which makes everything more cohesive and pleasant to look at.
+
+
+Sources
+---
+1. [Stack Overflow - Proper format for drawing polygon data in D3] (https://stackoverflow.com/questions/13204562/proper-format-for-drawing-polygon-data-in-d3)
+2. [Vegibit - Drawing Scalable Vector Graphics With D3 JavaScript] (https://vegibit.com/drawing-scalable-vector-graphics-with-d3-javascript/)
+3. [Chartio - How to Resize an SVG When the Window is Resized in d3.js] (https://chartio.com/resources/tutorials/how-to-resize-an-svg-when-the-window-is-resized-in-d3-js/)
+4. [CSS-Tricks - How to Scale SVG] (https://css-tricks.com/scale-svg/)
+
+
+
+
+
+
+
+
 
 Requirements
 ---
