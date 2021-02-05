@@ -28,8 +28,8 @@
 		// Add an SVG
 		var svg = d3.select('#svgcontainer')
 			.append('svg')
-			.attr('preserveAspectRatio', 'xMinYMin slice')
-			//.attr('preserveAspectRatio','none')
+			//.attr('preserveAspectRatio', 'xMinYMin slice')
+			.attr('preserveAspectRatio','none')
 			.attr('viewBox', 0+' '+0+' '+w+' '+h)
 			//.classed('svg-content', true)
 			//.attr('width', w)
@@ -40,9 +40,9 @@
 		var pig_colors = []
 		var bg_colors = []
 
-		draw_pig()
-		//d3.select(window).on('resize', resize);
-		window.onresize = resize
+		draw()
+		d3.select(window).on('resize', resize);
+		//window.onresize = resize
 
 		//sresize();
 
@@ -51,18 +51,30 @@
 		 */
 		 function resize() {
 			 console.log('resizing')
+
 			 w = window.innerWidth - 20
-			 //h = window.innerHeight - 150
+			 h = window.innerHeight - 150
+			 pig_size = h / 2
+			 pig_offset = w/2 - pig_size
+
 			 console.log('width', w)
 			 console.log('height',h)
+
 			 svg.selectAll("*").remove();
-			 document.getElementById("svgcontainer").setAttribute('viewBox', 0+' '+0+' '+w+' '+h)
-			 draw_pig()
+			 //document.getElementById("svgcontainer").setAttribute('viewBox', 0+' '+0+' '+w+' '+h)
+			 svg.attr('viewBox', 0+' '+0+' '+w+' '+h)
+			 
+			 console.log(document.getElementById("svgcontainer").getAttribute('viewBox'))
+			 //document.getElementById("svgcontainer").setAttribute('width', w)
+			 //console.log(svg._groups[0][0])
+			 
+			 draw()
 		 }
 
 
 		/**
 		 * Helper function for turning point objects to a string of points
+		 * 
 		 */
 		function points_string(data) {
 			output = ''
@@ -76,16 +88,24 @@
 			return output
 		}
 
-		function draw_pig() {
-			// clear the svg first
-			svg.selectAll("*").remove();
+		/* -------------------------------------------------------------------------- */
+		/*                                   Drawing                                  */
+		/* -------------------------------------------------------------------------- */
+
+		// TODO: d3.interval
+		function draw() {
+			bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
+				'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
+				'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
 
 			pig_colors = ['hsla('+hue+', 100%, 85%, 1)', 
 				'hsla('+hue+', 100%, 70%, 1)', 'hsla('+hue+', 100%, 60%, 1)']
 
-			bg_colors = ['hsla('+hue+', 10%, 90%, 1)', 
-				'hsla('+hue+', 10%, 80%, 1)', 'hsla('+hue+', 10%, 70%, 1)', 
-				'hsla('+hue+', 10%, 60%, 1)', 'hsla('+hue+', 10%, 50%, 1)']
+			draw_bg()
+			draw_pig()
+		}
+
+		function draw_bg() {
 
 			// text
 			//let author_width = document.getElementById("author").offsetWidth
@@ -104,8 +124,10 @@
 					.attr('height', h / 5)
 					.attr('fill', bg_colors[i])
 			}
+		}
 
-			// Add Head
+		function draw_pig() {
+			/* -------------------------------- Add Head -------------------------------- */
 			head = [
 				{'id':1, 'x':pig_size/2 + pig_offset, 		'y':3*pig_size/4},
 				{'id':2, 'x':pig_size/2 + pig_offset, 		'y':5*pig_size/4},
@@ -122,7 +144,7 @@
 				.attr('fill', pig_colors[0])
 
 
-			// Add Lines
+			/* -------------------------------- Add Lines ------------------------------- */
 			svg.append('line')
 				.attr('x1', pig_size/2+pig_offset)
 				.attr('y1', 3*pig_size/4)
@@ -166,7 +188,7 @@
 				.style('stroke', pig_colors[1])
 			
 
-			// Add Nose
+			/* -------------------------------- Add Nose -------------------------------- */
 			nose = [
 				{'id': 1,'x':7*pig_size/8 + pig_offset, 	'y':17*pig_size/16},
 				{'id': 2,'x':7*pig_size/8 + pig_offset, 	'y':19*pig_size/16},
@@ -180,7 +202,7 @@
 				//.attr('points', '233, 135 233, 216 349, 270 466, 216 466, 135 407, 54 291, 54 233, 135')
 				.attr('fill', pig_colors[2])
 
-			// Add Nostrils
+			/* ------------------------------ Add Nostrils ------------------------------ */
 			svg.append('circle')
 				.attr('cx', 15*pig_size/16+pig_offset)
 				.attr('cy', 9*pig_size/8)
@@ -208,7 +230,7 @@
 				.attr('fill', 'black')
 			
 
-			// Add Ears
+			/* -------------------------------- Add Ears -------------------------------- */
 			l_ear1 = [
 				{'x':pig_size/2 + pig_offset, 	'y':3*pig_size/4},
 				{'x':3*pig_size/4 + pig_offset, 	'y':pig_size/2},
@@ -258,7 +280,7 @@
 				.attr('fill', pig_colors[2])
 
 
-			// Add Airbender Triangle
+			/* ------------------------- Add Airbender Triangle ------------------------- */
 			airbender = [
 				{'x':3*pig_size/4 + pig_offset, 	'y':pig_size/2},
 				{'x':2*pig_size/2 + pig_offset, 	'y':3*pig_size/4},
