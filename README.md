@@ -77,7 +77,10 @@ Below are some, but not necessarily all, of the key points we will consider duri
     - A working link to the hosted files (usually the gh-pages 'live' url)  
     - Section for Technical and Design Achievements
 
-Technical Achievement Desription -- 12  
+Technical Achievement Desription
+---
+
+I have never worked in d3 and only a very little in Terminal and GitHub, so it was a technical achievement for me to get up to speed on those things. 
 Design Achievement Description -- 12
 
 Remember, it is up to *you* to define what constitutes a technical and design achievements.
