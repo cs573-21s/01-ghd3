@@ -346,7 +346,7 @@
     // var spanMap = divMap.append('span')
 
 
-    d3.json('https://geo.datav.aliyun.com/areas_v2/bound/420000_full.json').then(function (data) {
+    d3.json('../hubeiGeo.json').then(function (data) {
       var projection = d3.geoMercator().fitExtent(
         [
           [0, 0],
