@@ -22,8 +22,13 @@ let selectedDay = 0;
 // displayForDay(selectedDay);
 
 function nextDay() {
-  selectedDay++;
-  displayForDay(selectedDay);
+  LOAD_DATA.then(data => {
+    selectedDay++;
+    if (selectedDay >= data[0].length) {
+      selectedDay = 0
+    }
+    displayForDay(selectedDay);
+  })
 }
 
 const LOAD_DATA = new Promise((resolve, reject) => {
@@ -33,7 +38,8 @@ const LOAD_DATA = new Promise((resolve, reject) => {
     d3.csv("TenneTTSO.csv"),
     d3.csv("TransnetBW.csv"),
   ]).then(values => {
-    displayForDay(selectedDay);
+    // displayForDay(selectedDay);
+    d3.interval(nextDay, 500)
     console.log('All data loaded!');
     resolve(values);
   }).catch(err => {
@@ -73,7 +79,7 @@ function displayForDay(day) {
         {
           name: "Ampiron",
           points: parseDay(data[1][day]),
-          color: "red"
+          color: "#ff00ff" // magenta
         },
         {
           name: "TenneTTSO",
@@ -83,13 +89,14 @@ function displayForDay(day) {
         {
           name: "TransnetBW",
           points: parseDay(data[3][day]),
-          color: "purple"
+          color: "#9966ff" // purple
         },
       ]);
   });
 }
 
 function buildVis(dataArray){
+  // Set a common scale and axes using the first dataset
   let x = d3.scaleUtc()
     .domain(d3.extent(dataArray[0].points, d => d.date))
     .range([margin.left, width - margin.right])
@@ -114,15 +121,6 @@ function buildVis(dataArray){
         .text(dataArray[0].points.y))
 
   function addLine(name, companyData, color) {
-    // let x = d3.scaleUtc()
-    //   .domain(d3.extent(companyData, d => d.date))
-    //   .range([margin.left, width - margin.right])
-
-    // let y = d3.scaleLinear()
-    //   .domain([0, 750]).nice()  // observed max for 50 Hertz
-    //   // .domain([0, d3.max(companyData, d => d.value)]).nice()
-    //   .range([height - margin.bottom, margin.top])
-
     let line = d3.line()
       .defined(d => !isNaN(d.value))
       .x(d => x(d.date))
@@ -138,10 +136,6 @@ function buildVis(dataArray){
       .attr("company-name", name)
       .attr("d", line);
   }
-  // let line = d3.line()
-  //   .defined(d => !isNaN(d.value))
-  //   .x(d => x(d.date))
-  //   .y(d => y(d.value))
 
   svg.append("g")
     .call(xAxis);
@@ -149,19 +143,8 @@ function buildVis(dataArray){
   svg.append("g")
     .call(yAxis);
 
-  // svg.append("path")
-  //   .datum(dataPoints)
-  //   .attr("fill", "none")
-  //   .attr("stroke", "steelblue")
-  //   .attr("stroke-width", 1.5)
-  //   .attr("stroke-linejoin", "round")
-  //   .attr("stroke-linecap", "round")
-  //   .attr("d", line);
-
   for (let dataset of dataArray) {
     addLine(dataset.name, dataset.points, dataset.color);
   }
   console.log('Line should be drawn now.');
 }
-
-// d3.interval(nextDay, 500)
