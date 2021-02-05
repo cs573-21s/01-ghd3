@@ -8,8 +8,29 @@ February 2021
 
 Project URL: https://imogencs.github.io/01-ghd3/
 
-Technical and Design Elements
-===
+
+![Screenshot 1](/images/ss1.png)
+![Screenshot 2](/images/ss2.png)
+![Screenshot 3](/images/ss3.png)
+
+Technical Achievements
+---
+1. The sheep's eyes open and close when it is clicked. 
+2. The butterfly appearrs where you click on the sky and flies to the right. 
+3. The picture resized to fit the window width. 
+4. The sheep's hat changes color when clicked. 
+5. The grass is re-drawn at random heights when it is moused over. 
+6. The wool rotates around the sheep's body. 
+
+Design Achievements
+--- 
+1. There are many different shapes that make the sheep. 
+2. There are different colors, as well as gradients and variations in opacity. 
+3. The grass has a texture. 
+
+
+Description
+---
 
 The sheep is made of circles (the body and wool, as well as the open eyes), an ellipse (the head), rectangles (the legs), polygons (the hat and hooves), paths (the sleepy eyes).
 
@@ -38,7 +59,8 @@ When the user changes the window size, the width of the picture also changes wid
 
 Another technical element is that the sheep's hat changes both colors of the radial gradient each time it is clicked, alternating between 3 hat styles. The eyes still open and close when the hat is clicked, but no other polygons or shapes change their colors on this mouse event. 
 
-The butterfly is also a technical element. The butterfly appears where the user has clicked on the sky and flies toward the right until it is off the screen. If the user clicks on the sky again while the butterfly is flying, the original butterfly will disappear (because otherwise it flashes because it is updating too much) and a new butterlfy will appear in the new spot. This demonstrates the "transitions" that can be used to animate objects. 
+The butterfly is also a technical element. The butterfly appears where the user has clicked on the sky and flies toward the right until it is off the screen. If the user clicks on the sky again while the butterfly is flying, the original butterfly will disappear (because otherwise it flashes because it is updating too much) and a new butterlfy will appear in the new spot. This demonstrates the transform attribute that can be used to animate objects. 
+
 
 
 Project Description/Requirements
