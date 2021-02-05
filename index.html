@@ -346,7 +346,7 @@
     // var spanMap = divMap.append('span')
 
 
-    d3.json('../hubeiGeo.json').then(function (data) {
+    d3.json('https://raw.githubusercontent.com/zihao777/01-ghd3/main/hubeiGeo.json').then(function (data) {
       var projection = d3.geoMercator().fitExtent(
         [
           [0, 0],
