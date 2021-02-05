@@ -32,6 +32,7 @@ There are four coloring options to choose from:
 - Red/yellow/blue
 - Gray
 - Rainbow
+
 The colors of the text and background also change when the pig changes color, which makes everything more cohesive and pleasant to look at.
 
 
