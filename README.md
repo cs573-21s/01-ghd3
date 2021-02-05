@@ -1,11 +1,12 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
-  Github Pages link:https://zihao777.github.io/01-ghd3/
+>>Github Pages link:https://zihao777.github.io/01-ghd3/
 
 - According to statistical data, draw histograms and pie charts to reflect statistical characteristics
 - According to temparature dataset, reflect the temperature trend of Hubei Province throughout the year through the line chart
 - Draw the map of Hubei Province
+![Image text](https://github.com/zihao777/01-ghd3/blob/main/Assignment1-1.png)
 ![Image text](https://github.com/zihao777/01-ghd3/blob/main/Assignment1-2.png)
 Technical achievement
 ---
