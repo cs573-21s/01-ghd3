@@ -1,18 +1,27 @@
 <html>
   <head>
-    <!-- Load d3.js v5 -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
+
   <body>
-    <!-- Div to manipulate -->
     <div id="d3"></div>
 
     <script>
+
       var svg = d3.select("body")
                   .append("svg")
                   .attr("width", 300)
                   .attr("height", 200)
                   .style('background-color', 'lightgrey')
+
+      var border = d3.select("d3")
+                     .append("rect")
+                     .attr("x", 150)
+                     .attr("y", 100)
+                     .attr("width", 50)
+                     .attr("height", 50)
+                     .attr("stroke", "black")
+                     .attr("fill", "#6032a8")
     </script>
 
   </body>
