@@ -1,0 +1,23 @@
+{
+  "name": "01-ghd3",
+  "version": "1.0.0",
+  "description": "Project 1 for CS 582 Data Visualization",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mastlouis/01-ghd3.git"
+  },
+  "author": "Matthew St Louis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mastlouis/01-ghd3/issues"
+  },
+  "homepage": "https://github.com/mastlouis/01-ghd3#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
