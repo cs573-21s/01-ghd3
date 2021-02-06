@@ -9,7 +9,6 @@
 
 <body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-
     <div>
         <code>Color:</code>
         <select id="colorsSelect">
@@ -18,7 +17,6 @@
             <option value="blue">🟦 Blue</option>
         </select>
         <span>&nbsp;|&nbsp;</span>
-
         <code>Shape:</code>
         <button id="addCircle">⚫</button>
         <button id="addRect">⬛</button>
@@ -32,19 +30,28 @@
         <svg id="vis"></svg>
     </div>
 
-
-
     <script>
-        /**
-         * https://observablehq.com/@d3/circle-dragging-i
-        */
         console.log(d3); // test if d3 is loaded
 
+        // Configurations
+        const originPoint = 25
+        const sideLength = 50
+        const halfBaseLength = 25
+        const paddingWidth = 20
+        const paddingHeight = 70
+        const opacityPercentage = 0.5
+        const lineLength = 100
+        const lineTilt = 20
+        const lineWidth = 8
+        const circleRadius = 20
+
+        // Data
         let circles = []
         let rects = []
         let lines = []
         let polygons = []
 
+        // Buttons
         const clearButton = document.getElementById('clear')
         const colorsSelect = document.getElementById('colorsSelect')
         const circlesButton = document.getElementById('addCircle')
@@ -64,103 +71,133 @@
         })
 
         circlesButton.addEventListener('click', event => {
-            circles.push({ type: 'circle', color: colorsSelect.value })
+            circles.push({ id: uuidv4(), type: 'circle', color: colorsSelect.value })
             draw()
         })
 
         rectButton.addEventListener('click', event => {
-            rects.push({ type: 'rect', color: colorsSelect.value })
+            rects.push({ id: uuidv4(), type: 'rect', color: colorsSelect.value })
             draw()
         })
 
         lineButton.addEventListener('click', event => {
-            lines.push({ type: 'line', color: colorsSelect.value })
+            lines.push({ id: uuidv4(), type: 'line', color: colorsSelect.value })
             draw()
         })
 
         polygonButton.addEventListener('click', event => {
-            polygons.push({ type: 'polygon', color: colorsSelect.value })
+            polygons.push({ id: uuidv4(), type: 'polygon', color: colorsSelect.value })
             draw()
         })
 
         function draw() {
             // Add an SVG
             const svg = d3.select('#vis')
-                .attr("width", window.innerWidth - 10)
-                .attr("height", window.innerHeight - 59)
+                .attr("width", window.innerWidth - paddingWidth)
+                .attr("height", window.innerHeight - paddingHeight)
                 .style("background-color", "#D0D0D0")
 
             // Add Circles
-            const circle = svg.selectAll("circle").data(circles)
-
+            const circle = svg.selectAll("circle").data(circles, d => d.id)
+            circle.exit().remove()
             circle.enter()
                 .append("circle")
-                .attr("cy", 50)
-                .attr("cx", 50)
-                .attr("r", 20)
-                .attr("fill", d => { return d.color })
+                .attr('id', d => d.id)
+                .attr("r", 0)
+                .attr("cy", originPoint)
+                .attr("cx", originPoint)
+                .attr("fill", d => d.color)
+                .attr("opacity", opacityPercentage)
                 .call(drag)
-
-            circle.exit().remove()
+                .transition()
+                .attr("r", circleRadius)
 
             // Add Rectangles
-            const rect = svg.selectAll("rect").data(rects)
-
+            const rect = svg.selectAll("rect").data(rects, d => d.id)
+            rect.exit().remove()
             rect.enter()
                 .append("rect")
-                .attr("y", 150)
-                .attr("x", (d, i) => { return i * 100; })
-                .attr("width", 60)
-                .attr("height", 60)
-                .attr("fill", d => { return d.color })
+                .attr('id', d => d.id)
+                .attr("y", originPoint)
+                .attr("x", originPoint)
+                .attr("width", 0)
+                .attr("height", 0)
+                .attr("fill", d => d.color)
+                .attr("opacity", opacityPercentage)
                 .call(drag)
-
-            rect.exit().remove()
+                .transition()
+                .attr("width", sideLength)
+                .attr("height", sideLength)
 
             // Add Lines
-            const line = svg.selectAll("line").data(lines)
-
+            const line = svg.selectAll("line").data(lines, d => d.id)
+            line.exit().remove()
             line.enter()
                 .append("line")
-                .attr("x1", (d, i) => { return i * 100 + 40 })
-                .attr("y1", 250)
-                .attr("x2", (d, i) => { return i * 100 + 20 })
-                .attr("y2", 350)
-                .attr("stroke", d => { return d.color })
-                .attr('stroke-width', 8)
+                .attr('id', d => d.id)
+                .attr("x1", 0)
+                .attr("y1", 0)
+                .attr("x2", 0)
+                .attr("y2", 0)
+                .attr("stroke", d => d.color)
+                .attr('stroke-width', lineWidth)
                 .call(drag)
-
-            line.exit().remove()
+                .attr("opacity", opacityPercentage)
+                .transition()
+                .attr("x1", originPoint)
+                .attr("y1", originPoint)
+                .attr("x2", originPoint - lineTilt)
+                .attr("y2", originPoint + lineLength)
 
             // Add Polygons
-            const polygon = svg.selectAll("polygon").data(polygons)
-
+            const polygon = svg.selectAll("polygon").data(polygons, d => d.id)
+            polygon.exit().remove()
             polygon.enter()
                 .append("polygon")
-                .attr("points", (d, i) => { return `${i * 100 + 30},450 ${i * 100},500 ${i * 100 + 60},500` })
-                .attr("fill", d => { return d.color })
+                .attr('id', d => d.id)
+                .attr("points", '0,0')
+                .attr("fill", d => d.color)
+                .attr("opacity", opacityPercentage)
                 .call(drag)
-
-            polygon.exit().remove()
+                .transition()
+                .attr("points", (d, i) => `${originPoint},${originPoint} ${originPoint - halfBaseLength},${originPoint + sideLength} ${originPoint + halfBaseLength},${originPoint + sideLength}`)
         }
 
+        /**
+         * Drag functions
+         * @source https://observablehq.com/@d3/circle-dragging-i
+        */
         function dragstarted(event, d) {
-            console.log(d.type);
             d3.select(this).raise().attr("stroke", "black");
         }
 
         function dragged(event, d) {
-            if (d.type === 'circle') d3.select(this).attr("cx", d.x = event.x).attr("cy", d.y = event.y)
+            if (d.type === 'circle') d3.select(this).attr("cx", event.x).attr("cy", event.y)
+            if (d.type === 'rect') d3.select(this).attr("x", event.x).attr("y", event.y)
+            if (d.type === 'polygon') d3.select(this).attr("points", `${event.x},${event.y} ${event.x - halfBaseLength},${event.y + sideLength} ${event.x + halfBaseLength},${event.y + sideLength}`)
+            if (d.type === 'line') d3.select(this).attr("x1", event.x).attr("y1", event.y).attr("x2", event.x - lineTilt).attr("y2", event.y + lineLength)
         }
 
         function dragended(event, d) {
-            if (d.type === 'line') d3.select(this).attr("stroke", d => { return d.color });
+            if (d.type === 'line') d3.select(this).attr("stroke", d => d.color);
+            else d3.select(this).attr("stroke", null);
         }
 
         const drag = d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended);
+
+        /**
+         * Create UUID v4
+         * @source https://stackoverflow.com/a/2117523
+        */
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
         draw()
     </script>
