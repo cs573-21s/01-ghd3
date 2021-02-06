@@ -19,6 +19,7 @@ Link to the hosted files:
 https://slwoodland.github.io/01-ghd3/index.html
 
 Technical Achievement:
+
 I was able to get all the shapes that I used (circles, polygons, and rectangles) in the correct positions on the webpage to form the rocket and only ended up with minute differences between my image and the original.
 
 Design Achievement:
