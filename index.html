@@ -1,16 +1,23 @@
-<html>
-  <head>
-    <!-- Load d3.js v5 -->
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-  </head>
-  <body>
-    <!-- Div to manipulate -->
-    <div id="d3"></div>
+<script src="https://d3js.org/d3.v6.min.js"></script>
 
-    <script>
-      // Add text to the div
-      d3.select('#d3').text('Hello world!')
-    </script>
+<div id="circle"></div>
 
-  </body>
-</html>
+<script>
+  console.log(d3); // test if d3 is loaded
+  // Add an SVG
+  // create svg element:
+  var svg = d3.select("#circle").append("svg").attr("width", 200).attr("height", 200)
+
+  // Add the path using this helper function
+  svg.append('circle')
+    .attr('cx', 100)
+    .attr('cy', 100)
+    .attr('r', 50)
+    .attr('stroke', 'black')
+    .attr('fill', '#69a3b2');
+
+  // Add Rectangles
+  // Add Circles
+  // Add Lines
+  // Add Polygons
+</script>
