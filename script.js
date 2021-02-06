@@ -58,8 +58,8 @@ const LOAD_DATA = new Promise((resolve, reject) => {
     d3.csv("TenneTTSO.csv"),
     d3.csv("TransnetBW.csv"),
   ]).then(values => {
-    // displayForDay(selectedDay);
-    chartInterval = d3.interval(nextDay, 500);
+    displayForDay(selectedDay);
+    chartInterval = d3.interval(nextDay, 2000);
     console.log('All data loaded!');
     setSlider(values[0].length)
     resolve(values);
