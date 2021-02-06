@@ -1,10 +1,140 @@
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+  </head>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+  <body>
+
+    <script>
+
+      var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", 550)
+                  .attr("height", 500)
+                  .style('background-color', '#5594cb')
+
+      var rocket = svg.append("ellipse")
+                    .attr("cx", 275)
+                    .attr("cy", 250)
+                    .attr("rx", 75)
+                    .attr("ry", 150)
+                    .attr("stroke", "#82242c")
+                    .attr("stroke-width", 6)
+                    .attr("fill", "#fafafa")
+
+      var yellow = svg.append("ellipse")
+                    .attr("cx", 275)
+                    .attr("cy", 250)
+                    .attr("rx", 65)
+                    .attr("ry", 140)
+                    .attr("fill", "#d5ad41")
+
+      var triangle = svg.append("polygon")
+                    .attr("points", "275,40 227,130 323,130")
+                    .attr("fill", "#82242c")
+
+      var circle = svg.append("circle")
+                    .attr("cx", 275)
+                    .attr("cy", 200)
+                    .attr("r", 33)
+                    .attr("fill", "#fafafa")
+
+      var windo = svg.append("circle")
+                    .attr("cx", 275)
+                    .attr("cy", 200)
+                    .attr("r", 25)
+                    .attr("fill", "#5594cb")
+                    .attr("stroke", "#82242c")
+                    .attr("stroke-width", 6)
+
+      var bottom = svg.append("rect")
+                    .attr("x", 230)
+                    .attr("y", 375)
+                    .attr("width", 90)
+                    .attr("height", 30)
+                    .attr("fill", "#82242c")
+
+      var stripe = svg.append("rect")
+                    .attr("x", 200)
+                    .attr("y", 275)
+                    .attr("width", 150)
+                    .attr("height", 15)
+                    .attr("fill", "#82242c")
+
+      var ystripe = svg.append("rect")
+                    .attr("x", 230)
+                    .attr("y", 390)
+                    .attr("width", 90)
+                    .attr("height", 10)
+                    .attr("fill", "#d5ad41")
+
+      var engine1 = svg.append("ellipse")
+                    .attr("cx", 175)
+                    .attr("cy", 400)
+                    .attr("rx", 20)
+                    .attr("ry", 50)
+                    .attr("stroke", "#82242c")
+                    .attr("stroke-width", 4)
+                    .attr("fill", "#fafafa")
+
+      var engine2 = svg.append("ellipse")
+                    .attr("cx", 370)
+                    .attr("cy", 400)
+                    .attr("rx", 20)
+                    .attr("ry", 50)
+                    .attr("stroke", "#82242c")
+                    .attr("stroke-width", 4)
+                    .attr("fill", "#fafafa")
+
+      var y1 = svg.append("ellipse")
+                    .attr("cx", 175)
+                    .attr("cy", 400)
+                    .attr("rx", 13)
+                    .attr("ry", 40)
+                    .attr("fill", "#d5ad41")
+
+      var y2 = svg.append("ellipse")
+                    .attr("cx", 370)
+                    .attr("cy", 400)
+                    .attr("rx", 13)
+                    .attr("ry", 40)
+                    .attr("fill", "#d5ad41")
+
+      var t1 = svg.append("polygon")
+                    .attr("points", "175,465 161,440 189,440")
+                    .attr("fill", "#82242c")
+
+      var t2 = svg.append("polygon")
+                    .attr("points", "370,465 356,440 384,440")
+                    .attr("fill", "#82242c")
+
+
+      var c1 = svg.append("polygon")
+                    .attr("points", "185,360 210,330 220,350 195,400")
+                    .attr("fill", "#82242c")
+
+      var c2 = svg.append("polygon")
+                    .attr("points", "360,360 340,330 330,350 350,400")
+                    .attr("fill", "#82242c")
+
+      var line1 =  svg.append("line")
+                    .attr("x1", 65)
+                    .attr("y1", 0)
+                    .attr("x2", 65)
+                    .attr("y2", 500)
+                    .attr("stroke", "#d5ad41")
+                    .attr("stroke-width", 4)
+
+
+      var line2 = svg.append("line")
+                    .attr("x1", 450)
+                    .attr("y1", 0)
+                    .attr("x2", 450)
+                    .attr("y2", 500)
+                    .attr("stroke", "#d5ad41")
+                    .attr("stroke-width", 4)
+
+    </script>
+
+  </body>
+</html>
