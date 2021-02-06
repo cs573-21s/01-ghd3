@@ -36,6 +36,7 @@ $(document).ready(function() {
     .attr('fill', '#ff000077')
     .attr('stroke', '#aaaaaa')
     .attr('data-info', "Rectangle<br/> Custom element");
+
   svg.append('text')
     .attr('x', '73%')
     .attr('y', '69.5%')
@@ -43,12 +44,14 @@ $(document).ready(function() {
     .attr('fill', '#ffffff')
     .text("KFC");
 
-  // svg.append('line')
-  //   .attr('x1', 0)
-  //   .attr('y1', 590)
-  //   .attr('x2', 959)
-  //   .attr('y2', 590)
-  //   .attr('stroke', '#333333');
+  svg.append('line')
+    .attr('x1', 722)
+    .attr('y1', 336)
+    .attr('x2', 736)
+    .attr('y2', 341)
+    .attr('stroke', '#FFFFFF')
+    .attr('stroke-width', 3)
+    .attr('data-info', "Line<br/> Custom element");
 
 
   var points = [
