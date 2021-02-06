@@ -1,6 +1,7 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 Gabrielle Acquista
+---
 Look at my project here!!: https://geacquista.github.io/01-ghd3/
 I didn't use official "starter code," but I built off of examples from https://www.d3-graph-gallery.com/.
 
