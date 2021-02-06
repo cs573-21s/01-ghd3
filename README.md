@@ -1,12 +1,17 @@
 Assignment 1 - Hello World: GitHub and d3  
 ===
 
-Introduction:
+Introduction
 ---
 
 The goal of this project is to make particles in (circles, rectangles, lines and texts) shapes in different locations on the screen with different colors using d3.js
 
-Project Description:
+Github Pages Link
+---
+
+https://khulood20.github.io/01-ghd3/
+
+Project Description
 ---
 
 I started with this example [1] from bl.ocks.org. The code [1] is written in 3d.js v3 so I had to look for updates in this website [2] for v6. 
@@ -17,13 +22,13 @@ When touching the first column of the page, the pointer position got returned, t
 
 (Note: I did merge two screenshots together in order to display all of the mouse movements in one image).
 
-Technical and Design Achievements:
+Technical and Design Achievements
 ---
 
 1. Creating different elements in d3 (Circle, rectangle, line, text).
 2. Making the graph interactive by generating graphs ontouchstart.
 
-Sources:
+Sources
 ---
 
 1) https://bl.ocks.org/mbostock/1062544
