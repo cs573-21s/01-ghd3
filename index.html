@@ -36,20 +36,6 @@
   radius = 15;
   difficulty = "easy";
 
-  // https://bl.ocks.org/d3noob/1ea51d03775b9650e8dfd03474e202fe
-  var easing = [
-    "easeElastic",
-    "easeBounce",
-    "easeLinear",
-    "easeSin",
-    "easeQuad",
-    "easeCubic",
-    "easePoly",
-    "easeCircle",
-    "easeExp",
-    "easeBack"
-    ];
-
   var svg = d3.select("#container").append("svg")
     .attr("width", width)
     .attr("height", height);
@@ -117,7 +103,6 @@
       for(i = 0; i < difficultyOptions.length; i++) {
           if(difficultyOptions[i].checked) {
               return difficultyOptions[i].value;
-              // console.log(difficulty);
           }
       }
   }
