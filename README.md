@@ -4,7 +4,7 @@ Assignment 1 - Whack-a-Shape
 gh-pages:
 https://jpking19.github.io/01-ghd3/
 
-![plot](./images/Capture.png)
+![plot](./images/Capture.PNG)
 
 For Assignment 1, I decided to make a simple, online Whack-a-Mole (in my version, you are whacking circles!). To play, select a difficulty, and then press the "Play the Game" button. Click on the circles before they dissapear to score points! And watch out, on higher difficulties, the shapes move across the screen.
 
