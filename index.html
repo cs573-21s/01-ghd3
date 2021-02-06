@@ -1,10 +1,306 @@
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
+<div id="value"> </div>
+<svg id="vis"></svg>
+
+<style>
+  body {
+    background-color: rgb(239, 240, 178);
+  }
+</style>
+
 <script>
   console.log(d3); // test if d3 is loaded
   // Add an SVG
   // Add Rectangles
   // Add Circles
   // Add Lines
-  // Add Polygons
-</script>
+  // Add Polygons 
+  var data0 = [30,35,40,50,55];
+  var data01 = [26, 43, 34, 32];
+  var data02 = [32, 46, 50, 29];
+  var data03 = [37, 48, 44];
+  var data04 = [39];
+  var data05 = [42];
+  var data06 = [39,37];
+  var data07 = [36, 40, 41];
+  var data08 = [39];
+  var data09 = [42];
+  var data010 = [28,38,42];
+
+  var data1 = [30];
+  var data2 = [39];
+  var data3 = [{x: 205, y: 720},{x: 570, y: 650},
+               {x: 245, y: 600},{x: 540, y: 550},
+               {x: 275, y: 500},{x: 510, y: 450},
+               {x: 305, y: 400},{x: 480, y: 350},
+               {x: 335, y: 300},{x: 450, y: 250},
+               {x: 365, y: 200},{x: 415, y: 150}];
+
+  var data4 = [{x: 200, y: 750}, {x: 400, y: 100}, {x: 600, y: 750}]
+
+  var t = d3.transition().duration(2500).delay(1000);
+
+  var svg = d3.select('#vis').attr('width', 1000).attr('height', 1000);
+
+  var xscale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([0, 1000]);
+
+  var yscale = d3.scaleLinear()
+    .domain([0, 500])
+    .range([0, 1000]);
+
+var lineFunc = d3.line()
+  .x(function(d) { return d.x })
+  .y(function(d) { return d.y })
+
+
+svg.append('path')
+  .attr('d', lineFunc(data4))
+  .attr('width', '50')
+  .attr('stroke', 'green')
+  .attr('fill', 'green');
+
+
+svg.append('path')
+  .attr('d', lineFunc(data3))
+  .attr('width', '50')
+  .attr('stroke', 'yellow')
+  .attr('fill', 'none');
+
+  svg.append('g').attr('id', 'group0');
+
+  svg.selectAll('circle').select('group0')
+   .data(data0)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 10)
+   .attr('cy', 700)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'white'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'red'); })
+   .transition(t).attr('r',15);
+
+
+
+   svg.append('g').attr('id', 'groupA');
+
+  svg.selectAll('rect').select('groupA')
+   .data(data1)
+   .enter().append('rect')
+   .attr('x', function(d) { console.log(d); return xscale(d); } )
+   .attr('y', 100)
+   .attr('width', 20)
+   .attr('height', 20)
+   .attr('fill', 'yellow')
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'orange');})
+   .on('mouseout', function() {d3.select(this).attr('fill', 'yellow'); })
+  .attr('transform', 'translate(259, -200) rotate(45)')
+  .transition(t)
+  .ease(d3.easeLinear)
+  .attr("height", 50).attr("width", 50);
+
+
+  svg.append('g').attr('id', 'groupB');
+
+  svg.selectAll('rect').select('groupB')
+   .data(data2)
+   .enter().append('rect')
+   .attr('x', function(d) { console.log(d); return xscale(d); } )
+   .attr('y', 750)
+   .attr('width', 20)
+   .attr('height', 50)
+   .attr('fill', 'brown');
+
+   svg.append('polygon')
+   .attr("points","200,700 240,800 160,790 170,700")
+   .attr("stroke","blue")
+   .attr("fill", "pink")
+   .attr("stroke-width", 2)
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'brown');})
+   .on('mouseout', function() {d3.select(this).attr('fill', 'white'); });
+
+   svg.append('polygon')
+   .attr("points","510,710 540,800 440,800 470,700")
+   .attr("stroke","blue")
+   .attr("fill", "purple")
+   .attr("stroke-width", 2)
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'brown');})
+   .on('mouseout', function() {d3.select(this).attr('fill', 'white'); });
+
+   svg.append('polygon')
+   .attr("points","650,710 640,800 570,800 520,700")
+   .attr("stroke","blue")
+   .attr("fill", "brown")
+   .attr("stroke-width", 2)
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'brown');})
+   .on('mouseout', function() {d3.select(this).attr('fill', 'white'); });
+
+   svg.append('polygon')
+   .attr("points","100,730 100,800 220,800 170,720")
+   .attr("stroke","blue")
+   .attr("fill", "orange")
+   .attr("stroke-width", 2)
+   .on('mouseover', function(e, d) {
+      d3.select(this).attr('fill', 'brown');})
+   .on('mouseout', function() {d3.select(this).attr('fill', 'white'); });
+
+
+
+   svg.append('g').attr('id', 'group1');
+
+   svg.selectAll('circle').select('group1')
+   .data(data01)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 650)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'yellow'); })
+   .transition(t).attr('r', 12);
+
+
+   svg.append('g').attr('id', 'group2');
+
+   svg.selectAll('circle').select('group2')
+   .data(data02)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 611)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'pink'); })
+   .transition(t).attr('r', 14);
+
+
+   svg.append('g').attr('id', 'group3');
+
+   svg.selectAll('circle').select('group3')
+   .data(data03)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 420)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'brown'); })
+   .transition(t).attr('r', 18);
+
+
+   svg.append('g').attr('id', 'group4');
+
+   svg.selectAll('circle').select('group4')
+   .data(data04)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 160)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'gray'); })
+   .transition(t).attr('r', 13);
+
+
+   svg.append('g').attr('id', 'group5');
+
+   svg.selectAll('circle').select('group5')
+   .data(data05)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 278)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'yellow'); })
+   .transition(t).attr('r', 9);
+
+   svg.append('g').attr('id', 'group6');
+
+   svg.selectAll('circle').select('group6')
+   .data(data06)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 666)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'orange'); })
+   .transition(t).attr('r', 13);
+
+
+   svg.append('g').attr('id', 'group7');
+
+   svg.selectAll('circle').select('group7')
+   .data(data07)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 491)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'pink'); })
+   .transition(t).attr('r', 13);
+
+
+   svg.append('g').attr('id', 'group8');
+
+   svg.selectAll('circle').select('group8')
+   .data(data08)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 309)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'blue'); })
+   .transition(t).attr('r', 11);
+
+
+   svg.append('g').attr('id', 'group9');
+
+   svg.selectAll('circle').select('group9')
+   .data(data09)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 468)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'orange'); })
+   .transition(t).attr('r', 10);
+
+
+   svg.append('g').attr('id', 'group10');
+
+   svg.selectAll('circle').select('group10')
+   .data(data010)
+   .enter().append('circle')
+   .attr('cx', function(d) { console.log(d); return xscale(d); } )
+   .attr('r', 8)
+   .attr('cy', 557)
+   .attr('fill', 'white')
+   .on('mouseover', function(e, d) { 
+      d3.select(this).attr('fill', 'red'); })
+   .on('mouseout', function() {d3.select(this).attr('fill', 'purple'); })
+   .transition(t).attr('r', 17);
+
+//HELP FROM https://www.d3-graph-gallery.com/graph/shape.html
+  
+</script> 
