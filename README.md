@@ -7,31 +7,15 @@ For this assignment I considered exploring the following svg componenets:
 - color components with different colors
 - rectangle
 
- Below are a few examples of the d3 exploration.
+Below are a few examples of the d3 exploration.
+ 
  ![Example Image](./images/demo1.png)
  
+Technical and Design Achievement
+---
+For this project, I wanted to explore the technical challenges and the learning curve I'd face if I tried to integrate d3 to manipulate preexisting SVG on a website. The technical difficulties of implementing and exploring the basic features of D3.js were relatively straight forward, and the plugin implementation was easy. The documentation was very straightforward, and the concepts were easy to pick up. I also explored how well d3.js can replicate the practice of embedding data using data-* attribute. D3 handled both the traditional usage approach and the comparatively newer DOM approach, where you store the data by binding it to the object's instance. We can see the data bound to each svg element by hovering over the elements on and around the map. For the states the tool tip on the bottom right hand side shows the name of the state and the capital of the state. To have the hover more interactive the states get hilighted with blue color when you hover you mouse on it.
 
-Grades are on a 120 point scale. 
-96 points will be graded for functionality: the program does what the assignment requests with an informative README. 
 
-We will use Google Chrome to view submissions. 
-Be sure to test your code there.
 
-Below are some, but not necessarily all, of the key points we will consider during grading:
 
-- Circles and Rectangles  
-- Lines  
-- Polygons  
-- Different colors  
-- README Quality
-    - A description of what you have created. 1-2 screenshots are recommended for the README.  
-    - A working link to the hosted files (usually the gh-pages 'live' url)  
-    - Section for Technical and Design Achievements
-
-Technical Achievement Desription -- 12  
-Design Achievement Description -- 12
-
-Remember, it is up to *you* to define what constitutes a technical and design achievements.
-Be ambitious as these are designed to allow you to shape your learning.
-These are the only way to move from B to A territory.
 
