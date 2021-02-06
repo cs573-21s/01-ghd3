@@ -27,6 +27,9 @@ Technical and Design Achievements
 
 1. Creating different elements in d3 (Circle, rectangle, line, text).
 2. Making the graph interactive by generating graphs ontouchstart.
+3. Prototyping before coding. A screenshot of the prototype is added below:
+
+![alt text](Prototype.png)
 
 Sources
 ---
