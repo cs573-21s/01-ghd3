@@ -1,10 +1,206 @@
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
+<div style="text-align:center">
+    <h2>Whack-a-shape</h2>
+    <div style="width:100%">
+        <h1 id="high_score" style="display:inline-block; padding-right:50px;">High Score: 0</h1>
+        <h1 id="counter" style="display:inline-block; padding-left:50px;">Current Score: 0</h1>
+    </div
+    <div style="width:100%">
+        <button type="button" id="startButton" onclick="startGame()">Play the Game!</button>
+        <input type="radio" id="easy" name="difficulty" value="easy" checked="checked">
+        <label for="easy">Easy</label>
+        <input type="radio" id="medium" name="difficulty" value="medium">
+        <label for="female">Medium</label>
+        <input type="radio" id="hard" name="difficulty" value="hard">
+        <label for="hard">Hard</label>
+        <button type="button" id="startButton" onclick="makePrettyShapes()">Make some pretty shapes!</button>
+    </div>
+    <br>
+    <div id="container" style="width:100%; text-align:center">
+
+    </div>
+</div>
+
 <script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
+  // svg dimensions
+  width = 1000
+  height = 500
+
+  // high score
+  counter = 0;
+  high_score = 0;
+
+  // settings
+  lifetime = 3000;
+  radius = 15;
+  difficulty = "easy";
+
+  var svg = d3.select("#container").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // border
+  svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", "transparent")
+    .attr("stroke", "black")
+    .attr("stroke-width", 5);
+
+  function handleCircleClick(d, i) {
+      counter++;
+      d3.select("#counter").text("Current Score: " + counter);
+      d3.select(this).remove();
+  }
+
+  const startGame = async () => {
+      // set high score
+      if (counter > high_score) {
+          high_score = counter;
+          d3.select("#high_score").text("High Score: " + counter);
+      }
+
+      // cleanup
+      counter = 0;
+      d3.select("#counter").text("Current Score: " + 0);
+      svg.selectAll("*").remove();
+      svg.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", width)
+        .attr("height", height)
+        .attr("fill", "transparent")
+        .attr("stroke", "black")
+        .attr("stroke-width", 5);
+
+      // run the game
+      difficulty = getDifficulty();
+      for (var i = 0; i < 60; i++) {
+          // https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
+          if (difficulty == "easy") {
+              setTimeout(appendRandomCircleEasy, i * 500);
+          } else if (difficulty == "medium") {
+              setTimeout(appendRandomCircleMedium, i * 500);
+          } else if (difficulty == "hard") {
+              setTimeout(appendRandomCircleHard, i * 500);
+          }
+      }
+  }
+
+  function endGame() {
+      if (counter > high_score) {
+          high_score = counter;
+          d3.select("#high_score").text("High Score: " + counter);
+      }
+      document.getElementById("startModal").style.display = "block";
+  }
+
+  function getDifficulty() {
+      var difficultyOptions = document.getElementsByName("difficulty");
+      for(i = 0; i < difficultyOptions.length; i++) {
+          if(difficultyOptions[i].checked) {
+              return difficultyOptions[i].value;
+          }
+      }
+  }
+
+  const appendRandomCircleEasy = async () => {
+      var cirle = svg.append("circle")
+        .attr("cx", randomNum(0, width))
+        .attr("cy", randomNum(0, height))
+        .attr("r", radius)
+        .attr("fill", "green")
+        .attr("stroke", "black")
+        .on("click", handleCircleClick)
+        .transition()
+        .duration(200)
+        .transition()
+        .duration(lifetime / 1.5)
+        .attr("fill", "yellow")
+        .transition()
+        .duration(200)
+        .transition()
+        .duration(lifetime / 1.5)
+        .attr("fill", "red")
+        .remove();
+  }
+
+  const appendRandomCircleMedium = async () => {
+      var cirle = svg.append("circle")
+        .attr("cx", randomNum(0, width))
+        .attr("cy", randomNum(0, height))
+        .attr("r", radius)
+        .attr("fill", "green")
+        .attr("stroke", "black")
+        .on("click", handleCircleClick)
+        .transition()
+        .duration(200)
+        .transition()
+        .duration(lifetime / 2)
+        .attr("fill", "yellow")
+        .attr("cx", function(d, i) {
+            return randomNum(0, width);
+        })
+        .transition()
+        .duration(200)
+        .transition()
+        .duration(lifetime / 2)
+        .attr("fill", "red")
+        .attr("cy", function(d, i) {
+            return randomNum(0, height);
+        })
+        .remove();
+  }
+
+  const appendRandomCircleHard = async () => {
+      var cirle = svg.append("circle")
+        .attr("cx", randomNum(0, width))
+        .attr("cy", randomNum(0, height))
+        .attr("r", radius)
+        .attr("fill", "green")
+        .attr("stroke", "black")
+        .on("click", handleCircleClick)
+        .transition()
+        .duration(lifetime / 2.5)
+        .attr("fill", "yellow")
+        .attr("cx", function(d, i) {
+            return randomNum(0, width);
+        })
+        .transition()
+        .duration(lifetime / 2.5)
+        .attr("fill", "red")
+        .attr("cy", function(d, i) {
+            return randomNum(0, height);
+        })
+        .remove();
+  }
+
+  function makePrettyShapes() {
+     svg.append("rect")
+        .attr("x", 200)
+        .attr("y", 250)
+        .attr("width", 100)
+        .attr("height", 40)
+        .attr("stroke", "black")
+        .attr("fill", "blue");
+     svg.append("line")
+        .attr("x1", 400)
+        .attr("y1", 150)
+        .attr("x2", 600)
+        .attr("y2", 350)
+        .attr("stroke", "red");
+     svg.append("polygon")
+        .attr("points", "650,400 850,30 950,250")
+        .attr("stroke", "black")
+        .attr("fill", "purple");
+  }
+
+  // https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+  function randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
 </script>
