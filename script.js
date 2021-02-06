@@ -95,25 +95,25 @@ function displayForDay(day) {
         {
           name: "50Hertz",
           points: parseDay(data[0][day]),
-          color: "steelblue"
+          color: "#9367F6" // Light purple
         },
         {
           name: "Ampiron",
           points: parseDay(data[1][day]),
-          color: "#ff00ff" // magenta
+          color: "#5D59D4" // dark purple
         },
         {
           name: "TenneTTSO",
           points: parseDay(data[2][day]),
-          color: "green"
+          color: "#5996D4" // dark blue
         },
         {
           name: "TransnetBW",
           points: parseDay(data[3][day]),
-          color: "#9966ff" // purple
+          color: "#67D4F6" // light blue
         },
       ]);
-      document.getElementById('data-date').innerHTML = `Showing data for ${data[0][day]["Date"]}`
+      document.getElementById('data-date').innerHTML = `Showing Data for <span class="date">${data[0][day]["Date"]}<\span>`
       slider.attr('value', selectedDay);
       // slider.setAttribute("value", selectedDay)
   });
@@ -230,22 +230,6 @@ function buildVis(dataArray){
         break;
     }
   }
-
-  // svg.append("g").selectAll("path")
-  //   .data(dataArray[0].points)
-  //   .enter()
-  //   .append("path")
-  //     .attr("d", d3.area()
-  //       .x(d => x(d.date))
-  //       .y0(d => 0)
-  //       .y1(d => y(d.value))(dataArray[0].points)
-  //     )
-  //     // .attr("points", d => d.map( d=> [x(d.time), y(d.value)].join(",")).join(" "))
-  //     // .attr("stroke", "black")
-  //     .attr("fill", "green")
-  //     // .attr("stroke-width", 2)
-  //     .attr("fill-opacity", 0.005)
-  //     // .attr("stroke-opacity", 0.5)
 
   console.log('Line should be drawn now.');
 }
