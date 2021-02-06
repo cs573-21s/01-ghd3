@@ -4,9 +4,11 @@ Assignment 1 - Whack-a-Shape
 gh-pages:
 https://jpking19.github.io/01-ghd3/
 
+![plot](./images/Capture.png)
+
 For Assignment 1, I decided to make a simple, online Whack-a-Mole (in my version, you are whacking circles!). To play, select a difficulty, and then press the "Play the Game" button. Click on the circles before they dissapear to score points! And watch out, on higher difficulties, the shapes move across the screen.
 
-After playing my own game, I have come to the conclusion that clicking on 2d shapes is not quite as satisfying as hitting animatronics with a hammer... Oh well... 
+After playing my own game, I have come to the conclusion that clicking on 2d shapes is not quite as satisfying as hitting animatronics with a hammer... Oh well...
 
 The "Make Pretty Shapes" button is only there to prove that I can make rectangles, lines, and polygons :)
 
@@ -27,3 +29,4 @@ References
 ---
 - Learning how to setTimeouts - https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 - Generating random numbers in a rannge - https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+- Learning how to animate in d3 - https://www.tutorialsteacher.com/d3js/animation-with-d3js
