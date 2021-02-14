@@ -1,5 +1,9 @@
 Assignment 1: One-Capture Checkers
 ===
+Page Link
+---
+https://wtt102.github.io/01-ghd3/index.html
+
 Description
 ---
 This is a two player checkers game with king promotions and single capture per turn.
