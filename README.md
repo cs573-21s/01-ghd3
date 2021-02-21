@@ -4,10 +4,11 @@ Design achievements:
 The project generates graphics primitives (circle, rectangle, polygon and ellipse) at different locations on the screen with different colors. Each of them is reduced in size using transition function. 
 These four shapes appear and decrease in size. Before transition circle, rectangle, polygon and ellipse are in blue, yellow, green and red respectively and after transition they are in red, green, yellow and blue respectively. 
 An overview of how the project works
+
 Before transition
- 
+ ![image](https://user-images.githubusercontent.com/54874663/108635467-86ee4c80-744d-11eb-9114-295a2d647fc2.png)
 After transition
- 
+ ![image](https://user-images.githubusercontent.com/54874663/108635503-af764680-744d-11eb-96eb-3f46c1362c2c.png)
 
 Technical achievements:
 The code generates graphics using D2 library. Following are some of the methods are used in this project.
