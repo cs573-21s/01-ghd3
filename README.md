@@ -4,7 +4,7 @@ By Andrew Nolan
 
 Github Pages Link
 ---
-https://acnolan.tech/01-ghd3/
+https://andrewnolan.dev/Chernoff-Faces/
 
 Submission Description
 ---
